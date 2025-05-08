@@ -26,19 +26,16 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # Paso 3: Navegar al directorio del backend (donde está el pom.xml)
-      - name: Navigate to backend folder
-        run: cd backend  # Asegúrate de cambiar "backend" al nombre correcto de tu carpeta si es diferente
-
-      # Paso 4: Construir el proyecto con Maven
+      # Paso 3: Construir el proyecto con Maven
       - name: Build with Maven
+        working-directory: ./backend
         run: mvn clean package -DskipTests  # Aquí se ejecuta Maven en el directorio del backend
 
-      # Paso 5: Configurar Docker y Docker Compose
+      # Paso 4: Configurar Docker y Docker Compose
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      # Paso 6: Cacheo de Docker (opcional)
+      # Paso 5: Cacheo de Docker (opcional)
       - name: Cache Docker layers
         uses: actions/cache@v3
         with:
@@ -47,7 +44,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      # Paso 7: Construir imágenes Docker
+      # Paso 6: Construir imágenes Docker
       - name: Build Docker images
         run: |
           docker-compose -f docker-compose.yml build
@@ -57,11 +54,11 @@ jobs:
         run: |
           docker-compose -f docker-compose.yml up -d
 
-      # Paso 9: Realizar pruebas de integración (si las tienes)
+      # Paso 7: Realizar pruebas de integración (si las tienes)
       - name: Run integration tests
         run: mvn verify
 
-      # Paso 10: Desplegar o detener los contenedores Docker
+      # Paso 8: Desplegar o detener los contenedores Docker
       - name: Clean up Docker containers
         run: |
           docker-compose down
