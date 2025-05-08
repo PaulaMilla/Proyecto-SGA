@@ -14,6 +14,7 @@ import com.mednova.usuarios_service.model.Rol;
 import com.mednova.usuarios_service.model.Usuario;
 import com.mednova.usuarios_service.service.UsuarioService;
 
+//Controller para manejar las peticiones relacionadas con los usuarios, roles y permisos
 @RestController
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
