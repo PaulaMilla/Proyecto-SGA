@@ -26,16 +26,21 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # Paso 3: Construir el proyecto con Maven
-      - name: Build with Maven
-        working-directory: ./backend
-        run: mvn clean package -DskipTests  # Aquí se ejecuta Maven en el directorio del backend
+      # Paso 3: Construir el microservicio de usuarios
+      - name: Build Usuarios Service with Maven
+        working-directory: ./backend/usuarios-service # Especifica el directorio del microservicio
+        run: mvn clean package -DskipTests
 
-      # Paso 4: Configurar Docker y Docker Compose
+      # Paso 4: Construir el API Gateway con Maven
+      - name: Build API Gateway with Maven
+        working-directory: ./backend/api-gateway # Especifica el directorio del microservicio
+        run: mvn clean package -DskipTests
+
+      # Paso 5: Configurar Docker y Docker Compose
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      # Paso 5: Cacheo de Docker (opcional)
+      # Paso 6: Cacheo de Docker (opcional)
       - name: Cache Docker layers
         uses: actions/cache@v3
         with:
@@ -44,7 +49,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      # Paso 6: Construir imágenes Docker
+      # Paso 7: Construir imágenes Docker
       - name: Build Docker images
         run: |
           docker-compose -f docker-compose.yml build
@@ -54,11 +59,11 @@ jobs:
         run: |
           docker-compose -f docker-compose.yml up -d
 
-      # Paso 7: Realizar pruebas de integración (si las tienes)
+      # Paso 8: Realizar pruebas de integración (si las tienes)
       - name: Run integration tests
         run: mvn verify
 
-      # Paso 8: Desplegar o detener los contenedores Docker
+      # Paso 10: Desplegar o detener los contenedores Docker
       - name: Clean up Docker containers
         run: |
           docker-compose down
