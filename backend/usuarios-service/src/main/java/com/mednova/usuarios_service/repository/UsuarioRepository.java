@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.mednova.usuarios_service.model.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-    Usuario findByCorreo_usuario(String correo_usuario);
-    List<Usuario> findAllByRol_usuario(String rol_usuario);
+    Usuario findByCorreo(String correo);
+    List<Usuario> findAllByRol(String rol_usuario);
     
 }

@@ -1,0 +1,11 @@
+server:
+  port: 8080  # El API Gateway escuchará aquí
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: usuarios-service
+          uri: http://usuarios-service:8080  # Nombre del servicio Docker + puerto
+          predicates:
+            - Path=/api/usuarios/**
