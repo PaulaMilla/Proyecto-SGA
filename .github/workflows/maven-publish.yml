@@ -64,14 +64,13 @@ jobs:
       - name: List files in backend directory
         run: ls -l ${{ github.workspace }}/backend
 
-      # Paso 9: Construir imágenes Docker
+        # Paso 9: Docker build
       - name: Build Docker images
         working-directory: ${{ github.workspace }}/backend
         run: |
-          docker-compose -f docker-compose.yml build
-
-      # Paso 10: Desplegar o detener los contenedores Docker
+          docker-compose build
+        # Paso 10: Docker clean up
       - name: Clean up Docker containers
         working-directory: ${{ github.workspace }}/backend
         run: |
-          docker-compose -f docker-compose.yml down
+          docker-compose down
