@@ -56,16 +56,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      # Paso 8: Construir imágenes Docker
+      # Paso 8: Imprimir directorio de trabajo
+      - name: Print current working directory
+        run: pwd
+
+      # Paso 9: Construir imágenes Docker
       - name: Build Docker images
-        working-directory: ${{ github.workspace }} # Establece explícitamente la raíz del workspace
+        working-directory: ${{ github.workspace }}
         run: |
           docker-compose -f ./backend/docker-compose.yml build
-
-      # Paso 9: Levantar los contenedores Docker (en segundo plano)
-      - name: Start Docker containers
-        run: |
-          docker-compose -f ./backend/docker-compose.yml up -d
 
       # Paso 10: Realizar pruebas de integración (si las tienes)
       - name: Run integration tests
