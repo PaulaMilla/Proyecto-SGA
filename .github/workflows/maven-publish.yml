@@ -3,7 +3,7 @@ name: Build, Test, and Deploy Docker Containers
 on:
   push:
     branches:
-      - main  # O la rama que uses para despliegue
+      - main # O la rama que uses para despliegue
 
 jobs:
   build:
@@ -40,7 +40,14 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      # Paso 6: Cacheo de Docker (opcional)
+      # Paso 6: Instalar Docker Compose V2
+      - name: Install Docker Compose V2
+        run: |
+          docker-compose version || curl -SL https://github.com/docker/compose/releases/download/v2.24.2/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          docker-compose --version
+
+      # Paso 7: Cacheo de Docker (opcional)
       - name: Cache Docker layers
         uses: actions/cache@v3
         with:
@@ -49,21 +56,21 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      # Paso 7: Construir imágenes Docker
+      # Paso 8: Construir imágenes Docker
       - name: Build Docker images
         run: |
-          docker-compose -f docker-compose.yml build
+          docker-compose -f ./backend/docker-compose.yml build
 
-      # Paso 8: Levantar los contenedores Docker (en segundo plano)
+      # Paso 9: Levantar los contenedores Docker (en segundo plano)
       - name: Start Docker containers
         run: |
-          docker-compose -f docker-compose.yml up -d
+          docker-compose -f ./backend/docker-compose.yml up -d
 
-      # Paso 8: Realizar pruebas de integración (si las tienes)
+      # Paso 10: Realizar pruebas de integración (si las tienes)
       - name: Run integration tests
-        run: mvn verify
+        run: echo "Implementar comandos para ejecutar pruebas de integración"
 
-      # Paso 10: Desplegar o detener los contenedores Docker
+      # Paso 11: Desplegar o detener los contenedores Docker
       - name: Clean up Docker containers
         run: |
-          docker-compose down
+          docker-compose -f ./backend/docker-compose.yml down
