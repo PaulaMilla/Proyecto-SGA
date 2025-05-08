@@ -9,23 +9,14 @@ public class Usuario{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_usuario;
-    @Column(name = "nombre_usuario")
     private String nombre_usuario;
-    @Column(name = "apellido_usuario")
     private String apellido_usuario;
-    @Column(name = "correo_usuario")
     private String correo_usuario;
-    @Column(name = "password_usuario")
     private String password;
-    @Column(name = "estado_usuario")
     private String estado_usuario;
-    @Column(name = "rol_usuario")
     private String rol_usuario;
-    @Column(name = "fecha_creacion")
     private Date fecha_creacion;
-    @Column(name = "fecha_modificacion")
     private Date fecha_modificacion;
-    @Column(name = "fecha_ultimo_acceso")
     private Date fecha_ultimo_acceso;
 
 

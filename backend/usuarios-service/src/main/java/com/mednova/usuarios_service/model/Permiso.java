@@ -7,9 +7,7 @@ public class Permiso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_permiso;
-    @Column(name = "nombre_permiso")
     private String nombre_permiso;
-    @Column(name = "descripcion_permiso")
     private String descripcion_permiso;
 
 
