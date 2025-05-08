@@ -58,6 +58,7 @@ jobs:
 
       # Paso 8: Construir imágenes Docker
       - name: Build Docker images
+        working-directory: ${{ github.workspace }} # Establece explícitamente la raíz del workspace
         run: |
           docker-compose -f ./backend/docker-compose.yml build
 
