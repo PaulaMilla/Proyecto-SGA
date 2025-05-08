@@ -15,7 +15,7 @@ import com.mednova.usuarios_service.model.Usuario;
 import com.mednova.usuarios_service.service.UsuarioService;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/api/usuarios")
 public class UsuarioController {
 
     private final UsuarioService usuarioService;

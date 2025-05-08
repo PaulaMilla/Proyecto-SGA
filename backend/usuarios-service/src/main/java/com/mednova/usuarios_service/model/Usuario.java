@@ -5,80 +5,123 @@ import java.util.Date;
 import jakarta.persistence.*;
 
 @Entity
-public class Usuario{
+@Table(name = "usuario")  
+public class Usuario {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_usuario;
-    private String nombre_usuario;
-    private String apellido_usuario;
-    private String correo_usuario;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  
+    @Column(name = "id_usuario")  
+    private Integer id;
+
+    @Column(name = "apellido_usuario") 
+    private String apellido;
+
+    @Column(name = "correo")
+    private String correo;
+
+    @Column(name = "estado_usuario")
+    private String estado;
+
+    @Column(name = "fecha_creacion")
+    @Temporal(TemporalType.TIMESTAMP)  
+    private Date fechaCreacion;
+
+    @Column(name = "fecha_modificacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaModificacion;
+
+    @Column(name = "fecha_ultimo_acceso")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaUltimoAcceso;
+
+    @Column(name = "nombre_usuario")
+    private String nombre;
+
+    @Column(name = "password")
     private String password;
-    private String estado_usuario;
-    private String rol_usuario;
-    private Date fecha_creacion;
-    private Date fecha_modificacion;
-    private Date fecha_ultimo_acceso;
 
+    @Column(name = "rol_usuario")
+    private String rol;
 
-    //Getters and Setters
-    public Integer getId_usuario() {
-        return id_usuario;
+    // Getters y setters
+
+    public Integer getId() {
+        return id;
     }
-    public void setId_usuario(Integer id_usuario) {
-        this.id_usuario = id_usuario;
+
+    public void setId(Integer id) {
+        this.id = id;
     }
-    public String getNombre_usuario() {
-        return nombre_usuario;
+
+    public String getApellido() {
+        return apellido;
     }
-    public void setNombre_usuario(String nombre_usuario) {
-        this.nombre_usuario = nombre_usuario;
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
-    public String getApellido_usuario() {
-        return apellido_usuario;
+
+    public String getCorreo() {
+        return correo;
     }
-    public void setApellido_usuario(String apellido_usuario) {
-        this.apellido_usuario = apellido_usuario;
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
-    public String getCorreo_usuario() {
-        return correo_usuario;
+
+    public String getEstado() {
+        return estado;
     }
-    public void setCorreo_usuario(String correo_usuario) {
-        this.correo_usuario = correo_usuario;
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Date getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    public void setFechaModificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
+    }
+
+    public Date getFechaUltimoAcceso() {
+        return fechaUltimoAcceso;
+    }
+
+    public void setFechaUltimoAcceso(Date fechaUltimoAcceso) {
+        this.fechaUltimoAcceso = fechaUltimoAcceso;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
-    public String getEstado_usuario() {
-        return estado_usuario;
+
+    public String getRol() {
+        return rol;
     }
-    public void setEstado_usuario(String estado_usuario) {
-        this.estado_usuario = estado_usuario;
-    }
-    public String getRol_usuario() {
-        return rol_usuario;
-    }
-    public void setRol_usuario(String rol_usuario) {
-        this.rol_usuario = rol_usuario;
-    }
-    public Date getFecha_creacion() {
-        return fecha_creacion;
-    }
-    public void setFecha_creacion(Date fecha_creacion) {
-        this.fecha_creacion = fecha_creacion;
-    }
-    public Date getFecha_modificacion() {
-        return fecha_modificacion;
-    }
-    public void setFecha_modificacion(Date fecha_modificacion) {
-        this.fecha_modificacion = fecha_modificacion;
-    }
-    public Date getFecha_ultimo_acceso() {
-        return fecha_ultimo_acceso;
-    }
-    public void setFecha_ultimo_acceso(Date fecha_ultimo_acceso) {
-        this.fecha_ultimo_acceso = fecha_ultimo_acceso;
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 }

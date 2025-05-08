@@ -32,9 +32,9 @@ public class UsuarioService {
     public Usuario actualizarUsuario(Integer id, Usuario usuario) {
         Usuario usuarioExistente = usuarioRepository.findById(id).orElse(null);
         if (usuarioExistente != null) {
-            usuarioExistente.setNombre_usuario(usuario.getNombre_usuario());
-            usuarioExistente.setCorreo_usuario(usuario.getCorreo_usuario());
-            usuarioExistente.setRol_usuario(usuario.getRol_usuario());
+            usuarioExistente.setNombre(usuario.getNombre());
+            usuarioExistente.setCorreo(usuario.getCorreo());
+            usuarioExistente.setRol(usuario.getRol());
             return usuarioRepository.save(usuarioExistente);
         }
         return null;
