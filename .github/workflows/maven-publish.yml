@@ -60,6 +60,10 @@ jobs:
       - name: Print current working directory
         run: pwd
 
+        # Paso (antes del build de Docker)
+      - name: List files in backend directory
+        run: ls -l ${{ github.workspace }}/backend
+
       # Paso 9: Construir imágenes Docker
       - name: Build Docker images
         working-directory: ${{ github.workspace }}
