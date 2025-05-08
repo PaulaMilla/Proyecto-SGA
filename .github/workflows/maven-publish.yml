@@ -70,11 +70,8 @@ jobs:
         run: |
           docker-compose -f docker-compose.yml build
 
-      # Paso 10: Realizar pruebas de integración (si las tienes)
-      - name: Run integration tests
-        run: echo "Implementar comandos para ejecutar pruebas de integración"
-
-      # Paso 11: Desplegar o detener los contenedores Docker
+      # Paso 10: Desplegar o detener los contenedores Docker
       - name: Clean up Docker containers
+        working-directory: ${{ github.workspace }}/backend
         run: |
-          docker-compose -f ./backend/docker-compose.yml down
+          docker-compose -f docker-compose.yml down
