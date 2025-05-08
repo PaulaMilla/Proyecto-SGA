@@ -66,9 +66,9 @@ jobs:
 
       # Paso 9: Construir imágenes Docker
       - name: Build Docker images
-        working-directory: ${{ github.workspace }}
+        working-directory: ${{ github.workspace }}/backend
         run: |
-          docker-compose -f backend/docker-compose.yml build
+          docker-compose -f docker-compose.yml build
 
       # Paso 10: Realizar pruebas de integración (si las tienes)
       - name: Run integration tests
