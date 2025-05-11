@@ -1,10 +1,39 @@
 package com.mednova.inventarios_service.controller;
 
-import java.util.List;
+import com.mednova.inventarios_service.model.Inventario;
+import com.mednova.inventarios_service.service.InventarioService;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/inventarios")
+public class InventarioController {
+
+    private final InventarioService inventarioService;
+
+    public InventarioController(InventarioService inventarioService) {
+        this.inventarioService = inventarioService;
+    }
+
+    @GetMapping
+    public List<Inventario> getAllInventarios() {
+        return inventarioService.getAllInventarios();
+    }
+
+    @GetMapping("/{id}")
+    public Optional<Inventario> getInventarioById(@PathVariable int id) {
+        return inventarioService.getInventarioById(id);
+    }
+
+    @PostMapping
+    public Inventario createInventario(@RequestBody Inventario inventario) {
+        return inventarioService.saveInventario(inventario);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteInventario(@PathVariable int id) {
+        inventarioService.deleteInventario(id);
+    }
+}

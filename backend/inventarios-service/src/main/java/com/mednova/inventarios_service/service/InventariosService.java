@@ -1,16 +1,33 @@
 package com.mednova.inventarios_service.service;
-import java.util.List;
 
+import com.mednova.inventarios_service.model.Inventario;
+import com.mednova.inventarios_service.repository.InventarioRepository;
 import org.springframework.stereotype.Service;
 
-import com.mednova.inventarios_service.model.Id;
-import com.mednova.inventarios_service.model.Cantidad;
-import com.mednova.inventarios_service.model.inventarios;
-import com.mednova.inventarios_service.repository.CantidadRepository;
-import com.mednova.inventarios_service.repository.IdRepository;
-
+import java.util.List;
+import java.util.Optional;
 
 @Service
-public class UsuarioService {
+public class InventarioService {
+    private final InventarioRepository inventarioRepository;
 
+    public InventarioService(InventarioRepository inventarioRepository) {
+        this.inventarioRepository = inventarioRepository;
+    }
+
+    public List<Inventario> getAllInventarios() {
+        return inventarioRepository.findAll();
+    }
+
+    public Optional<Inventario> getInventarioById(int id) {
+        return inventarioRepository.findById(id);
+    }
+
+    public Inventario saveInventario(Inventario inventario) {
+        return inventarioRepository.save(inventario);
+    }
+
+    public void deleteInventario(int id) {
+        inventarioRepository.deleteById(id);
+    }
 }
