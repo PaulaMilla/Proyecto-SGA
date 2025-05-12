@@ -1,5 +1,7 @@
 package com.mednova.inventarios_service.model;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -13,9 +15,7 @@ public class Inventario {
     private String lote;
     private String fecha_vencimiento;
 
-    @ManyToOne
-    @JoinColumn(name = "id_producto", nullable = false)
-    private Producto producto;
+    //List<Producto> productos;
 
     // Getters and Setters
     public int getId_inventario() {
@@ -56,13 +56,5 @@ public class Inventario {
 
     public void setFecha_vencimiento(String fecha_vencimiento) {
         this.fecha_vencimiento = fecha_vencimiento;
-    }
-
-    public Producto getProducto() {
-        return producto;
-    }
-
-    public void setProducto(Producto producto) {
-        this.producto = producto;
     }
 }
