@@ -2,13 +2,15 @@ package com.mednova.inventarios_service.controller;
 
 import com.mednova.inventarios_service.model.Inventario;
 import com.mednova.inventarios_service.service.InventarioService;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/inventarios")
+@RequestMapping("/api/inventarios")
 public class InventarioController {
 
     private final InventarioService inventarioService;
@@ -18,8 +20,8 @@ public class InventarioController {
     }
 
     @GetMapping
-    public List<Inventario> getAllInventarios() {
-        return inventarioService.getAllInventarios();
+    public ResponseEntity<List<Inventario>> getAllInventarios() {
+        return ResponseEntity.ok(inventarioService.getAllInventarios());
     }
 
     @GetMapping("/{id}")

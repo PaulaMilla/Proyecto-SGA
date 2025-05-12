@@ -26,6 +26,18 @@ services:
       mysql-db:
         condition: service_healthy
 
+  inventarios-service:
+    build: ./inventarios-service
+    ports:
+      - "8082:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/sga_db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rootpassword
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+
   api-gateway:
     build: ./api-gateway  # La carpeta donde está tu API Gateway
     ports:

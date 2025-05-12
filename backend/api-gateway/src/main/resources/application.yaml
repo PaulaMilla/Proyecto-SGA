@@ -9,3 +9,8 @@ spring:
           uri: http://usuarios-service:8080  # Nombre del servicio Docker + puerto
           predicates:
             - Path=/api/usuarios/**
+        
+        - id: inventarios-service
+          uri: http://inventarios-service:8080  # Nombre del servicio Docker + puerto
+          predicates:
+            - Path=/api/inventarios/**

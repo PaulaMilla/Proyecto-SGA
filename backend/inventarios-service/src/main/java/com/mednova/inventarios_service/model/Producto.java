@@ -16,9 +16,6 @@ public class Producto {
     private String tipo; // ej: jarabe, pastilla, cápsula, etc.
     private double precio_unitario;
 
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<Inventario> inventarios;
-
     // Getters y Setters
     public int getId_producto() {
         return id_producto;
@@ -68,11 +65,4 @@ public class Producto {
         this.precio_unitario = precio_unitario;
     }
 
-    public List<Inventario> getInventarios() {
-        return inventarios;
-    }
-
-    public void setInventarios(List<Inventario> inventarios) {
-        this.inventarios = inventarios;
-    }
 }
