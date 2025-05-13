@@ -19,8 +19,8 @@ public class Venta {
     @Column(name = "total")
     private double total;
 
-    @Column(name = "idUsuarioVendedor")
-    private int idUsuarioVendedor;
+    @Column(name = "usuarioId")
+    private int usuarioId;
 
     public int getId() {
         return id;
@@ -55,10 +55,10 @@ public class Venta {
     }
 
     public int getIdUsuarioVendedor() {
-        return idUsuarioVendedor;
+        return usuarioId;
     }
 
-    public void setIdUsuarioVendedor(int idUsuarioVendedor) {
-        this.idUsuarioVendedor = idUsuarioVendedor;
+    public void setIdUsuarioVendedor(int usuarioId) {
+        this.usuarioId = usuarioId;
     }
 }
