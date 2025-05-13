@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/ventas")
+@RequestMapping("/api/ventas")
 public class VentasController {
 
     private final VentaService ventaService;
@@ -22,8 +22,8 @@ public class VentasController {
 
     // POST /ventas - Registrar nueva venta
     @PostMapping
-    public ResponseEntity<Venta> registrarVenta(@RequestBody Venta venta, DetalleVenta detalleVenta) {
-        Venta nuevaVenta = ventaService.registrarVenta(venta, (List<DetalleVenta>) detalleVenta);
+    public ResponseEntity<Venta> registrarVenta(@RequestBody Venta venta, @RequestBody List<DetalleVenta> detalleVenta) {
+        Venta nuevaVenta = ventaService.registrarVenta(venta, detalleVenta);
         return ResponseEntity.ok(nuevaVenta);
     }
 
