@@ -6,16 +6,16 @@ spring:
     gateway:
       routes:
         - id: usuarios-service
-          uri: http://usuarios-service:8080  # Nombre del servicio Docker + puerto
+          uri: ${USUARIOS_SERVICE_URL}  # Nombre del servicio Docker + puerto
           predicates:
             - Path=/api/usuarios/**
         
         - id: inventarios-service
-          uri: http://inventarios-service:8080  # Nombre del servicio Docker + puerto
+          uri: ${INVENTARIOS_SERVICE_URL}  # Nombre del servicio Docker + puerto
           predicates:
             - Path=/api/inventarios/**
 
         - id: ventas-service
-          uri: http://ventas-service:8080  # Nombre del servicio Docker + puerto
+          uri: ${VENTAS_SERVICE_URL}  # Nombre del servicio Docker + puerto
           predicates:
             - Path=/api/ventas/**

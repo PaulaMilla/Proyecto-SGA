@@ -1,6 +1,5 @@
 package com.mednova.inventarios_service.model;
 
-import java.util.List;
 
 import jakarta.persistence.*;
 
