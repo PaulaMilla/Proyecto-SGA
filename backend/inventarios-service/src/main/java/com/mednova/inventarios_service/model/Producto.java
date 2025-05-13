@@ -1,7 +1,6 @@
 package com.mednova.inventarios_service.model;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
 public class Producto {
