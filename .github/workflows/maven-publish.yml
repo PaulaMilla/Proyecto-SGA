@@ -15,16 +15,18 @@ jobs:
       id-token: write
 
     steps:
+      # Paso 1: Clonar el código
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Paso 2: Configurar JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      # Construcción de servicios usando matrix
+      # Paso 3: Construir todos los microservicios con Maven
       - name: Build microservices with Maven
         run: |
           for dir in usuarios-service api-gateway inventarios-service; do
@@ -32,11 +34,19 @@ jobs:
             mvn -f ./backend/$dir/pom.xml clean package -DskipTests
           done
 
-      # Configurar Docker Buildx
+      # Paso 4: Configurar Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      # Cache para Docker layers
+      # Paso 5: Instalar Docker Compose V2 como plugin de CLI
+      - name: Install Docker Compose V2
+        run: |
+          mkdir -p ~/.docker/cli-plugins/
+          curl -SL https://github.com/docker/compose/releases/download/v2.24.2/docker-compose-linux-x86_64 -o ~/.docker/cli-plugins/docker-compose
+          chmod +x ~/.docker/cli-plugins/docker-compose
+          docker compose version
+
+      # Paso 6: Cache de capas Docker
       - name: Cache Docker layers
         uses: actions/cache@v3
         with:
@@ -45,12 +55,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      # Build imágenes Docker
+      # Paso 7: Construir imágenes Docker
       - name: Build Docker images
         working-directory: ./backend
-        run: docker-compose build
+        run: docker compose build
 
-      # (Opcional) Bajar servicios después del build
+      # Paso 8: Detener y eliminar contenedores (limpieza)
       - name: Clean up Docker containers
         working-directory: ./backend
-        run: docker-compose down
+        run: docker compose down
