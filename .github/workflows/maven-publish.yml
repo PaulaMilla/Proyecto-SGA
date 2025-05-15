@@ -3,7 +3,7 @@ name: Build, Test, and Deploy Docker Containers
 on:
   push:
     branches:
-      - main # O la rama que uses para despliegue
+      - main
 
 jobs:
   build:
@@ -15,44 +15,28 @@ jobs:
       id-token: write
 
     steps:
-      # Paso 1: Checkout del código
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Paso 2: Configurar JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      # Paso 3: Construir el microservicio de usuarios
-      - name: Build Usuarios Service with Maven
-        working-directory: ./backend/usuarios-service # Especifica el directorio del microservicio
-        run: mvn clean package -DskipTests
+      # Construcción de servicios usando matrix
+      - name: Build microservices with Maven
+        run: |
+          for dir in usuarios-service api-gateway inventarios-service; do
+            echo "🔧 Building $dir"
+            mvn -f ./backend/$dir/pom.xml clean package -DskipTests
+          done
 
-      # Paso 4: Construir el API Gateway con Maven
-      - name: Build API Gateway with Maven
-        working-directory: ./backend/api-gateway # Especifica el directorio del microservicio
-        run: mvn clean package -DskipTests
-
-        # Paso 5: Construir el Inventarios Service con Maven
-      - name: Build Inventarios Service with Maven
-        working-directory: ./backend/inventarios-service # Especifica el directorio del microservicio
-        run: mvn clean package -DskipTests
-
-      # Paso 6: Configurar Docker y Docker Compose
+      # Configurar Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      # Paso 7: Instalar Docker Compose V2
-      - name: Install Docker Compose V2
-        run: |
-          docker-compose version || curl -SL https://github.com/docker/compose/releases/download/v2.24.2/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
-          docker-compose --version
-
-      # Paso 8: Cacheo de Docker (opcional)
+      # Cache para Docker layers
       - name: Cache Docker layers
         uses: actions/cache@v3
         with:
@@ -61,21 +45,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      # Paso 9: Imprimir directorio de trabajo
-      - name: Print current working directory
-        run: pwd
-
-        # Paso (antes del build de Docker)
-      - name: List files in backend directory
-        run: ls -l ${{ github.workspace }}/backend
-
-        # Paso 10: Docker build
+      # Build imágenes Docker
       - name: Build Docker images
-        working-directory: ${{ github.workspace }}/backend
-        run: |
-          docker-compose build
-        # Paso 11: Docker clean up
+        working-directory: ./backend
+        run: docker-compose build
+
+      # (Opcional) Bajar servicios después del build
       - name: Clean up Docker containers
-        working-directory: ${{ github.workspace }}/backend
-        run: |
-          docker-compose down
+        working-directory: ./backend
+        run: docker-compose down
