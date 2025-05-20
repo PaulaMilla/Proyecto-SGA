@@ -19,7 +19,6 @@ import com.mednova.usuarios_service.service.UsuarioService;
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
 
-    
     private final UsuarioService usuarioService;
 
     public UsuarioController(UsuarioService usuarioService) {
