@@ -1,6 +1,7 @@
 server:
   port: 8080  # El API Gateway escuchará aquí
 
+
 spring:
   cloud:
     gateway:
