@@ -13,6 +13,7 @@ import java.util.Optional;
 @RequestMapping("/api/inventarios")
 public class InventarioController {
 
+    
     private final InventarioService inventarioService;
 
     public InventarioController(InventarioService inventarioService) {
