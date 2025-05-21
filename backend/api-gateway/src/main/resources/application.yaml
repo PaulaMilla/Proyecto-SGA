@@ -1,21 +1,24 @@
-server:
-  port: 8080  # El API Gateway escuchará aquí
-
 spring:
   cloud:
     gateway:
       routes:
         - id: usuarios-service
-          uri: ${USUARIOS_SERVICE_URL}  # Nombre del servicio Docker + puerto
+          uri: http://usuarios-service:80
           predicates:
             - Path=/api/usuarios/**
-        
+          filters:
+            - RewritePath=/api/usuarios/(?<segment>.*), /${segment}
+
         - id: inventarios-service
-          uri: ${INVENTARIOS_SERVICE_URL}  # Nombre del servicio Docker + puerto
+          uri: http://inventarios-service:80
           predicates:
             - Path=/api/inventarios/**
+          filters:
+            - RewritePath=/api/inventarios/(?<segment>.*), /${segment}
 
         - id: ventas-service
-          uri: ${VENTAS_SERVICE_URL}  # Nombre del servicio Docker + puerto
+          uri: http://ventas-service:80
           predicates:
             - Path=/api/ventas/**
+          filters:
+            - RewritePath=/api/ventas/(?<segment>.*), /${segment}
