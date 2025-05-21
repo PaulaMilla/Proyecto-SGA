@@ -3,21 +3,21 @@ spring:
     gateway:
       routes:
         - id: usuarios-service
-          uri: http://usuarios-service:80
+          uri: http://usuarios-service.usuarios.svc.cluster.local:80
           predicates:
             - Path=/api/usuarios/**
           filters:
             - RewritePath=/api/usuarios/(?<segment>.*), /${segment}
 
         - id: inventarios-service
-          uri: http://inventarios-service:80
+          uri: http://inventarios-service.inventarios.svc.cluster.local:80
           predicates:
             - Path=/api/inventarios/**
           filters:
             - RewritePath=/api/inventarios/(?<segment>.*), /${segment}
 
         - id: ventas-service
-          uri: http://ventas-service:80
+          uri: http://ventas-service.ventas.svc.cluster.local:80
           predicates:
             - Path=/api/ventas/**
           filters:
