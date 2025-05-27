@@ -56,3 +56,10 @@ services:
       - "8080:8080"  # El puerto expuesto para que accedas desde tu navegador
     depends_on:
       - usuarios-service  # Se asegura que usuarios-service esté listo
+
+  frontend:
+    build:
+      context: ../frontend  # Ruta relativa al Dockerfile del frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"

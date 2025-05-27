@@ -4,6 +4,13 @@ server:
 spring:
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
       routes:
         - id: usuarios-service
           uri: http://usuarios-service:8080  # Nombre del servicio Docker + puerto
