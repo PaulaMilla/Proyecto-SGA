@@ -26,7 +26,13 @@ public class VentaService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public Venta registrarVenta(Venta venta, List<DetalleVenta> detalles) {
+    public Venta registrarVenta(Venta venta){
+        Venta ventaGuardada = ventaRepository.save(venta);
+        return ventaGuardada;
+    }
+
+
+  /**  public Venta registrarVenta(Venta venta, List<DetalleVenta> detalles) {
         // 1. Guardar venta
         Venta ventaGuardada = ventaRepository.save(venta);
 
@@ -40,7 +46,7 @@ public class VentaService {
         }
 
         return ventaGuardada;
-    }
+    }**/
 
     public List<Venta> listarTodas() {
         return ventaRepository.findAll();
