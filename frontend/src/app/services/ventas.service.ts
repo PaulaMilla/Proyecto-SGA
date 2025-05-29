@@ -23,7 +23,7 @@ export interface DetalleVenta {
 })
 export class VentasService {
 
-  private apiUrl = 'http://localhost:8080/api/ventas'; // Cambia si tu API Gateway usa otro puerto
+  private apiUrl = 'http://127.0.0.1:51495/api/ventas'; // Cambia si tu API Gateway usa otro puerto
 
   constructor(private http: HttpClient) {}
 
