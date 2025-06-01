@@ -1,3 +1,7 @@
+package com.mednova.reportes_service.model;
+
+import java.time.LocalDate;
+
 public class ReporteVenta {
     private LocalDate fecha;
     private String nombreMedicamento;

@@ -1,14 +1,9 @@
 package com.mednova.reportes_service.model;
 
-import java.time.LocalDate;        // Para representar fechas
-import java.util.List;             // Para manejar listas de detalles
+import java.time.LocalDate;
+import java.util.List;
 
-/**
- * Clase DTO para representar una venta traída desde el microservicio de ventas.
- * Se usa para mapear el JSON que llega al microservicio de reportes desde el API Gateway.
- */
 public class VentaDTO {
-
     private Integer id;                        // ID de la venta
     private Integer pacienteId;                // ID del paciente asociado a la venta
     private String nombrePaciente;             // Nombre del paciente (si lo incluye el JSON)
@@ -56,3 +51,5 @@ public class VentaDTO {
         this.detalles = detalles;
     }
 }
+
+

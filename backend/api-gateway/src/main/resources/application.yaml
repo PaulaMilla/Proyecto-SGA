@@ -30,6 +30,20 @@ spring:
           filters:
             - RewritePath=/api/ventas/(?<segment>.*), /${segment}
 
+        - id: alertas-service
+          uri: http://alertas-service.alertas.svc.cluster.local:80
+          predicates:
+            - Path=/api/alertas/**
+          filters:
+            - RewritePath=/api/alertas/(?<segment>.*), /${segment}
+
+        - id: reportes-service
+          uri: http://reportes-service.reportes.svc.cluster.local:80
+          predicates:
+            - Path=/api/reportes/**
+          filters:
+            - RewritePath=/api/reportes/(?<segment>.*), /${segment}
+
 management:
   endpoints:
     web:
