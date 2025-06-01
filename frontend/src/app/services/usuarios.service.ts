@@ -8,7 +8,7 @@ export class UsuariosService {
 
   constructor(private http: HttpClient) { }
 
-  apiUrl = 'http://127.0.0.1:51495/api/usuarios';
+  apiUrl = 'http://api-gateway.local/api/usuarios';
 
   
 
