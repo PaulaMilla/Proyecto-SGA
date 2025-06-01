@@ -29,3 +29,16 @@ spring:
             - Path=/api/ventas/**
           filters:
             - RewritePath=/api/ventas/(?<segment>.*), /${segment}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
