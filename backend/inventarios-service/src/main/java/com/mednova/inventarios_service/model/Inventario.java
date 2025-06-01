@@ -9,12 +9,21 @@ public class Inventario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_inventario;
 
+    @Column (name = "id_producto")
+    private int id_producto;
+
+    @Column (name = "cantidad_disponible")
     private int cantidad_disponible;
+
+    @Column (name = "ubicacion")
     private String ubicacion;
+
+    @Column (name = "lote")
     private String lote;
+
+    @Column (name = "fecha_vencimiento")
     private String fecha_vencimiento;
 
-    //List<Producto> productos;
 
     // Getters and Setters
     public int getId_inventario() {
@@ -23,6 +32,14 @@ public class Inventario {
 
     public void setId_inventario(int id_inventario) {
         this.id_inventario = id_inventario;
+    }
+
+    public int getId_producto() {
+        return id_producto;
+    }
+
+    public void setId_producto(int id_producto) {
+        this.id_producto = id_producto;
     }
 
     public int getCantidad_disponible() {
