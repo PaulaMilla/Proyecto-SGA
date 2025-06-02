@@ -1,7 +1,21 @@
 <h2>Ventas</h2>
-<ul>
-  <li *ngFor="let venta of ventas">
-    {{ venta.id }} - {{ venta.fechaVenta }} - ${{ venta.total }}
+<ul class="ventas-lista">
+  <li *ngFor="let venta of ventas" class="venta-item">
+    <div>
+      <strong>ID Venta:</strong> {{ venta.id }}
+    </div>
+    <div>
+      <strong>Fecha:</strong> {{ venta.fechaVenta | date: 'dd/MM/yyyy HH:mm' }}
+    </div>
+    <div>
+      <strong>Total:</strong> ${{ venta.total | number:'1.0-0' }}
+    </div>
+    <div>
+      <strong>Paciente ID:</strong> {{ venta.pacienteId }}
+    </div>
+    <div>
+      <strong>Vendedor ID:</strong> {{ venta.usuarioId }}
+    </div>
   </li>
 </ul>
 
