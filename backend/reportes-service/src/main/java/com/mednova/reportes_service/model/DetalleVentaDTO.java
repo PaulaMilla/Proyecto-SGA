@@ -1,9 +1,7 @@
 package com.mednova.reportes_service.model;
 
-/**
- * Clase DTO que representa un detalle individual de una venta.
- * Usado dentro del objeto VentaDTO para reflejar los productos vendidos.
- */
+import java.time.LocalDate;
+
 public class DetalleVentaDTO {
 
     private Integer medicamentoId;

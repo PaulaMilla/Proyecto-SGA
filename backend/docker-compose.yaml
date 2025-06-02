@@ -73,7 +73,7 @@ services:
     depends_on:
       mysql-db:
         condition: service_healthy
-
+  
   api-gateway:
     build: ./api-gateway  # La carpeta donde está tu API Gateway
     ports:

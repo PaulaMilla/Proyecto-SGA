@@ -9,10 +9,6 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Repositorio para obtener datos de ventas desde el microservicio de ventas.
- * Aquí usamos RestTemplate para hacer solicitudes HTTP a través del API Gateway.
- */
 @Repository
 public class ReporteRepository {
 
