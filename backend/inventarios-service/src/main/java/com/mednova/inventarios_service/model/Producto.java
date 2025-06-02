@@ -9,10 +9,19 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_producto;
 
+    @Column (name = "nombre")
     private String nombre;
+
+    @Column (name = "descripcion")
     private String descripcion;
+
+    @Column (name = "laboratorio")
     private String laboratorio;
+
+    @Column (name = "tipo")
     private String tipo; // ej: jarabe, pastilla, cápsula, etc.
+
+    @Column (name = "precio_unitario")
     private double precio_unitario;
 
     // Getters y Setters

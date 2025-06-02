@@ -19,6 +19,4 @@ public class ReporteService {
     public List<ReporteVenta> generarReportePorFechas(LocalDate desde, LocalDate hasta) {
         return reporteRepository.obtenerReportePorFechas(desde, hasta);
     }
-
-
 }
