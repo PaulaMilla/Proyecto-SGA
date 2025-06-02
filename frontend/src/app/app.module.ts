@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { VentasComponent } from './ventas/ventas.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { UploadComponent } from './inventario/upload/upload.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { FooterComponent } from './shared/footer/footer.component';
     AppComponent,
     VentasComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,
