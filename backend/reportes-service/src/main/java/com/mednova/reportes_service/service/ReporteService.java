@@ -16,7 +16,7 @@ public class ReporteService {
         this.reporteRepository = reporteRepository;
     }
 
-    public List<ReporteVenta> generarReportePorFechas(LocalDate desde, LocalDate hasta) {
+/*    public List<ReporteVenta> generarReportePorFechas(LocalDate desde, LocalDate hasta) {
         return reporteRepository.obtenerReportePorFechas(desde, hasta);
-    }
+    }*/
 }

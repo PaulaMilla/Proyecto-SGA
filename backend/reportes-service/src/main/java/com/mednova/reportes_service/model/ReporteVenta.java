@@ -14,4 +14,6 @@ public class ReporteVenta {
         this.cantidadVendida = cantidadVendida;
         this.total = total;
     }
+
+
 }

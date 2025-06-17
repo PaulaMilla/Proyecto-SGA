@@ -22,10 +22,10 @@ public class ReporteController {
         this.reporteService = reporteService;
     }
 
-    @GetMapping("/ventas")
+/*    @GetMapping("/ventas")
     public ResponseEntity<List<ReporteVenta>> obtenerReportePorFechas(
             @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate desde,
             @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate hasta) {
         return ResponseEntity.ok(reporteService.generarReportePorFechas(desde, hasta));
-    }
+    }*/
 }
