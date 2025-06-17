@@ -1,0 +1,16 @@
+.usuarios-lista {
+  list-style: none;
+  padding: 0;
+
+  .usuario-item {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #f1f1f1;
+
+    div {
+      margin: 0.3rem 0;
+    }
+  }
+}

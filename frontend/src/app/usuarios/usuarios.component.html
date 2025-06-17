@@ -1,1 +1,30 @@
-<p>usuarios works!</p>
+<h2>Usuarios</h2>
+<ul class="ventas-lista">
+  <li *ngFor="let usuario of usuarios" class="usuario-item">
+    <div>
+      <strong>ID:</strong> {{ usuario.id }}
+    </div>
+    <div>
+      <strong>Nombre:</strong> {{ usuario.nombre }} {{ usuario.apellido }}
+    </div>
+    <div>
+      <strong>Correo:</strong> {{ usuario.correo }}
+    </div>
+    <div>
+      <strong>Rol:</strong> {{ usuario.rol }}
+    </div>
+    <div>
+      <strong>Estado:</strong> {{ usuario.estado }}
+    </div>
+    <div>
+      <strong>Fecha de creación:</strong> {{ usuario.fechaCreacion | date: 'dd/MM/yyyy HH:mm' }}
+    </div>
+    <div>
+      <strong>Última modificación:</strong> {{ usuario.fechaModificacion | date: 'dd/MM/yyyy HH:mm' }}
+    </div>
+    <div>
+      <strong>Último acceso:</strong> {{ usuario.fechaUltimoAcceso | date: 'dd/MM/yyyy HH:mm' }}
+    </div>
+  </li>
+</ul>
+
