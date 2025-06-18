@@ -41,25 +41,30 @@ public class InventarioService {
         try (Reader reader = new InputStreamReader(file.getInputStream())) {
             CSVReader csvReader = new CSVReader(reader);
             List<String[]> rows = csvReader.readAll();
-            for (int i = 1; i < rows.size(); i++) { // saltar header
-                String[] row = rows.get(i);
-                try {
-                    Inventario inv = new Inventario();
-                    // No asignar id_inventario aquí porque es autogenerado:
-                    // inv.setId_inventario(Integer.parseInt(row[0].trim()));
+            if(rows.Empty()){
+                throw new IllegalArgumentException("El archivo CSV está vacío.");
+            }else{
+                for (int i = 1; i < rows.size(); i++) { // saltar header
+                    String[] row = rows.get(i);
+                    try {
+                        Inventario inv = new Inventario();
+                        // No asignar id_inventario aquí porque es autogenerado:
+                        // inv.setId_inventario(Integer.parseInt(row[0].trim()));
 
-                    inv.setId_producto(Integer.parseInt(row[1].trim()));
-                    inv.setCantidad_disponible(Integer.parseInt(row[2].trim()));
-                    inv.setUbicacion(row[3].trim());
-                    inv.setLote(row[4].trim());
-                    inv.setFecha_vencimiento(row[5].trim());
+                        inv.setId_producto(Integer.parseInt(row[1].trim()));
+                        inv.setCantidad_disponible(Integer.parseInt(row[2].trim()));
+                        inv.setUbicacion(row[3].trim());
+                        inv.setLote(row[4].trim());
+                        inv.setFecha_vencimiento(row[5].trim());
 
-                    inventarioRepository.save(inv);
-                } catch (Exception e) {
-                    System.err.println("Error al procesar fila " + (i+1) + ": " + e.getMessage());
-                    throw e;
+                        inventarioRepository.save(inv);
+                    } catch (Exception e) {
+                        System.err.println("Error al procesar fila " + (i+1) + ": " + e.getMessage());
+                        throw e;
+                    }
                 }
             }
+            
         } catch (CsvException e) {
             throw new RuntimeException(e);
         }
