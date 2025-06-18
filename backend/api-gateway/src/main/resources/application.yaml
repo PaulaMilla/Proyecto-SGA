@@ -2,9 +2,10 @@ spring:
   cloud:
     gateway:
       httpclient:
-        wiretap: true 
+        wiretap: true
         max-initial-line-length: 8192
-      forwarded-headers-strategy: native 
+      forwarded-headers-strategy: native
+      default-filters:
         - name: RemoveRequestHeader
           args:
             name: Content-Length
@@ -20,7 +21,7 @@ spring:
           uri: http://usuarios-service.usuarios.svc.cluster.local:80
           predicates:
             - Path=/api/usuarios/**
-
+          
         - id: inventarios-service
           uri: http://inventarios-service.inventarios.svc.cluster.local:80
           predicates:
