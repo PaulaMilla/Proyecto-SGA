@@ -1,4 +1,79 @@
-<h2>Cargar Inventario</h2>
-<input type="file" (change)="onFileSelected($event)" />
-<button (click)="onUpload()">Subir</button>
+<div class="upload-container">
+  <h2>Cargar Inventario</h2>
+  
+  <!-- Mensajes de estado -->
+  <div *ngIf="message" class="message" [ngClass]="messageType">
+    {{ message }}
+  </div>
+  
+  <!-- Información de productos -->
+  <div class="productos-section">
+    <h3>Información de Productos</h3>
+    <button (click)="getProductosInfo()" [disabled]="loading">
+      {{ loading ? 'Cargando...' : 'Ver Productos Disponibles' }}
+    </button>
+    <button (click)="createTestProducts()" [disabled]="loading">
+      {{ loading ? 'Creando...' : 'Crear Productos de Prueba' }}
+    </button>
+    
+    <div *ngIf="productosInfo" class="productos-info">
+      <pre>{{ productosInfo }}</pre>
+    </div>
+  </div>
+  
+  <!-- Carga de archivos -->
+  <div class="upload-section">
+    <h3>Cargar Archivo</h3>
+    
+    <div class="file-input">
+      <input 
+        type="file" 
+        (change)="onFileSelected($event)" 
+        accept=".csv,.xlsx"
+        [disabled]="loading"
+      />
+      <small>Formatos aceptados: CSV, XLSX (máximo 10MB)</small>
+    </div>
+    
+    <div class="buttons">
+      <button 
+        (click)="onTestUpload()" 
+        [disabled]="!file || loading"
+        class="btn-test"
+      >
+        {{ loading ? 'Probando...' : 'Probar Carga' }}
+      </button>
+      
+      <button 
+        (click)="onUpload()" 
+        [disabled]="!file || loading"
+        class="btn-upload"
+      >
+        {{ loading ? 'Subiendo...' : 'Subir Archivo' }}
+      </button>
+    </div>
+    
+    <div *ngIf="file" class="file-info">
+      <strong>Archivo seleccionado:</strong> {{ file.name }} ({{ (file.size / 1024).toFixed(2) }} KB)
+    </div>
+  </div>
+  
+  <!-- Instrucciones -->
+  <div class="instructions">
+    <h3>Instrucciones</h3>
+    <ol>
+      <li>Primero verifica qué productos están disponibles o crea productos de prueba</li>
+      <li>Prepara tu archivo CSV o Excel con el formato correcto</li>
+      <li>Usa los IDs de productos que aparecen en la información de productos</li>
+      <li>Prueba la carga antes de subir definitivamente</li>
+    </ol>
+    
+    <h4>Formato del archivo:</h4>
+    <pre>
+id_producto,cantidad_disponible,ubicacion,lote,fecha_vencimiento
+1,100,Estante A,L001,2024-12-31
+2,50,Estante B,L002,2024-06-30
+    </pre>
+  </div>
+</div>
 

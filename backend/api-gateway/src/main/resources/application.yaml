@@ -4,6 +4,8 @@ spring:
       httpclient:
         wiretap: true
         max-initial-line-length: 8192
+        connect-timeout: 30000
+        response-timeout: 60s
       forwarded-headers-strategy: native
       default-filters:
         - name: RemoveRequestHeader
@@ -13,10 +15,11 @@ spring:
       globalcors:
         corsConfigurations:
           '[/**]':
-            allowedOrigins: "http://api-gateway.local"
+            allowedOrigins: "*"
             allowedMethods: "*"
             allowedHeaders: "*"
             allowCredentials: true
+            maxAge: 3600
       routes:
         - id: usuarios-service
           uri: http://usuarios-service.usuarios.svc.cluster.local:80
@@ -29,6 +32,10 @@ spring:
             - Path=/api/inventarios/**
           filters:
             - name: PreserveHostHeader
+            - name: RewritePath
+              args:
+                regexp: /api/inventarios/(?<segment>.*)
+                replacement: /api/inventarios/${segment}
 
         - id: ventas-service
           uri: http://ventas-service.ventas.svc.cluster.local:80
@@ -44,6 +51,13 @@ spring:
           uri: http://reportes-service.reportes.svc.cluster.local:80
           predicates:
             - Path=/api/reportes/**
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+      file-size-threshold: 2KB
 
 management:
   endpoints:

@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/inventarios")
+@CrossOrigin(origins = "*")
 public class InventarioController {
 
     private final InventarioService inventarioService;
@@ -105,7 +106,7 @@ public class InventarioController {
 
     // Endpoint de prueba para diagnosticar problemas
     @PostMapping("/test-upload")
-    public ResponseEntity<String> testUpload(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> testUpload(@RequestPart("file") MultipartFile file) {
         System.out.println("=== PRUEBA DE CARGA DE ARCHIVO ===");
         System.out.println("Nombre del archivo: " + file.getOriginalFilename());
         System.out.println("Tamaño: " + file.getSize() + " bytes");
@@ -120,7 +121,7 @@ public class InventarioController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadInventario(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> uploadInventario(@RequestPart("file") MultipartFile file) {
         System.out.println("=== CARGA DE INVENTARIO ===");
         System.out.println("Recibido archivo: " + file.getOriginalFilename());
         System.out.println("Tamaño del archivo: " + file.getSize() + " bytes");
