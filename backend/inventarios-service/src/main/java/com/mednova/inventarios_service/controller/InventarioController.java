@@ -38,7 +38,6 @@ public class InventarioController {
         return inventarioService.saveInventario(inventario);
     }
 
-    @CrossOrigin(origins = "*")
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadInventario(@RequestParam("file") MultipartFile file) {
         try {
