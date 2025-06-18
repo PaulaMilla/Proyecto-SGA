@@ -13,36 +13,31 @@ spring:
           uri: http://usuarios-service.usuarios.svc.cluster.local:80
           predicates:
             - Path=/api/usuarios/**
-          filters:
-            - RewritePath=/api/usuarios/(?<segment>.*), /${segment}
+          
 
         - id: inventarios-service
           uri: http://inventarios-service.inventarios.svc.cluster.local:80
           predicates:
             - Path=/api/inventarios/**
-          filters:
-            - RewritePath=/api/inventarios/(?<segment>.*), /${segment}
+          
 
         - id: ventas-service
           uri: http://ventas-service.ventas.svc.cluster.local:80
           predicates:
             - Path=/api/ventas/**
-          filters:
-            - RewritePath=/api/ventas/(?<segment>.*), /${segment}
+          
 
         - id: alertas-service
           uri: http://alertas-service.alertas.svc.cluster.local:80
           predicates:
             - Path=/api/alertas/**
-          filters:
-            - RewritePath=/api/alertas/(?<segment>.*), /${segment}
+          
 
         - id: reportes-service
           uri: http://reportes-service.reportes.svc.cluster.local:80
           predicates:
             - Path=/api/reportes/**
-          filters:
-            - RewritePath=/api/reportes/(?<segment>.*), /${segment}
+          
 
 management:
   endpoints:
