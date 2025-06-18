@@ -1,3 +1,6 @@
+package com.mednova.inventarios_service.config;
+
+import jakarta.servlet.MultipartConfigElement;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
