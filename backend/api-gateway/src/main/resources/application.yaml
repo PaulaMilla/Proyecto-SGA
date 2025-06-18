@@ -1,6 +1,8 @@
 spring:
   cloud:
     gateway:
+      httpclient:
+        max-initial-line-length: 8192
       globalcors:
         corsConfigurations:
           '[/**]':
