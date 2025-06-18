@@ -3,7 +3,6 @@ package com.mednova.inventarios_service.controller;
 import com.mednova.inventarios_service.model.Inventario;
 import com.mednova.inventarios_service.service.InventarioService;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +37,7 @@ public class InventarioController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadInventario(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> uploadInventario(@RequestPart("file") MultipartFile file) {
         System.out.println("Recibido archivo: " + file.getOriginalFilename());
         try {
             inventarioService.processFile(file);

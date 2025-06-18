@@ -28,9 +28,6 @@ spring:
           predicates:
             - Path=/api/inventarios/**
           filters:
-            - name: RemoveRequestHeader
-              args:
-                name: Content-Length
             - name: PreserveHostHeader
 
         - id: ventas-service
