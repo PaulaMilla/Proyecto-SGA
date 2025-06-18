@@ -30,12 +30,6 @@ public class InventarioController {
         return ResponseEntity.ok(inventarioService.getAllInventarios());
     }
 
-    // Endpoint para listar productos
-    @GetMapping("/productos")
-    public ResponseEntity<List<Producto>> getAllProductos() {
-        return ResponseEntity.ok(productoRepository.findAll());
-    }
-
     // Endpoint para mostrar productos con formato legible
     @GetMapping("/productos-info")
     public ResponseEntity<String> getProductosInfo() {
@@ -164,64 +158,6 @@ public class InventarioController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Error interno del servidor: " + e.getMessage());
-        }
-    }
-
-    // Endpoint alternativo para upload que acepta múltiples formatos
-    @PostMapping("/upload-flexible")
-    public ResponseEntity<String> uploadInventarioFlexible(
-            @RequestParam(value = "file", required = false) MultipartFile file,
-            @RequestParam(value = "data", required = false) String jsonData) {
-        
-        System.out.println("=== CARGA FLEXIBLE DE INVENTARIO ===");
-        
-        try {
-            if (file != null && !file.isEmpty()) {
-                System.out.println("Procesando archivo: " + file.getOriginalFilename());
-                return uploadInventario(file);
-            } else if (jsonData != null && !jsonData.trim().isEmpty()) {
-                System.out.println("Procesando datos JSON");
-                return processJsonData(jsonData);
-            } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Error: Debe proporcionar un archivo o datos JSON");
-            }
-        } catch (Exception e) {
-            System.err.println("Error en upload flexible: " + e.getMessage());
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Error interno: " + e.getMessage());
-        }
-    }
-
-    // Endpoint para procesar datos JSON directamente
-    private ResponseEntity<String> processJsonData(String jsonData) {
-        try {
-            // Aquí podrías implementar el procesamiento de JSON
-            // Por ahora, solo retornamos un mensaje
-            return ResponseEntity.ok("Datos JSON recibidos: " + jsonData.length() + " caracteres");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body("Error al procesar JSON: " + e.getMessage());
-        }
-    }
-
-    // Endpoint para crear inventario manualmente (para pruebas)
-    @PostMapping("/create-manual")
-    public ResponseEntity<String> createInventarioManual(@RequestBody Inventario inventario) {
-        try {
-            // Verificar que el producto existe
-            Optional<Producto> productoOpt = productoRepository.findById(inventario.getId_producto());
-            if (productoOpt.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Error: El producto con ID " + inventario.getId_producto() + " no existe");
-            }
-            
-            Inventario saved = inventarioService.saveInventario(inventario);
-            return ResponseEntity.ok("Inventario creado exitosamente con ID: " + saved.getId_inventario());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Error al crear inventario: " + e.getMessage());
         }
     }
 

@@ -57,6 +57,7 @@ public class InventarioService {
         List<String> errors = new ArrayList<>();
         int processedRows = 0;
         int totalRows = 0;
+        int skippedRows = 0;
 
         try (Reader reader = new InputStreamReader(file.getInputStream())) {
             CSVReader csvReader = new CSVReader(reader);
@@ -72,13 +73,30 @@ public class InventarioService {
             String[] header = rows.get(0);
             validateCSVHeader(header);
 
+            // Obtener lista de productos disponibles para mostrar en errores
+            List<Producto> productosDisponibles = productoRepository.findAll();
+            StringBuilder productosInfo = new StringBuilder();
+            for (Producto p : productosDisponibles) {
+                productosInfo.append(p.getId_producto()).append(" (").append(p.getNombre()).append("), ");
+            }
+
             for (int i = 1; i < rows.size(); i++) {
                 String[] row = rows.get(i);
                 try {
                     processCSVRow(row, i + 1);
                     processedRows++;
+                } catch (IllegalArgumentException e) {
+                    // Si es error de producto no encontrado, agregar información útil
+                    if (e.getMessage().contains("no existe en la base de datos")) {
+                        errors.add("Fila " + (i + 1) + ": " + e.getMessage() + 
+                            ". Productos disponibles: " + productosInfo.toString());
+                    } else {
+                        errors.add("Fila " + (i + 1) + ": " + e.getMessage());
+                    }
+                    skippedRows++;
                 } catch (Exception e) {
-                    errors.add("Fila " + (i + 1) + ": " + e.getMessage());
+                    errors.add("Fila " + (i + 1) + ": Error inesperado - " + e.getMessage());
+                    skippedRows++;
                 }
             }
         } catch (CsvException e) {
@@ -86,9 +104,21 @@ public class InventarioService {
         }
 
         // Reportar resultados
+        StringBuilder result = new StringBuilder();
+        result.append("Procesamiento completado. ");
+        result.append("Filas procesadas: ").append(processedRows).append("/").append(totalRows).append(". ");
+        
+        if (skippedRows > 0) {
+            result.append("Filas omitidas: ").append(skippedRows).append(". ");
+        }
+        
         if (!errors.isEmpty()) {
-            throw new RuntimeException("Procesamiento completado con errores. Filas procesadas: " + 
-                processedRows + "/" + totalRows + ". Errores: " + String.join("; ", errors));
+            result.append("Errores: ").append(String.join("; ", errors));
+            throw new RuntimeException(result.toString());
+        }
+        
+        if (processedRows == 0) {
+            throw new RuntimeException("No se procesó ninguna fila. Verifique que los IDs de productos existan en la base de datos.");
         }
     }
 
