@@ -26,6 +26,8 @@ spring:
           uri: http://inventarios-service.inventarios.svc.cluster.local:80
           predicates:
             - Path=/api/inventarios/**
+          filters:
+            - PreserveHostHeader
 
         - id: ventas-service
           uri: http://ventas-service.ventas.svc.cluster.local:80
