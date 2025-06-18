@@ -9,6 +9,7 @@ spring:
         - name: RemoveRequestHeader
           args:
             name: Content-Length
+        - name: PreserveHostHeader
       globalcors:
         corsConfigurations:
           '[/**]':
@@ -21,13 +22,16 @@ spring:
           uri: http://usuarios-service.usuarios.svc.cluster.local:80
           predicates:
             - Path=/api/usuarios/**
-          
+
         - id: inventarios-service
           uri: http://inventarios-service.inventarios.svc.cluster.local:80
           predicates:
             - Path=/api/inventarios/**
           filters:
-            - PreserveHostHeader
+            - name: RemoveRequestHeader
+              args:
+                name: Content-Length
+            - name: PreserveHostHeader
 
         - id: ventas-service
           uri: http://ventas-service.ventas.svc.cluster.local:80
