@@ -15,20 +15,9 @@ spring:
       globalcors:
         corsConfigurations:
           '[/**]':
-            allowedOriginPatterns: 
-              - "http://localhost:*"
-              - "http://127.0.0.1:*"
-              - "http://api-gateway.local:*"
-              - "http://*.local:*"
-            allowedMethods: 
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - OPTIONS
-              - PATCH
-            allowedHeaders: 
-              - "*"
+            allowedOriginPatterns: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
             allowCredentials: false
             maxAge: 3600
       routes:
