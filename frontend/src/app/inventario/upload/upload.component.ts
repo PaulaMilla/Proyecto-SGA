@@ -6,17 +6,17 @@ import { InventarioService } from '../services/inventario.service';
   templateUrl: './upload.component.html'
 })
 export class UploadComponent {
-  selectedFile: File | null = null;
+  file: File | null = null;
 
   constructor(private inventarioService: InventarioService) {}
 
   onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
+    this.file = event.target.files[0];
   }
 
   onUpload(): void {
-    if (this.selectedFile) {
-      this.inventarioService.subirArchivoInventario(this.selectedFile)
+    if (this.file) {
+      this.inventarioService.subirArchivoInventario(this.file)
         .subscribe({
           next: res => alert('Archivo cargado con éxito'),
           error: err => alert('Error al subir archivo')
