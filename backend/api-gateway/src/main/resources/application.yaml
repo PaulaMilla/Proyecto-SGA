@@ -2,7 +2,12 @@ spring:
   cloud:
     gateway:
       httpclient:
+        wiretap: true 
         max-initial-line-length: 8192
+      forwarded-headers-strategy: native 
+        - name: RemoveRequestHeader
+          args:
+            name: Content-Length
       globalcors:
         corsConfigurations:
           '[/**]':
@@ -15,31 +20,26 @@ spring:
           uri: http://usuarios-service.usuarios.svc.cluster.local:80
           predicates:
             - Path=/api/usuarios/**
-          
 
         - id: inventarios-service
           uri: http://inventarios-service.inventarios.svc.cluster.local:80
           predicates:
             - Path=/api/inventarios/**
-          
 
         - id: ventas-service
           uri: http://ventas-service.ventas.svc.cluster.local:80
           predicates:
             - Path=/api/ventas/**
-          
 
         - id: alertas-service
           uri: http://alertas-service.alertas.svc.cluster.local:80
           predicates:
             - Path=/api/alertas/**
-          
 
         - id: reportes-service
           uri: http://reportes-service.reportes.svc.cluster.local:80
           predicates:
             - Path=/api/reportes/**
-          
 
 management:
   endpoints:
