@@ -41,18 +41,24 @@ public class InventarioService {
         try (Reader reader = new InputStreamReader(file.getInputStream())) {
             CSVReader csvReader = new CSVReader(reader);
             List<String[]> rows = csvReader.readAll();
-            for (String[] row : rows.subList(1, rows.size())) { // skip header
-                // Validación y mapeo
-                Inventario inv = new Inventario();
-                inv.setId_inventario(Integer.parseInt(row[0]));
-                inv.setId_producto(Integer.parseInt(row[1]));
-                inv.setCantidad_disponible(Integer.parseInt(row[2]));
-                inv.setUbicacion(String.valueOf(row[3]));
-                inv.setLote(String.valueOf(row[4]));
-                inv.setFecha_vencimiento(String.valueOf(row[5]));
+            for (int i = 1; i < rows.size(); i++) { // saltar header
+                String[] row = rows.get(i);
+                try {
+                    Inventario inv = new Inventario();
+                    // No asignar id_inventario aquí porque es autogenerado:
+                    // inv.setId_inventario(Integer.parseInt(row[0].trim()));
 
-                // Validaciones aquí...
-                inventarioRepository.save(inv);
+                    inv.setId_producto(Integer.parseInt(row[1].trim()));
+                    inv.setCantidad_disponible(Integer.parseInt(row[2].trim()));
+                    inv.setUbicacion(row[3].trim());
+                    inv.setLote(row[4].trim());
+                    inv.setFecha_vencimiento(row[5].trim());
+
+                    inventarioRepository.save(inv);
+                } catch (Exception e) {
+                    System.err.println("Error al procesar fila " + (i+1) + ": " + e.getMessage());
+                    throw e;
+                }
             }
         } catch (CsvException e) {
             throw new RuntimeException(e);
@@ -63,20 +69,22 @@ public class InventarioService {
         Workbook workbook = new XSSFWorkbook(file.getInputStream());
         Sheet sheet = workbook.getSheetAt(0);
         for (Row row : sheet) {
-            if (row.getRowNum() == 0) continue; // skip header
+            if (row.getRowNum() == 0) continue; // saltar header
+
             Inventario inv = new Inventario();
-            inv.setId_inventario((int) row.getCell(0).getNumericCellValue());
+            // No asignar id_inventario aquí:
+            // inv.setId_inventario((int) row.getCell(0).getNumericCellValue());
+
             inv.setId_producto((int) row.getCell(1).getNumericCellValue());
             inv.setCantidad_disponible((int) row.getCell(2).getNumericCellValue());
             inv.setUbicacion(row.getCell(3).getStringCellValue());
             inv.setLote(row.getCell(4).getStringCellValue());
             inv.setFecha_vencimiento(row.getCell(5).getStringCellValue());
-            // Validaciones aquí...
+
             inventarioRepository.save(inv);
         }
         workbook.close();
     }
-
     public List<Inventario> getAllInventarios() {
         return inventarioRepository.findAll();
     }
