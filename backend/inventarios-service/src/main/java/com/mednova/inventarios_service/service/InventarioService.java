@@ -41,7 +41,7 @@ public class InventarioService {
         try (Reader reader = new InputStreamReader(file.getInputStream())) {
             CSVReader csvReader = new CSVReader(reader);
             List<String[]> rows = csvReader.readAll();
-            if(rows.Empty()){
+            if(rows.isEmpty()){
                 throw new IllegalArgumentException("El archivo CSV está vacío.");
             }else{
                 for (int i = 1; i < rows.size(); i++) { // saltar header
