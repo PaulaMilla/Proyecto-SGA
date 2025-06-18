@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class InventarioService {
 
-  private apiUrl = 'http://api-gateway.local/api/inventario'; // Cambiar si usas gateway
+  private apiUrl = 'http://api-gateway.local/api/inventarios'; // Cambiar si usas gateway
 
   constructor(private http: HttpClient) {}
 
