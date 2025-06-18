@@ -93,14 +93,15 @@ public class InventarioService {
     }
 
     private void validateCSVHeader(String[] header) {
-        if (header.length < 6) {
-            throw new IllegalArgumentException("El archivo debe tener al menos 6 columnas.");
+        if (header.length < 5) {
+            throw new IllegalArgumentException("El archivo debe tener al menos 5 columnas. Columnas encontradas: " + header.length);
         }
         
         String[] expectedColumns = {"id_producto", "cantidad_disponible", "ubicacion", "lote", "fecha_vencimiento"};
         for (int i = 0; i < expectedColumns.length; i++) {
-            if (!header[i + 1].trim().equalsIgnoreCase(expectedColumns[i])) {
-                throw new IllegalArgumentException("Columna " + (i + 1) + " debe ser '" + expectedColumns[i] + "'");
+            if (i >= header.length || !header[i].trim().equalsIgnoreCase(expectedColumns[i])) {
+                throw new IllegalArgumentException("Columna " + (i + 1) + " debe ser '" + expectedColumns[i] + "'. Encontrada: " + 
+                    (i < header.length ? header[i] : "faltante"));
             }
         }
     }

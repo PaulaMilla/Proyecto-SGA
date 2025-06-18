@@ -31,14 +31,10 @@ public class InventarioController {
         return ResponseEntity.ok(inventarioService.getAllInventarios());
     }
 
-    @GetMapping("/{id}")
-    public Optional<Inventario> getInventarioById(@PathVariable int id) {
-        return inventarioService.getInventarioById(id);
-    }
-
-    @PostMapping
-    public Inventario createInventario(@RequestBody Inventario inventario) {
-        return inventarioService.saveInventario(inventario);
+    // Endpoint para listar productos
+    @GetMapping("/productos")
+    public ResponseEntity<List<Producto>> getAllProductos() {
+        return ResponseEntity.ok(productoRepository.findAll());
     }
 
     // Endpoint para crear productos de prueba
@@ -79,12 +75,6 @@ public class InventarioController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Error al crear productos de prueba: " + e.getMessage());
         }
-    }
-
-    // Endpoint para listar productos
-    @GetMapping("/productos")
-    public ResponseEntity<List<Producto>> getAllProductos() {
-        return ResponseEntity.ok(productoRepository.findAll());
     }
 
     // Endpoint de prueba para diagnosticar problemas
@@ -143,6 +133,16 @@ public class InventarioController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Error interno del servidor: " + e.getMessage());
         }
+    }
+
+    @PostMapping
+    public Inventario createInventario(@RequestBody Inventario inventario) {
+        return inventarioService.saveInventario(inventario);
+    }
+
+    @GetMapping("/{id}")
+    public Optional<Inventario> getInventarioById(@PathVariable int id) {
+        return inventarioService.getInventarioById(id);
     }
 
     @DeleteMapping("/{id}")
