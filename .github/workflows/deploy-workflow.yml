@@ -1,0 +1,56 @@
+name: Build & Package for Deployment
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-package:
+    runs-on: ubuntu-latest
+
+    env:
+      DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASS: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ env.DOCKER_USER }}
+          password: ${{ env.DOCKER_PASS }}
+
+      - name: Build & Push Docker Images
+        run: |
+          docker build -t $DOCKER_USER/frontend ./frontend
+          docker push $DOCKER_USER/frontend
+
+          docker build -t $DOCKER_USER/api-gateway ./backend/api-gateway
+          docker push $DOCKER_USER/api-gateway
+
+          docker build -t $DOCKER_USER/inventarios-service ./backend/inventarios-service
+          docker push $DOCKER_USER/inventarios-service
+
+          docker build -t $DOCKER_USER/usuarios-service ./backend/usuarios-service
+          docker push $DOCKER_USER/usuarios-service
+
+          docker build -t $DOCKER_USER/ventas-service ./backend/ventas-service
+          docker push $DOCKER_USER/ventas-service
+
+      - name: Prepare deploy package
+        run: |
+          mkdir -p deploy-package
+          cp scripts/start.sh deploy-package/
+          echo "Ejecuta ./start.sh en el servidor luego de subir este paquete por SFTP" > deploy-package/README.txt
+
+      - name: Zip deploy package
+        run: |
+          zip -r deploy.zip deploy-package
+
+      - name: Upload deploy.zip as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: deploy-package
+          path: deploy.zip
