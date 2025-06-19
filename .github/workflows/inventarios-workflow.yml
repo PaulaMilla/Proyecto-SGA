@@ -29,9 +29,9 @@ jobs:
           distribution: 'temurin'
       
       # Paso 2.5: Obtener hash del último commit en la carpeta del microservicio
-      - name: Get last commit hash for ventas-service
+      - name: Get last commit hash for inventarios-service
         id: get_hash
-        run: echo "IMAGE_TAG=$(git log -n 1 --pretty=format:%h -- backend/ventas-service)" >> $GITHUB_ENV
+        run: echo "IMAGE_TAG=$(git log -n 1 --pretty=format:%h -- backend/inventarios-service)" >> $GITHUB_ENV
 
       # Paso 3: Construir el microservicio con Maven
       - name: Build inventarios-service with Maven
