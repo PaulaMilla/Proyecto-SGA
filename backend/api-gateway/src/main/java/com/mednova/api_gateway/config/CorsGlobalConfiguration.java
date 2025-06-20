@@ -13,26 +13,25 @@ import reactor.core.publisher.Mono;
 
 @Configuration
 public class CorsGlobalConfiguration {
-    
+
     @Bean
     public WebFilter corsFilter() {
         return (ServerWebExchange exchange, WebFilterChain chain) -> {
             ServerHttpResponse response = exchange.getResponse();
             HttpHeaders headers = response.getHeaders();
-            
-            // Agregar headers de CORS para todas las solicitudes
-            headers.add("Access-Control-Allow-Origin", "*");
-            headers.add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH");
-            headers.add("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Authorization, X-Requested-With");
-            headers.add("Access-Control-Max-Age", "3600");
-            
-            // Manejar solicitudes OPTIONS (preflight)
+
+            // Reemplazar en lugar de agregar
+            headers.set("Access-Control-Allow-Origin", "http://34.61.182.228"); // ⚠️ NO uses "*"
+            headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH");
+            headers.set("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Authorization, X-Requested-With");
+            headers.set("Access-Control-Max-Age", "3600");
+
             if (exchange.getRequest().getMethod() == HttpMethod.OPTIONS) {
                 response.setStatusCode(HttpStatus.OK);
                 return Mono.empty();
             }
-            
+
             return chain.filter(exchange);
         };
     }
-} 
+}
