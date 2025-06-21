@@ -1,6 +1,5 @@
 package com.mednova.auth_service.controller;
 
-
 import com.mednova.auth_service.dto.JwtResponse;
 import com.mednova.auth_service.dto.LoginRequest;
 import com.mednova.auth_service.service.AuthService;
