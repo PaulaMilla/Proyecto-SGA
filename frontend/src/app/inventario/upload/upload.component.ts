@@ -3,7 +3,8 @@ import { InventarioService } from '../services/inventario.service';
 
 @Component({
   selector: 'app-upload',
-  templateUrl: './upload.component.html'
+  templateUrl: './upload.component.html',
+  styleUrl: './upload.component.scss'
 })
 export class UploadComponent {
   file: File | null = null;
