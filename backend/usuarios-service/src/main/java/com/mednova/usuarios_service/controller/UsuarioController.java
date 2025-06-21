@@ -84,4 +84,10 @@ public class UsuarioController {
         }
         return ResponseEntity.ok("Contraseñas actualizadas");
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarUsuario(@PathVariable Integer id) {
+        usuarioService.eliminarUsuario(id);
+        return ResponseEntity.ok("Usuario eliminado");
+    }
 }
