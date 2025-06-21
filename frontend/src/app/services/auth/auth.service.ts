@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   getUserRole(): string | null {
-    console.log(this.roleKey);
+    console.log(localStorage.getItem(this.roleKey));
     return localStorage.getItem(this.roleKey);
   }
   
