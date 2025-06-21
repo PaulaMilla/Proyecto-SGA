@@ -24,6 +24,9 @@ public class Inventario {
     @Column (name = "fecha_vencimiento")
     private String fecha_vencimiento;
 
+    @Column (name = "nombre_farmacia")
+    private String nombre_farmacia;
+
 
     // Getters and Setters
     public int getId_inventario() {
@@ -72,5 +75,13 @@ public class Inventario {
 
     public void setFecha_vencimiento(String fecha_vencimiento) {
         this.fecha_vencimiento = fecha_vencimiento;
+    }
+
+    public String getNombre_farmacia() {
+        return nombre_farmacia;
+    }
+
+    public void setNombre_farmacia(String nombre_farmacia) {
+        this.nombre_farmacia = nombre_farmacia;
     }
 }

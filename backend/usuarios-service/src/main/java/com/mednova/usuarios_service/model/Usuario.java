@@ -43,6 +43,9 @@ public class Usuario {
     @Column(name = "rol_usuario")
     private String rol;
 
+    @Column (name = "nombre_farmacia")
+    private String nombre_farmacia;
+
     // Getters y setters
 
     public Integer getId() {
@@ -123,5 +126,13 @@ public class Usuario {
 
     public void setRol(String rol) {
         this.rol = rol;
+    }
+
+    public String getNombre_farmacia() {
+        return nombre_farmacia;
+    }
+
+    public void setNombre_farmacia(String nombre_farmacia) {
+        this.nombre_farmacia = nombre_farmacia;
     }
 }
