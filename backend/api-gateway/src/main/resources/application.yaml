@@ -1,25 +1,6 @@
 spring:
   cloud:
     gateway:
-      httpclient:
-        wiretap: true
-        max-initial-line-length: 8192
-        connect-timeout: 30000
-        response-timeout: 60s
-      forwarded-headers-strategy: native
-      default-filters:
-        - name: RemoveRequestHeader
-          args:
-            name: Content-Length
-        - name: PreserveHostHeader
-      globalcors:
-        corsConfigurations:
-          '[/**]':
-            allowedOriginPatterns: "http://34.61.182.228"
-            allowedMethods: "*"
-            allowedHeaders: "*"
-            allowCredentials: false
-            maxAge: 3600
       routes:
         - id: usuarios-service
           uri: http://usuarios-service.usuarios.svc.cluster.local:80

@@ -10,12 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/inventarios")
-@CrossOrigin(origins = "*")
 public class InventarioController {
 
     private final InventarioService inventarioService;
@@ -106,22 +107,22 @@ public class InventarioController {
 
     // Endpoint de prueba para diagnosticar problemas
     @PostMapping("/test-upload")
-    public ResponseEntity<String> testUpload(@RequestPart("file") MultipartFile file) {
-        System.out.println("=== PRUEBA DE CARGA DE ARCHIVO ===");
-        System.out.println("Nombre del archivo: " + file.getOriginalFilename());
-        System.out.println("Tamaño: " + file.getSize() + " bytes");
-        System.out.println("Tipo de contenido: " + file.getContentType());
-        System.out.println("¿Está vacío?: " + file.isEmpty());
-        
+    public ResponseEntity<Map<String, String>> testUpload(@RequestPart("file") MultipartFile file) {
+        Map<String, String> response = new HashMap<>();
+
         if (file.isEmpty()) {
-            return ResponseEntity.badRequest().body("El archivo está vacío");
+            response.put("message", "El archivo está vacío");
+            return ResponseEntity.badRequest().body(response);
         }
-        
-        return ResponseEntity.ok("Archivo recibido correctamente: " + file.getOriginalFilename());
+
+        response.put("message", "Archivo recibido correctamente: " + file.getOriginalFilename());
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadInventario(@RequestPart("file") MultipartFile file) {
+    public ResponseEntity<Map<String, String>> uploadInventario(@RequestPart("file") MultipartFile file) {
+        Map<String, String> response = new HashMap<>();
+
         System.out.println("=== CARGA DE INVENTARIO ===");
         System.out.println("Recibido archivo: " + file.getOriginalFilename());
         System.out.println("Tamaño del archivo: " + file.getSize() + " bytes");
@@ -130,35 +131,30 @@ public class InventarioController {
         try {
             // Validaciones básicas del archivo
             if (file.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Error: El archivo está vacío");
+                return ResponseEntity.badRequest().body(response);
             }
             
             String fileName = file.getOriginalFilename();
             if (fileName == null || fileName.trim().isEmpty()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Error: Nombre de archivo no válido");
+                return ResponseEntity.badRequest().body(response);
             }
             
             if (!fileName.toLowerCase().endsWith(".csv") && !fileName.toLowerCase().endsWith(".xlsx")) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Error: Solo se aceptan archivos CSV y XLSX. Archivo recibido: " + fileName);
+                return ResponseEntity.badRequest().body(response);
             }
             
             System.out.println("Iniciando procesamiento del archivo...");
             inventarioService.processFile(file);
             System.out.println("Archivo procesado exitosamente");
-            return ResponseEntity.ok("Archivo procesado exitosamente.");
+            return ResponseEntity.ok(response);
             
         } catch (IllegalArgumentException e) {
             System.err.println("Error de validación: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body("Error de validación: " + e.getMessage());
+            return ResponseEntity.badRequest().body(response);
         } catch (Exception e) {
             System.err.println("Error al procesar archivo: " + e.getMessage());
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Error interno del servidor: " + e.getMessage());
+            return ResponseEntity.badRequest().body(response);
         }
     }
 
