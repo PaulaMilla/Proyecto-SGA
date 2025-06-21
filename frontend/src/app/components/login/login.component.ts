@@ -4,12 +4,6 @@ import { Router } from '@angular/router';
 import { FormBuilder,FormGroup, Validators } from '@angular/forms';
 import { jwtDecode } from 'jwt-decode';
 
-interface JwtPayload {
-  sub: string;
-  role: string;
-  exp: number;
-}
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -28,29 +22,21 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
-  if (this.loginForm.valid) {
-    const { email, password } = this.loginForm.value;
-    this.authService.login(email, password).subscribe({
-      next: (res) => {
-        const token = res.token;
-        localStorage.setItem('token', token);
-
-        try {
-          const decoded = jwtDecode<JwtPayload>(token);
-          localStorage.setItem('email', decoded.sub);
-          localStorage.setItem('role', decoded.role);
-        } catch (error) {
-          console.error('Error al decodificar el token:', error);
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.value;
+      this.authService.login(email, password).subscribe({
+        next: (res) => {
+          localStorage.setItem('token', res.token);
+          localStorage.setItem('email', res.email);
+          localStorage.setItem('rol', res.rol); 
+          this.router.navigate(['/']); 
+        },
+        error: (err) => {
+          alert('Credenciales inválidas');
+          console.log(err);
         }
-
-        this.router.navigate(['/']);
-      },
-      error: (err) => {
-        alert('Credenciales inválidas');
-        console.log(err);
-      }
-    });
+      });
+    }
   }
-}
 
 }
