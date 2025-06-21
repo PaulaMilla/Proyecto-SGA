@@ -7,10 +7,10 @@
     <a routerLink="/dashboard">Dashboard</a>
     <a routerLink="/beneficiarios">Beneficiarios</a>
 
-    <a *ngIf="role === 'admin' || role === 'farmaceutico'" routerLink="/ventas">Ventas</a>
-    <a *ngIf="role === 'admin' || role === 'farmaceutico'" routerLink="/inventario">Inventario</a>
-    <a *ngIf="role === 'admin'" routerLink="/usuarios">Usuarios</a>
-    <a *ngIf="role === 'admin'" routerLink="/upload">Cargar archivos</a>
+    <a *ngIf="role === 'ADMIN' || role === 'FARMACEUTICO'" routerLink="/ventas">Ventas</a>
+    <a *ngIf="role === 'ADMIN' || role === 'FARMACEUTICO'" routerLink="/inventario">Inventario</a>
+    <a *ngIf="role === 'ADMIN'" routerLink="/usuarios">Usuarios</a>
+    <a *ngIf="role === 'ADMIN'" routerLink="/upload">Cargar archivos</a>
   </nav>
 
   <div class="profile">
