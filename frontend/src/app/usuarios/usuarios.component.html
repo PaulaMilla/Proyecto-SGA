@@ -1,49 +1,3 @@
-<div class="formulario-usuario">
-  <h2 class="titulo">Registrar Usuario</h2>
-  <form (ngSubmit)="guardarUsuario()" #form="ngForm" class="formulario">
-    <label for="nombre">Nombre</label>
-    <input
-      id="nombre"
-      type="text"
-      [(ngModel)]="usuario.nombre"
-      name="nombre"
-      placeholder="Ej: Paula"
-      required
-    />
-
-    <label for="apellido">Apellido</label>
-    <input
-      id="apellido"
-      type="text"
-      [(ngModel)]="usuario.apellido"
-      name="apellido"
-      placeholder="Ej: Veloso"
-      required
-    />
-
-    <label for="correo">Correo</label>
-    <input
-      id="correo"
-      type="email"
-      [(ngModel)]="usuario.correo"
-      name="correo"
-      placeholder="Ej: ana@example.com"
-      required
-    />
-
-    <label for="rol">Rol</label>
-    <input
-      id="rol"
-      type="text"
-      [(ngModel)]="usuario.rol"
-      name="rol"
-      placeholder="Ej: Administrador"
-    />
-
-    <button type="submit">Guardar Usuario</button>
-  </form>
-</div>
-
 <h2 class="titulo-lista">Usuarios Registrados</h2>
 <div class="usuarios-lista">
   <div class="usuario-card" *ngFor="let u of usuarios">
@@ -58,4 +12,41 @@
       <button (click)="eliminarUsuario(u.id)">Eliminar</button>
     </div>
   </div>
+</div>
+
+<div style="text-align: center; margin-bottom: 2rem;">
+  <button (click)="mostrarFormularioNuevo()">➕ Agregar Usuario</button>
+</div>
+
+<!-- Formulario de usuario -->
+<div class="formulario-usuario" *ngIf="mostrarFormulario">
+  <h2 class="titulo">{{ editando ? 'Editar Usuario' : 'Registrar Usuario' }}</h2>
+  <form (ngSubmit)="guardarUsuario()" #form="ngForm" class="formulario">
+    <label for="nombre">Nombre</label>
+    <input id="nombre" type="text" [(ngModel)]="usuario.nombre" name="nombre" placeholder="Ej: Paula" required />
+
+    <label for="apellido">Apellido</label>
+    <input id="apellido" type="text" [(ngModel)]="usuario.apellido" name="apellido" placeholder="Ej: Veloso" required />
+
+    <label for="correo">Correo</label>
+    <input id="correo" type="email" [(ngModel)]="usuario.correo" name="correo" placeholder="Ej: ana@example.com" required />
+
+    <label for="rol">Rol</label>
+    <select id="rol" [(ngModel)]="usuario.rol" name="rol" required>
+      <option value="" disabled selected>Seleccione un rol</option>
+      <option value="Administrador">Administrador</option>
+      <option value="Vendedor">Vendedor</option>
+      <option value="Bodeguero">Bodeguero</option>
+    </select>
+
+    <div style="text-align: center; margin-top: 1rem;">
+      <button type="submit" style="display: block; margin: 0 auto 0.5rem auto;">
+        {{ editando ? 'Actualizar' : 'Guardar' }} Usuario
+      </button>
+      <button type="button" (click)="cancelar()" style="display: block; margin: 0 auto;">
+        Cancelar
+      </button>
+    </div>
+
+  </form>
 </div>
