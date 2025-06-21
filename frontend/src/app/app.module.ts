@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +14,7 @@ import { UploadComponent } from './inventario/upload/upload.component';
 import { HomeComponent } from './components/home/home.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { CargaDatosComponent } from './components/carga-datos/carga-datos.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -24,13 +25,15 @@ import { CargaDatosComponent } from './components/carga-datos/carga-datos.compon
     UploadComponent,
     HomeComponent,
     UsuariosComponent,
-    CargaDatosComponent
+    CargaDatosComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
