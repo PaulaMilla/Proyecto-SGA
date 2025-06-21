@@ -20,6 +20,7 @@ spring:
             allowedHeaders: "*"
             allowCredentials: false
             maxAge: 3600
+            
       routes:
         - id: usuarios-service
           uri: http://usuarios-service.usuarios.svc.cluster.local:80
