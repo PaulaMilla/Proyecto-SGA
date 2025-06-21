@@ -4,12 +4,15 @@ import { VentasComponent } from './ventas/ventas.component';
 import { UploadComponent } from './inventario/upload/upload.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { HomeComponent } from './components/home/home.component';
+import { authGuard } from './guards/auth.guard';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
-  {path: 'ventas', component: VentasComponent},
-  { path: 'usuarios', component: UsuariosComponent},
-  {path: 'upload', component: UploadComponent},
-  {path: '', component: HomeComponent}
+  { path: 'ventas', component: VentasComponent, canActivate: [authGuard] },
+  { path: 'usuarios', component: UsuariosComponent, canActivate: [authGuard] },
+  { path: 'upload', component: UploadComponent, canActivate: [authGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
 
 @NgModule({

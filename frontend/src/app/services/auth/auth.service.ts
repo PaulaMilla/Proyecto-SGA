@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
 
+interface JwtPayload{
+  sub: string;
+  role: string;
+  exp: number;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +37,20 @@ export class AuthService {
   getToken(): string | null{
     return localStorage.getItem(this.tokenKey);
   }
+  
+  getUserRole(): string | null{
+    const token = this.getToken();
+    if(!token) return null;
 
-  isAuthenticated():boolean{
+    try{
+      const decoded = jwtDecode<JwtPayload>(token);
+      return decoded.role;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  isLoggedIn():boolean{
     return !!this.getToken();
   }
 
