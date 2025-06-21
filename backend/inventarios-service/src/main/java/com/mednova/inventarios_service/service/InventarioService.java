@@ -174,7 +174,7 @@ public class InventarioService {
 
         // Verificar si ya existe inventario para ese producto, lote y farmacia
         Optional<Inventario> inventarioExistenteOpt = inventarioRepository
-                .findByIdProductoAndLoteAndNombreFarmacia(idProducto, lote, nombreFarmacia);
+                .findById_productoAndLoteAndNombre_farmacia(idProducto, lote, nombreFarmacia);
 
         if (inventarioExistenteOpt.isPresent()) {
             // Actualizar cantidad existente
@@ -323,7 +323,7 @@ public class InventarioService {
 
         // Verificar si ya existe inventario para ese producto, lote y farmacia
         Optional<Inventario> inventarioExistenteOpt = inventarioRepository
-                .findByIdProductoAndLoteAndNombreFarmacia(idProducto, lote, nombreFarmacia);
+                .findById_productoAndLoteAndNombre_farmacia(idProducto, lote, nombreFarmacia);
 
         if (inventarioExistenteOpt.isPresent()) {
             // Actualizar cantidad existente
