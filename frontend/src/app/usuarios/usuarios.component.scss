@@ -1,16 +1,125 @@
-.usuarios-lista {
-  list-style: none;
-  padding: 0;
+$titular-verde: #207a5a;
+$verde-boton: #28a745;
+$verde-hover: #218838;
+$gris-borde: #ddd;
+$gris-fondo: #f7f7f7;
 
-  .usuario-item {
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    padding: 1rem;
+.formulario-usuario {
+  max-width: 500px;
+  margin: 3rem auto;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  border: 1px solid $gris-borde;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .titulo {
+    color: $titular-verde;
+    font-size: 1.7rem;
+    font-weight: bold;
+    text-align: center;
     margin-bottom: 1rem;
-    background-color: #f1f1f1;
+  }
 
-    div {
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    label {
+      font-weight: 600;
+      color: $titular-verde;
+      margin-bottom: 0.3rem;
+    }
+
+    input {
+      padding: 0.8rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+
+      &:focus {
+        border-color: $titular-verde;
+        outline: none;
+      }
+    }
+
+    button[type='submit'] {
+      background-color: $verde-boton;
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: $verde-hover;
+      }
+    }
+  }
+}
+
+.titulo-lista {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: $titular-verde;
+  margin: 3rem 0 1.5rem;
+}
+
+.usuarios-lista {
+  max-width: 700px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', sans-serif;
+
+  .usuario-card {
+    background-color: $gris-fondo;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    border: 1px solid $gris-borde;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+
+    p {
       margin: 0.3rem 0;
+      color: #333;
+    }
+
+    .acciones {
+      margin-top: 1rem;
+
+      button {
+        margin-right: 0.5rem;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:first-child {
+          background-color: $verde-boton;   // Botón "Editar" verde
+          &:hover {
+            background-color: $verde-hover; // Verde más oscuro en hover
+          }
+        }
+
+        &:last-child {
+          background-color: #dc3545;   // Botón "Eliminar" rojo
+          &:hover {
+            background-color: #c82333; // Rojo más oscuro en hover
+          }
+        }
+      }
     }
   }
 }

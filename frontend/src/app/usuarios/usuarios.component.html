@@ -1,30 +1,61 @@
-<h2>Usuarios</h2>
-<ul class="ventas-lista">
-  <li *ngFor="let usuario of usuarios" class="usuario-item">
-    <div>
-      <strong>ID:</strong> {{ usuario.id }}
-    </div>
-    <div>
-      <strong>Nombre:</strong> {{ usuario.nombre }} {{ usuario.apellido }}
-    </div>
-    <div>
-      <strong>Correo:</strong> {{ usuario.correo }}
-    </div>
-    <div>
-      <strong>Rol:</strong> {{ usuario.rol }}
-    </div>
-    <div>
-      <strong>Estado:</strong> {{ usuario.estado }}
-    </div>
-    <div>
-      <strong>Fecha de creación:</strong> {{ usuario.fechaCreacion | date: 'dd/MM/yyyy HH:mm' }}
-    </div>
-    <div>
-      <strong>Última modificación:</strong> {{ usuario.fechaModificacion | date: 'dd/MM/yyyy HH:mm' }}
-    </div>
-    <div>
-      <strong>Último acceso:</strong> {{ usuario.fechaUltimoAcceso | date: 'dd/MM/yyyy HH:mm' }}
-    </div>
-  </li>
-</ul>
+<div class="formulario-usuario">
+  <h2 class="titulo">Registrar Usuario</h2>
+  <form (ngSubmit)="guardarUsuario()" #form="ngForm" class="formulario">
+    <label for="nombre">Nombre</label>
+    <input
+      id="nombre"
+      type="text"
+      [(ngModel)]="usuario.nombre"
+      name="nombre"
+      placeholder="Ej: Paula"
+      required
+    />
 
+    <label for="apellido">Apellido</label>
+    <input
+      id="apellido"
+      type="text"
+      [(ngModel)]="usuario.apellido"
+      name="apellido"
+      placeholder="Ej: Veloso"
+      required
+    />
+
+    <label for="correo">Correo</label>
+    <input
+      id="correo"
+      type="email"
+      [(ngModel)]="usuario.correo"
+      name="correo"
+      placeholder="Ej: ana@example.com"
+      required
+    />
+
+    <label for="rol">Rol</label>
+    <input
+      id="rol"
+      type="text"
+      [(ngModel)]="usuario.rol"
+      name="rol"
+      placeholder="Ej: Administrador"
+    />
+
+    <button type="submit">Guardar Usuario</button>
+  </form>
+</div>
+
+<h2 class="titulo-lista">Usuarios Registrados</h2>
+<div class="usuarios-lista">
+  <div class="usuario-card" *ngFor="let u of usuarios">
+    <p><strong>Nombre:</strong> {{ u.nombre }} {{ u.apellido }}</p>
+    <p><strong>Correo:</strong> {{ u.correo }}</p>
+    <p><strong>Rol:</strong> {{ u.rol }}</p>
+    <p><strong>Estado:</strong> {{ u.estado }}</p>
+    <p><strong>Último acceso:</strong> {{ u.fechaUltimoAcceso | date: 'dd/MM/yyyy HH:mm' }}</p>
+
+    <div class="acciones">
+      <button (click)="editarUsuario(u)">Editar</button>
+      <button (click)="eliminarUsuario(u.id)">Eliminar</button>
+    </div>
+  </div>
+</div>
