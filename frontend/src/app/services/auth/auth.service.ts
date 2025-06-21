@@ -17,6 +17,7 @@ export class AuthService {
   private apiUsuarios = 'http://34.61.182.228/api/usuarios';
   private tokenKey = 'token';
   private emailKey = 'email';
+  private rolKey = 'rol';
 
   private userSubject = new BehaviorSubject<{ email: string | null; rol: string | null }>({
     email: null,
@@ -39,6 +40,7 @@ export class AuthService {
         next: res => {
           localStorage.setItem(this.tokenKey, res.token);
           localStorage.setItem(this.emailKey, res.email);
+          localStorage.setItem(this.rolKey, res.rol);
           this.userSubject.next({ email: res.email, rol: res.rol });
           observer.next(res);
           observer.complete();
@@ -63,6 +65,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.emailKey);
+    localStorage.removeItem(this.rolKey);
     this.userSubject.next({ email: null, rol: null });
   }
 
