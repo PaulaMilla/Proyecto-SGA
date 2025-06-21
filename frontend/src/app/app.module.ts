@@ -11,8 +11,8 @@ import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { UploadComponent } from './inventario/upload/upload.component';
 
-import { UsuariosModule } from './usuarios/usuarios.module';
 import { HomeComponent } from './components/home/home.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
 
 @NgModule({
   declarations: [
@@ -21,14 +21,14 @@ import { HomeComponent } from './components/home/home.component';
     HeaderComponent,
     FooterComponent,
     UploadComponent,
-    HomeComponent
+    HomeComponent,
+    UsuariosComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule,
-    UsuariosModule
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
