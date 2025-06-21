@@ -6,7 +6,7 @@ import { jwtDecode } from 'jwt-decode';
 interface JwtResponse {
   token: string;
   email: string;
-  rol: string;
+  role: string;
 }
 
 @Injectable({
