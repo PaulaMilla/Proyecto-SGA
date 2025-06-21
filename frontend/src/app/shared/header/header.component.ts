@@ -7,23 +7,26 @@ import { AuthService } from '../../services/auth/auth.service';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  role = '';
+  userEmail: string | null = null;
+  userRol: string | null = null;
   isMenuOpen = false;
-
-  constructor(private authService: AuthService){}
-
-  ngOnInit(): void{
-    this.role = this.authService.getUserRole() || '';
-  }
-
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
+  
+  constructor(private authService: AuthService) {}
 
-  logout(): void{
-    this.authService.logout();
-    location.reload();
+  ngOnInit(): void {
+    this.authService.user$.subscribe(user => {
+      this.userEmail = user.email;
+      this.userRol = user.rol;
+    });
   }
 
+  logout() {
+    this.authService.logout();
+    window.location.href = '/login'; 
+  }
 }
+

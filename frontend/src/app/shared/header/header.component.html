@@ -1,21 +1,20 @@
 <header class="header">
   <div class="logo">
+    <img src="assets/logo.png" alt="Logo" />
     <span>Farmacias Comunales</span>
   </div>
 
-  <nav class="nav-links" [class.open]="isMenuOpen">
-    <a routerLink="/dashboard">Dashboard</a>
-    <a routerLink="/beneficiarios">Beneficiarios</a>
+  <button class="menu-toggle d-md-none" (click)="toggleMenu()">☰</button>
 
-    <a *ngIf="role === 'ADMIN' || role === 'FARMACEUTICO'" routerLink="/ventas">Ventas</a>
-    <a *ngIf="role === 'ADMIN' || role === 'FARMACEUTICO'" routerLink="/inventario">Inventario</a>
-    <a *ngIf="role === 'ADMIN'" routerLink="/usuarios">Usuarios</a>
-    <a *ngIf="role === 'ADMIN'" routerLink="/upload">Cargar archivos</a>
+  <nav class="nav-links" [class.open]="isMenuOpen">
+    <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+    <a *ngIf="userRol === 'ADMIN' || userRol === 'FARMACEUTICO'" routerLink="/ventas" routerLinkActive="active">Ventas</a>
+    <a *ngIf="userRol === 'ADMIN'" routerLink="/usuarios" routerLinkActive="active">Usuarios</a>
+    <a *ngIf="userRol" routerLink="/upload" routerLinkActive="active">Carga</a>
   </nav>
 
-  <div class="profile">
-    <span class="username">{{ role }}</span>
-    <button (click)="toggleMenu()" class="menu-toggle">☰</button>
-    <button (click)="logout()">Cerrar sesión</button>
+  <div class="profile" *ngIf="userEmail">
+    <span class="username">{{ userRol }} | {{ userEmail }}</span>
+    <button class="btn btn-outline-light btn-sm" (click)="logout()">Cerrar sesión</button>
   </div>
 </header>
