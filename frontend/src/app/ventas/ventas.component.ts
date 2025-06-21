@@ -1,18 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { VentasService, Venta } from '../services/ventas.service';
 
 @Component({
   selector: 'app-ventas',
-  templateUrl: './ventas.component.html'
+  templateUrl: './ventas.component.html',
+  styleUrls: ['./ventas.component.scss']
 })
 export class VentasComponent implements OnInit {
-  ventas: Venta[] = [];
+  venta = {
+    cliente: '',
+    producto: '',
+    cantidad: 1,
+    total: 0
+  };
 
-  constructor(private ventasService: VentasService) {}
+  constructor() {}
 
-  ngOnInit() {
-    this.ventasService.obtenerTodas().subscribe(data => {
-      this.ventas = data;
-    });
+  ngOnInit(): void {}
+
+  guardarVenta() {
+    // Aquí pondrías la llamada a tu servicio para guardar la venta en backend
+    console.log('Venta guardada:', this.venta);
+    // Luego limpiar formulario
+    this.venta = { cliente: '', producto: '', cantidad: 1, total: 0 };
   }
 }
