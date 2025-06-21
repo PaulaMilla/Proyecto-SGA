@@ -13,6 +13,7 @@ import { UploadComponent } from './inventario/upload/upload.component';
 
 import { HomeComponent } from './components/home/home.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { CargaDatosComponent } from './components/carga-datos/carga-datos.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
     FooterComponent,
     UploadComponent,
     HomeComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    CargaDatosComponent
   ],
   imports: [
     BrowserModule,
