@@ -23,7 +23,7 @@ export interface DetalleVenta {
 })
 export class VentasService {
 
-  private apiUrl = 'http://api-gateway.local/api/ventas';
+  private apiUrl = 'http://34.61.182.228/api/api/ventas';
 
   constructor(private http: HttpClient) {}
 
