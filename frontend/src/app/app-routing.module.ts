@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'ventas', component: VentasComponent, canActivate: [authGuard] },
   { path: 'usuarios', component: UsuariosComponent, canActivate: [authGuard] },
   { path: 'upload', component: UploadComponent, canActivate: [authGuard] },
+  { path: 'home', component: HomeComponent, canActivate: [authGuard]},
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];

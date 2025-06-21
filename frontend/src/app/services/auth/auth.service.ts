@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 interface JwtResponse {
   token: string;
   email: string;
-  role: string;
+  rol: string;
 }
 
 @Injectable({
@@ -16,7 +16,7 @@ export class AuthService {
   private apiUsuarios = 'http://34.61.182.228/api/usuarios';
   private tokenKey = 'token';
   private emailKey = 'email';
-  private roleKey = 'role';
+  private roleKey = 'rol';
 
   constructor(private http: HttpClient) { }
 

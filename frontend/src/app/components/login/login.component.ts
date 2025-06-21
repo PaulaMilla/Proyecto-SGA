@@ -28,7 +28,7 @@ export class LoginComponent {
         next: (res) => {
           localStorage.setItem('token', res.token);
           localStorage.setItem('email', res.email);
-          localStorage.setItem('role', res.role); 
+          localStorage.setItem('role', res.rol); 
           this.router.navigate(['/home']); 
         },
         error: (err) => {
