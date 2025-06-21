@@ -8,8 +8,8 @@ import { HomeComponent } from './components/home/home.component';
 const routes: Routes = [
   {path: 'ventas', component: VentasComponent},
   { path: 'usuarios', component: UsuariosComponent},
-  {path: 'upload', component: UploadComponent},
-  {path: '', component: HomeComponent}
+  { path: 'usuarios', loadChildren: () => import('./usuarios/usuarios.module').then(m => m.UsuariosModule)},
+  {path: 'upload', component: UploadComponent}
 ];
 
 @NgModule({
