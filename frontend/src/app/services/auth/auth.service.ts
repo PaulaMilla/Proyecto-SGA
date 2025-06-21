@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   getUserRole(): string | null {
-    return localStorage.getItem('role');
+    return localStorage.getItem(this.roleKey);
   }
   
   isLoggedIn():boolean{
