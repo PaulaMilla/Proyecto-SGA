@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -15,18 +16,19 @@ export class HeaderComponent {
     this.isMenuOpen = !this.isMenuOpen;
   }
   
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.authService.user$.subscribe(user => {
+  this.authService.user$.subscribe(user => {
+      console.log('Usuario recibido en header:', user);
       this.userEmail = user.email;
       this.userRol = user.rol;
     });
-  }
+  }  
 
   logout() {
     this.authService.logout();
-    window.location.href = '/login'; 
+    this.router.navigate(['/login']);
   }
 }
 

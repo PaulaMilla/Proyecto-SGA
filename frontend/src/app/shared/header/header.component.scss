@@ -9,13 +9,12 @@ $hover-color: lighten($text-color, 20%);
   padding: 0.75rem 1.5rem;
   background-color: $primary-color;
   color: $text-color;
-  position: relative;
 
   .logo {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     font-weight: bold;
 
     img {
@@ -23,29 +22,56 @@ $hover-color: lighten($text-color, 20%);
     }
 
     span {
-      font-family: 'Segoe UI', sans-serif;
+      color: $text-color;
+    }
+  }
+
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: $text-color;
+    cursor: pointer;
+
+    @media (max-width: 768px) {
+      display: block;
     }
   }
 
   .nav-links {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem;
 
     a {
       color: $text-color;
       text-decoration: none;
       font-weight: 500;
-      transition: color 0.2s ease;
+      transition: color 0.2s ease-in-out;
 
-      &:hover,
-      &.active {
+      &:hover {
         color: $hover-color;
-        text-decoration: underline;
+      }
+
+      &.active {
+        border-bottom: 2px solid $hover-color;
       }
     }
 
-    &.open {
-      display: flex;
+    @media (max-width: 768px) {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      right: 1rem;
+      background-color: $primary-color;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      z-index: 1000;
+
+      &.open {
+        display: flex;
+      }
     }
   }
 
@@ -56,44 +82,13 @@ $hover-color: lighten($text-color, 20%);
 
     .username {
       font-weight: 500;
+      font-size: 0.9rem;
+      color: $text-color;
     }
 
-    button {
-      white-space: nowrap;
+    .btn {
+      padding: 0.25rem 0.75rem;
+      font-size: 0.85rem;
     }
-  }
-
-  .menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 1.6rem;
-    color: $text-color;
-    cursor: pointer;
-  }
-}
-
-// Responsive
-@media (max-width: 768px) {
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 60px;
-    left: 1rem;
-    right: 1rem;
-    background-color: $primary-color;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    z-index: 1000;
-  }
-
-  .nav-links.open {
-    display: flex;
-  }
-
-  .menu-toggle {
-    display: block;
   }
 }
