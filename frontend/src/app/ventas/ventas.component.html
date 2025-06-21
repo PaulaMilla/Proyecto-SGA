@@ -1,21 +1,48 @@
-<h2>Ventas</h2>
-<ul class="ventas-lista">
-  <li *ngFor="let venta of ventas" class="venta-item">
-    <div>
-      <strong>ID Venta:</strong> {{ venta.id }}
-    </div>
-    <div>
-      <strong>Fecha:</strong> {{ venta.fechaVenta | date: 'dd/MM/yyyy HH:mm' }}
-    </div>
-    <div>
-      <strong>Total:</strong> ${{ venta.total | number:'1.0-0' }}
-    </div>
-    <div>
-      <strong>Paciente ID:</strong> {{ venta.pacienteId }}
-    </div>
-    <div>
-      <strong>Vendedor ID:</strong> {{ venta.usuarioId }}
-    </div>
-  </li>
-</ul>
+<div class="formulario-venta">
+  <h2 class="titulo">Registrar Venta</h2>
+  <form (ngSubmit)="guardarVenta()" #form="ngForm">
+    <label for="cliente">Nombre del cliente</label>
+    <input
+      id="cliente"
+      type="text"
+      [(ngModel)]="venta.cliente"
+      name="cliente"
+      placeholder="Ej: Antonia Yevenes"
+      required
+    />
 
+    <label for="producto">Medicamento</label>
+    <input
+      id="producto"
+      type="text"
+      [(ngModel)]="venta.producto"
+      name="producto"
+      placeholder="Ej: Paracetamol 500mg"
+      required
+    />
+
+    <label for="cantidad">Cantidad</label>
+    <input
+      id="cantidad"
+      type="number"
+      [(ngModel)]="venta.cantidad"
+      name="cantidad"
+      placeholder="Ej: 2"
+      required
+      min="1"
+    />
+
+    <label for="total">Total ($)</label>
+    <input
+      id="total"
+      type="number"
+      [(ngModel)]="venta.total"
+      name="total"
+      placeholder="Ej: 1500"
+      required
+      min="0"
+    />
+
+    <button type="submit">Guardar Venta</button>
+  </form>
+</div>
