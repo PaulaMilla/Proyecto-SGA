@@ -40,6 +40,7 @@ export class AuthService {
   }
 
   getUserRole(): string | null {
+    console.log(this.roleKey);
     return localStorage.getItem(this.roleKey);
   }
   
@@ -51,7 +52,7 @@ export class AuthService {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.emailKey);
     localStorage.removeItem(this.roleKey);
-    localStorage.removeItem('rol');
+    localStorage.removeItem('role');
   }
 
 }
