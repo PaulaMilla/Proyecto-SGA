@@ -16,6 +16,7 @@ export class AuthService {
   private apiUsuarios = 'http://34.61.182.228/api/usuarios';
   private tokenKey = 'token';
   private emailKey = 'email';
+  private roleKey = 'role';
 
   constructor(private http: HttpClient) { }
 
@@ -49,6 +50,8 @@ export class AuthService {
   logout(): void{
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.emailKey);
+    localStorage.removeItem(this.roleKey);
+    localStorage.removeItem('rol');
   }
 
 }

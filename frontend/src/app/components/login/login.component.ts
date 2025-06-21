@@ -29,7 +29,7 @@ export class LoginComponent {
           localStorage.setItem('token', res.token);
           localStorage.setItem('email', res.email);
           localStorage.setItem('role', res.role); 
-          this.router.navigate(['/']); 
+          this.router.navigate(['/home']); 
         },
         error: (err) => {
           alert('Credenciales inválidas');
