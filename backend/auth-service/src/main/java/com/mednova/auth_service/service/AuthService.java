@@ -11,10 +11,15 @@ public class AuthService {
     private final WebClient webClient;
     private final JwtUtils jwtUtils;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private String rolActual;
 
     public AuthService(WebClient.Builder builder, JwtUtils jwtUtils) {
         this.webClient = builder.baseUrl("http://usuarios-service.usuarios.svc.cluster.local").build();
         this.jwtUtils = jwtUtils;
+    }
+
+    public String getRolActual() {
+        return rolActual;
     }
 
     public String login(String email, String password){
@@ -28,8 +33,9 @@ public class AuthService {
             throw new RuntimeException("Credenciales inválidas");
         }
 
+        rolActual = (String) usuario.get("rol");
         //Generar JWT con claims
-        return jwtUtils.generateToken((String) usuario.get("email"), (String) usuario.get("rol"));
+        return jwtUtils.generateToken((String) usuario.get("email"), rolActual);
     }
 
 

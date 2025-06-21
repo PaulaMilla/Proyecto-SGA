@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
-interface JwtPayload{
-  sub: string;
-  role: string;
-  exp: number;
+interface JwtResponse {
+  token: string;
+  email: string;
+  rol: string;
 }
 
 @Injectable({
@@ -20,9 +20,10 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  login(email: string, password:string): Observable<any>{
-    return this.http.post(`${this.apiAuth}/login`, { email, password });
+  login(email: string, password: string): Observable<JwtResponse> {
+  return this.http.post<JwtResponse>(`${this.apiAuth}/login`, { email, password });
   }
+
 
   validateToken(): Observable<any>{
     const token = this.getToken();
@@ -37,19 +38,11 @@ export class AuthService {
   getToken(): string | null{
     return localStorage.getItem(this.tokenKey);
   }
-  
-  getUserRole(): string | null{
-    const token = this.getToken();
-    if(!token) return null;
 
-    try{
-      const decoded = jwtDecode<JwtPayload>(token);
-      return decoded.role;
-    } catch (error) {
-      return null;
-    }
+  getUserRole(): string | null {
+    return localStorage.getItem('rol');
   }
-
+  
   isLoggedIn():boolean{
     return !!this.getToken();
   }

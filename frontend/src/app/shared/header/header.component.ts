@@ -7,13 +7,13 @@ import { AuthService } from '../../services/auth/auth.service';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  role: string | null = null;
+  role = '';
   isMenuOpen = false;
 
   constructor(private authService: AuthService){}
 
   ngOnInit(): void{
-    this.role = this.authService.getUserRole();
+    this.role = this.authService.getUserRole() || '';
   }
 
 

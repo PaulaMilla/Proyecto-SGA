@@ -21,6 +21,8 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> login(@RequestBody LoginRequest request) {
         String jwt = authService.login(request.getEmail(), request.getPassword());
-        return ResponseEntity.ok(new JwtResponse(jwt));
+        return ResponseEntity.ok(
+                new JwtResponse(jwt, request.getEmail(), authService.getRolActual())
+        );
     }
 }
