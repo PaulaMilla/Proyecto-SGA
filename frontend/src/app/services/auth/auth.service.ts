@@ -13,8 +13,8 @@ interface JwtPayload{
   providedIn: 'root'
 })
 export class AuthService {
-  private apiAuth = 'http://34.61.182.228/api/api/auth';
-  private apiUsuarios = 'http://34.61.182.228/api/api/usuarios';
+  private apiAuth = 'http://34.61.182.228/api/auth';
+  private apiUsuarios = 'http://34.61.182.228/api/usuarios';
   private tokenKey = 'token';
   private emailKey = 'email';
 
