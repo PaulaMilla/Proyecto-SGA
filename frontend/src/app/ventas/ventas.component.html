@@ -32,17 +32,34 @@
       min="1"
     />
 
-    <label for="total">Total ($)</label>
+    <label for="precioUnitario">Precio Unitario ($)</label>
     <input
-      id="total"
+      id="precioUnitario"
       type="number"
-      [(ngModel)]="venta.total"
-      name="total"
+      [(ngModel)]="venta.precioUnitario"
+      name="precioUnitario"
       placeholder="Ej: 1500"
       required
       min="0"
     />
 
+    <label for="total">Total ($)</label>
+    <input
+      id="total"
+      type="text"
+      [value]="totalFormateado"
+      readonly
+    />
+
     <button type="submit">Guardar Venta</button>
   </form>
 </div>
+
+<!-- Botón volver arriba -->
+<button
+  *ngIf="mostrarBotonArriba"
+  class="btn-volver-arriba"
+  (click)="volverArriba()"
+>
+  ↑
+</button>
