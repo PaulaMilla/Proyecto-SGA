@@ -22,7 +22,7 @@ spring:
           uri: http://pacientes-service.pacientes.svc.cluster.local:80
           predicates:
             - Path=/api/pacientes/**
-            -
+
         - id: ventas-service
           uri: http://ventas-service.ventas.svc.cluster.local:80
           predicates:
