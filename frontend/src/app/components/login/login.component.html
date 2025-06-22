@@ -18,3 +18,18 @@
     </div>
   </div>
 </div>
+
+<!-- Modal Personalizado -->
+<div class="custom-modal-backdrop" *ngIf="showModal">
+  <div class="custom-modal animate-in" [ngClass]="{ 'success': isSuccess, 'error': !isSuccess }">
+    <div class="modal-header">
+      <h5>{{ isSuccess ? 'Éxito' : 'Error' }}</h5>
+    </div>
+    <div class="modal-body">
+      <p>{{ modalMessage }}</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-custom w-100" (click)="closeModal()">Aceptar</button>
+    </div>
+  </div>
+</div>
