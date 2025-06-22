@@ -18,7 +18,14 @@ $hover-color: lighten($text-color, 20%);
     font-weight: bold;
 
     img {
-      height: 40px;
+      height: 48px;
+      width: 48px;
+      object-fit: cover;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #004d40;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: box-shadow 0.2s;
     }
 
     span {
