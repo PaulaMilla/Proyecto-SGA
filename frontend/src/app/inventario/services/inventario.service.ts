@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {InventarioProducto} from "../model/inventarioproducto.model";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,10 @@ export class InventarioService {
   private apiUrl = 'http://34.61.182.228/api/inventarios'; // Cambiar si usas gateway
 
   constructor(private http: HttpClient) {}
+
+  getInventarioConProducto(): Observable<InventarioProducto[]> {
+    return this.http.get<InventarioProducto[]>(`${this.apiUrl}/con-producto`);
+  }
 
   subirArchivoInventario(file: File): Observable<any> {
     const formData = new FormData();
