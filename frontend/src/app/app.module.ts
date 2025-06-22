@@ -15,6 +15,7 @@ import { HomeComponent } from './components/home/home.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { CargaDatosComponent } from './components/carga-datos/carga-datos.component';
 import { LoginComponent } from './components/login/login.component';
+import { InventarioInfoComponent } from './inventario/info/inventario-info/inventario-info.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { LoginComponent } from './components/login/login.component';
     HomeComponent,
     UsuariosComponent,
     CargaDatosComponent,
-    LoginComponent
+    LoginComponent,
+    InventarioInfoComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
 package com.mednova.inventarios_service.service;
 
+import com.mednova.inventarios_service.dto.InventarioProductoDTO;
 import com.mednova.inventarios_service.model.Inventario;
 import com.mednova.inventarios_service.model.Producto;
 import com.mednova.inventarios_service.repository.InventarioRepository;
@@ -342,6 +343,38 @@ public class InventarioService {
             nuevoInventario.setNombre_farmacia(nombreFarmacia);
             inventarioRepository.save(nuevoInventario);
         }
+    }
+
+    public List<InventarioProductoDTO> obtenerInventarioConProducto() {
+        List<Inventario> inventarios = inventarioRepository.findAll();
+        List<InventarioProductoDTO> resultado = new ArrayList<>();
+
+        for (Inventario inv : inventarios) {
+            Optional<Producto> productoOpt = productoRepository.findById(inv.getId_producto());
+
+            if (productoOpt.isPresent()) {
+                Producto prod = productoOpt.get();
+                InventarioProductoDTO dto = new InventarioProductoDTO();
+
+                dto.setId_inventario(inv.getId_inventario());
+                dto.setId_producto(prod.getId_producto());
+                dto.setNombre_producto(prod.getNombre());
+                dto.setDescripcion(prod.getDescripcion());
+                dto.setLaboratorio(prod.getLaboratorio());
+                dto.setTipo(prod.getTipo());
+                dto.setPrecio_unitario(prod.getPrecio_unitario());
+
+                dto.setCantidad_disponible(inv.getCantidad_disponible());
+                dto.setUbicacion(inv.getUbicacion());
+                dto.setLote(inv.getLote());
+                dto.setFecha_vencimiento(inv.getFecha_vencimiento());
+                dto.setNombre_farmacia(inv.getNombre_farmacia());
+
+                resultado.add(dto);
+            }
+        }
+
+        return resultado;
     }
 
     public List<Inventario> getAllInventarios() {
