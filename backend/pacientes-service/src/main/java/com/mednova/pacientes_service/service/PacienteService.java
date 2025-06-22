@@ -145,7 +145,7 @@ public class PacienteService {
         }
 
         String direccion = row[2].trim();
-        Boolean beneficiario = Boolean.valueOf(row[3].trim());
+        Boolean beneficiario = row[3].trim().equalsIgnoreCase("true");
         String nombreFarmacia = row[4].trim();
 
         // Crear nuevo inventario
