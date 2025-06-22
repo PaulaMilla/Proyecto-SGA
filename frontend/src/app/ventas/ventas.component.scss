@@ -41,6 +41,11 @@
         border-color: #207a5a;
         outline: none;
       }
+
+      &[readonly] {
+        background-color: #f5f5f5;
+        cursor: not-allowed;
+      }
     }
 
     button[type='submit'] {
@@ -58,5 +63,25 @@
         background-color: #218838;
       }
     }
+  }
+}
+
+.btn-volver-arriba {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #207a5a;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #1a5e48;
   }
 }
