@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -12,6 +13,9 @@ export class HeaderComponent {
   userRol: string | null = null;
   isMenuOpen = false;
 
+  private subscription!: Subscription;
+
+
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
@@ -19,12 +23,15 @@ export class HeaderComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-  this.authService.user$.subscribe(user => {
-      console.log('Usuario recibido en header:', user);
+    this.subscription = this.authService.user$.subscribe(user => {
       this.userEmail = user.email;
       this.userRol = user.rol;
     });
-  }  
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   logout() {
     this.authService.logout();

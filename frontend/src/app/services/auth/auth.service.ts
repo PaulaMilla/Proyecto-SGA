@@ -26,13 +26,17 @@ export class AuthService {
 
   user$ = this.userSubject.asObservable();
 
-  constructor(private http: HttpClient) {
-    const token = this.getToken();
-    if (token) {
-      const decoded = this.decodeToken(token);
-      this.userSubject.next({ email: decoded?.sub || null, rol: decoded?.role || null });
-    }
+constructor(private http: HttpClient) {
+  const token = this.getToken();
+  const email = localStorage.getItem(this.emailKey);
+  const rol = localStorage.getItem(this.rolKey);
+
+  if (token && email && rol) {
+    this.userSubject.next({ email, rol });
+  } else {
+    this.userSubject.next({ email: null, rol: null });
   }
+}
 
   login(email: string, password: string): Observable<JwtResponse> {
     return new Observable(observer => {
