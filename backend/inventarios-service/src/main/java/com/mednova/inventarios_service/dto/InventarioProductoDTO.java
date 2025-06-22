@@ -3,7 +3,7 @@ package com.mednova.inventarios_service.dto;
 public class InventarioProductoDTO {
     private int id_inventario;
     private int id_producto;
-    private String nombre_producto;
+    private String nombre;
     private String descripcion;
     private String laboratorio;
     private String tipo;
@@ -31,12 +31,12 @@ public class InventarioProductoDTO {
         this.id_producto = id_producto;
     }
 
-    public String getNombre_producto() {
-        return nombre_producto;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombre_producto(String nombre_producto) {
-        this.nombre_producto = nombre_producto;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getDescripcion() {

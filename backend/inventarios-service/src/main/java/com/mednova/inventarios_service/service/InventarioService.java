@@ -5,7 +5,6 @@ import com.mednova.inventarios_service.model.Inventario;
 import com.mednova.inventarios_service.model.Producto;
 import com.mednova.inventarios_service.repository.InventarioRepository;
 import com.mednova.inventarios_service.repository.ProductoRepository;
-import com.opencsv.CSVParser;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -17,7 +16,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -358,7 +356,7 @@ public class InventarioService {
 
                 dto.setId_inventario(inv.getId_inventario());
                 dto.setId_producto(prod.getId_producto());
-                dto.setNombre_producto(prod.getNombre());
+                dto.setNombre(prod.getNombre());
                 dto.setDescripcion(prod.getDescripcion());
                 dto.setLaboratorio(prod.getLaboratorio());
                 dto.setTipo(prod.getTipo());
