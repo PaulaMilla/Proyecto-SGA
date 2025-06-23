@@ -1,0 +1,33 @@
+<div *ngIf="loading">Cargando datos...</div>
+
+<table *ngIf="!loading" class="table table-striped">
+  <thead>
+  <tr>
+    <th>Farmacia</th>
+    <th>Producto</th>
+    <th>Descripcion</th>
+    <th>Laboratorio</th>
+    <th>Tipo</th>
+    <th>Cantidad</th>
+    <th>Ubicación</th>
+    <th>Lote</th>
+    <th>Vencimiento</th>
+    <th>Precio</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of inventarioList">
+    <td>{{ item.nombre_farmacia }}</td>
+    <td>{{ item.nombre }}</td>
+    <td>{{ item.descripcion }}</td>
+    <td>{{ item.laboratorio }}</td>
+    <td>{{ item.tipo }}</td>
+    <td>{{ item.cantidad_disponible }}</td>
+    <td>{{ item.ubicacion }}</td>
+    <td>{{ item.lote }}</td>
+    <td>{{ item.fecha_vencimiento }}</td>
+    <td>{{ item.precio_unitario | currency }}</td>
+  </tr>
+  </tbody>
+</table>
+

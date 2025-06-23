@@ -1,0 +1,35 @@
+<div class="container login-container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow p-4">
+        <h2 class="text-center mb-4">Iniciar Sesión</h2>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input type="email" formControlName="email" class="form-control" id="email" placeholder="ejemplo@correo.com">
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" formControlName="password" class="form-control" id="password" placeholder="Tu contraseña">
+          </div>
+          <button type="submit" class="btn btn-custom w-100" [disabled]="loginForm.invalid">Ingresar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Personalizado -->
+<div class="custom-modal-backdrop" *ngIf="showModal">
+  <div class="custom-modal animate-in" [ngClass]="{ 'success': isSuccess, 'error': !isSuccess }">
+    <div class="modal-header">
+      <h5>{{ isSuccess ? 'Éxito' : 'Error' }}</h5>
+    </div>
+    <div class="modal-body">
+      <p>{{ modalMessage }}</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-custom w-100" (click)="closeModal()">Aceptar</button>
+    </div>
+  </div>
+</div>

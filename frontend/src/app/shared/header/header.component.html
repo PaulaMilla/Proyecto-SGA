@@ -1,21 +1,29 @@
-
 <header class="header">
-  <div class="logo">
-    <!--<img src="assets/logo.png" alt="Logo SGA" />-->
+  <div class="logo" [routerLink]="['/home']" style="cursor: pointer;">
+     <img src="assets/logo.png" alt="Logo" />
     <span>Farmacias Comunales</span>
   </div>
 
-  <nav class="nav-links" [class.open]="isMenuOpen">
-    <a routerLink="/dashboard">Dashboard</a>
-    <a routerLink="/beneficiarios">Beneficiarios</a>
-    <a routerLink="/ventas">Ventas</a>
-    <a routerLink="/inventario">Inventario</a>
-    <a routerLink="/usuarios">Usuarios</a>
-    <a routerLink="/upload">Cargar archivos</a>
+  <!-- Menú hamburguesa solo si hay sesión -->
+  <button class="menu-toggle d-md-none" *ngIf="userEmail" (click)="toggleMenu()">☰</button>
+
+  <!-- Nav links solo si el usuario ha iniciado sesión -->
+  <nav class="nav-links" [class.open]="isMenuOpen" *ngIf="userEmail">
+    <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+    <a *ngIf="userRol === 'ADMIN' || userRol === 'FARMACEUTICO'" routerLink="/ventas" routerLinkActive="active">Ventas</a>
+    <a *ngIf="userRol === 'ADMIN'" routerLink="/usuarios" routerLinkActive="active">Usuarios</a>
+    <a *ngIf="userRol === 'ADMIN'" routerLink="/inventario-info" routerLinkActive="active">Inventario</a>
+    <a *ngIf="userRol === 'ADMIN'" routerLink="/carga-datos" routerLinkActive="active">Carga</a>
   </nav>
 
+  <!-- Sección de perfil o login -->
   <div class="profile">
-    <span class="username">admin</span>
-    <button (click)="toggleMenu()" class="menu-toggle">☰</button>
+    <ng-container *ngIf="userEmail; else loginButton">
+      <span class="username">{{ userRol }} | {{ userEmail }}</span>
+      <button class="btn btn-outline-light btn-sm" (click)="logout()">Cerrar sesión</button>
+    </ng-container>
+    <ng-template #loginButton>
+      <a routerLink="/login" class="btn btn-outline-light btn-sm">Iniciar sesión</a>
+    </ng-template>
   </div>
 </header>

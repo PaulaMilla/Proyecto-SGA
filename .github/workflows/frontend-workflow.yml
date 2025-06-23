@@ -55,6 +55,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
+      # Paso extra: Insertar tag de versión en index.html
+      - name: Insert version in index.html
+        run: |
+          echo "Insertando tag de versión: $IMAGE_TAG"
+          sed -i "s|</head>|<meta name=\"version\" content=\"${IMAGE_TAG}\" />\n</head>|" frontend/dist/frontend/browser/index.html
+
       # Paso 8: Login a Docker Hub
       - name: Login to Docker Hub
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin

@@ -1,5 +1,6 @@
 package com.mednova.inventarios_service.controller;
 
+import com.mednova.inventarios_service.dto.InventarioProductoDTO;
 import com.mednova.inventarios_service.model.Inventario;
 import com.mednova.inventarios_service.model.Producto;
 import com.mednova.inventarios_service.repository.ProductoRepository;
@@ -56,6 +57,12 @@ public class InventarioController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Error al obtener información de productos: " + e.getMessage());
         }
+    }
+
+    @GetMapping("/con-producto")
+    public ResponseEntity<List<InventarioProductoDTO>> getInventarioConProducto() {
+        List<InventarioProductoDTO> lista = inventarioService.obtenerInventarioConProducto();
+        return ResponseEntity.ok(lista);
     }
 
     // Endpoint para crear productos de prueba

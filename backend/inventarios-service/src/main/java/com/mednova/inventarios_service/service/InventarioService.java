@@ -1,10 +1,10 @@
 package com.mednova.inventarios_service.service;
 
+import com.mednova.inventarios_service.dto.InventarioProductoDTO;
 import com.mednova.inventarios_service.model.Inventario;
 import com.mednova.inventarios_service.model.Producto;
 import com.mednova.inventarios_service.repository.InventarioRepository;
 import com.mednova.inventarios_service.repository.ProductoRepository;
-import com.opencsv.CSVParser;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -16,7 +16,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -62,7 +61,7 @@ public class InventarioService {
         try (Reader reader = new InputStreamReader(file.getInputStream())) {
             CSVReader csvReader = new CSVReader(reader);
             List<String[]> rows = csvReader.readAll();
-            
+
             if (rows.isEmpty()) {
                 throw new IllegalArgumentException("El archivo CSV está vacío.");
             }
@@ -88,7 +87,7 @@ public class InventarioService {
                 } catch (IllegalArgumentException e) {
                     // Si es error de producto no encontrado, agregar información útil
                     if (e.getMessage().contains("no existe en la base de datos")) {
-                        errors.add("Fila " + (i + 1) + ": " + e.getMessage() + 
+                        errors.add("Fila " + (i + 1) + ": " + e.getMessage() +
                             ". Productos disponibles: " + productosInfo.toString());
                     } else {
                         errors.add("Fila " + (i + 1) + ": " + e.getMessage());
@@ -107,16 +106,16 @@ public class InventarioService {
         StringBuilder result = new StringBuilder();
         result.append("Procesamiento completado. ");
         result.append("Filas procesadas: ").append(processedRows).append("/").append(totalRows).append(". ");
-        
+
         if (skippedRows > 0) {
             result.append("Filas omitidas: ").append(skippedRows).append(". ");
         }
-        
+
         if (!errors.isEmpty()) {
             result.append("Errores: ").append(String.join("; ", errors));
             throw new RuntimeException(result.toString());
         }
-        
+
         if (processedRows == 0) {
             throw new RuntimeException("No se procesó ninguna fila. Verifique que los IDs de productos existan en la base de datos.");
         }
@@ -127,7 +126,7 @@ public class InventarioService {
             throw new IllegalArgumentException("El archivo debe tener al menos 5 columnas. Columnas encontradas: " + header.length);
         }
         
-        String[] expectedColumns = {"id_producto", "cantidad_disponible", "ubicacion", "lote", "fecha_vencimiento"};
+        String[] expectedColumns = {"id_producto", "cantidad_disponible", "ubicacion", "lote", "fecha_vencimiento","nombre_farmacia"};
         for (int i = 0; i < expectedColumns.length; i++) {
             if (i >= header.length || !header[i].trim().equalsIgnoreCase(expectedColumns[i])) {
                 throw new IllegalArgumentException("Columna " + (i + 1) + " debe ser '" + expectedColumns[i] + "'. Encontrada: " + 
@@ -137,11 +136,10 @@ public class InventarioService {
     }
 
     private void processCSVRow(String[] row, int rowNumber) throws Exception {
-        if (row.length < 5) {
-            throw new IllegalArgumentException("La fila debe tener al menos 5 columnas");
+        if (row.length < 6) {
+            throw new IllegalArgumentException("La fila debe tener al menos 6 columnas incluyendo nombre_farmacia");
         }
 
-        // Validar y obtener id_producto
         int idProducto;
         try {
             idProducto = Integer.parseInt(row[0].trim());
@@ -149,13 +147,11 @@ public class InventarioService {
             throw new IllegalArgumentException("ID de producto debe ser un número válido");
         }
 
-        // Verificar que el producto existe
         Optional<Producto> productoOpt = productoRepository.findById(idProducto);
         if (productoOpt.isEmpty()) {
             throw new IllegalArgumentException("El producto con ID " + idProducto + " no existe en la base de datos");
         }
 
-        // Validar cantidad disponible
         int cantidadDisponible;
         try {
             cantidadDisponible = Integer.parseInt(row[1].trim());
@@ -166,31 +162,36 @@ public class InventarioService {
             throw new IllegalArgumentException("Cantidad disponible debe ser un número válido");
         }
 
-        // Validar campos de texto
         String ubicacion = row[2].trim();
-        if (ubicacion.isEmpty()) {
-            throw new IllegalArgumentException("La ubicación no puede estar vacía");
-        }
-
         String lote = row[3].trim();
-        if (lote.isEmpty()) {
-            throw new IllegalArgumentException("El lote no puede estar vacío");
-        }
-
         String fechaVencimiento = row[4].trim();
-        if (fechaVencimiento.isEmpty()) {
-            throw new IllegalArgumentException("La fecha de vencimiento no puede estar vacía");
+        String nombreFarmacia = row[5].trim();
+
+        if (ubicacion.isEmpty() || lote.isEmpty() || fechaVencimiento.isEmpty() || nombreFarmacia.isEmpty()) {
+            throw new IllegalArgumentException("Ninguno de los campos puede estar vacío");
         }
 
-        // Crear y guardar el inventario
-        Inventario inventario = new Inventario();
-        inventario.setId_producto(idProducto);
-        inventario.setCantidad_disponible(cantidadDisponible);
-        inventario.setUbicacion(ubicacion);
-        inventario.setLote(lote);
-        inventario.setFecha_vencimiento(fechaVencimiento);
+        // Verificar si ya existe inventario para ese producto, lote y farmacia
+        Optional<Inventario> inventarioExistenteOpt = inventarioRepository
+                .findByProductoYLoteYFarmacia(idProducto, lote, nombreFarmacia);
 
-        inventarioRepository.save(inventario);
+        if (inventarioExistenteOpt.isPresent()) {
+            // Actualizar cantidad existente
+            Inventario inventarioExistente = inventarioExistenteOpt.get();
+            inventarioExistente.setCantidad_disponible(
+                    inventarioExistente.getCantidad_disponible() + cantidadDisponible);
+            inventarioRepository.save(inventarioExistente);
+        } else {
+            // Crear nuevo inventario
+            Inventario nuevoInventario = new Inventario();
+            nuevoInventario.setId_producto(idProducto);
+            nuevoInventario.setCantidad_disponible(cantidadDisponible);
+            nuevoInventario.setUbicacion(ubicacion);
+            nuevoInventario.setLote(lote);
+            nuevoInventario.setFecha_vencimiento(fechaVencimiento);
+            nuevoInventario.setNombre_farmacia(nombreFarmacia);
+            inventarioRepository.save(nuevoInventario);
+        }
     }
 
     private void processExcel(MultipartFile file) throws IOException {
@@ -200,7 +201,7 @@ public class InventarioService {
 
         try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
             Sheet sheet = workbook.getSheetAt(0);
-            
+
             if (sheet.getPhysicalNumberOfRows() == 0) {
                 throw new IllegalArgumentException("El archivo Excel está vacío.");
             }
@@ -226,7 +227,7 @@ public class InventarioService {
 
         // Reportar resultados
         if (!errors.isEmpty()) {
-            throw new RuntimeException("Procesamiento completado con errores. Filas procesadas: " + 
+            throw new RuntimeException("Procesamiento completado con errores. Filas procesadas: " +
                 processedRows + "/" + totalRows + ". Errores: " + String.join("; ", errors));
         }
     }
@@ -236,7 +237,7 @@ public class InventarioService {
             throw new IllegalArgumentException("El archivo debe tener al menos 5 columnas.");
         }
 
-        String[] expectedColumns = {"id_producto", "cantidad_disponible", "ubicacion", "lote", "fecha_vencimiento"};
+        String[] expectedColumns = {"id_producto", "cantidad_disponible", "ubicacion", "lote", "fecha_vencimiento","nombre_farmacia"};
         for (int i = 0; i < expectedColumns.length; i++) {
             Cell cell = headerRow.getCell(i);
             if (cell == null || !cell.getStringCellValue().trim().equalsIgnoreCase(expectedColumns[i])) {
@@ -246,108 +247,132 @@ public class InventarioService {
     }
 
     private void processExcelRow(Row row, int rowNumber) throws Exception {
-        if (row.getLastCellNum() < 5) {
-            throw new IllegalArgumentException("La fila debe tener al menos 5 columnas");
+        if (row.getLastCellNum() < 6) {
+            throw new IllegalArgumentException("La fila debe tener al menos 6 columnas incluyendo nombre_farmacia");
         }
 
-        // Validar y obtener id_producto
+        // ID del producto
         Cell idProductoCell = row.getCell(0);
         int idProducto;
         if (idProductoCell == null) {
             throw new IllegalArgumentException("ID de producto no puede estar vacío");
         }
-        
+
         if (idProductoCell.getCellType() == CellType.NUMERIC) {
             idProducto = (int) idProductoCell.getNumericCellValue();
-        } else if (idProductoCell.getCellType() == CellType.STRING) {
-            try {
-                idProducto = Integer.parseInt(idProductoCell.getStringCellValue().trim());
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("ID de producto debe ser un número válido");
-            }
         } else {
-            throw new IllegalArgumentException("ID de producto debe ser un número");
+            idProducto = Integer.parseInt(idProductoCell.getStringCellValue().trim());
         }
 
-        // Verificar que el producto existe
         Optional<Producto> productoOpt = productoRepository.findById(idProducto);
         if (productoOpt.isEmpty()) {
             throw new IllegalArgumentException("El producto con ID " + idProducto + " no existe en la base de datos");
         }
 
-        // Validar cantidad disponible
+        // Cantidad disponible
         Cell cantidadCell = row.getCell(1);
         int cantidadDisponible;
         if (cantidadCell == null) {
             throw new IllegalArgumentException("Cantidad disponible no puede estar vacía");
         }
-        
+
         if (cantidadCell.getCellType() == CellType.NUMERIC) {
             cantidadDisponible = (int) cantidadCell.getNumericCellValue();
-        } else if (cantidadCell.getCellType() == CellType.STRING) {
-            try {
-                cantidadDisponible = Integer.parseInt(cantidadCell.getStringCellValue().trim());
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Cantidad disponible debe ser un número válido");
-            }
         } else {
-            throw new IllegalArgumentException("Cantidad disponible debe ser un número");
+            cantidadDisponible = Integer.parseInt(cantidadCell.getStringCellValue().trim());
         }
 
         if (cantidadDisponible < 0) {
             throw new IllegalArgumentException("La cantidad disponible no puede ser negativa");
         }
 
-        // Validar ubicación
+        // Ubicación
         Cell ubicacionCell = row.getCell(2);
-        String ubicacion;
-        if (ubicacionCell == null) {
-            throw new IllegalArgumentException("La ubicación no puede estar vacía");
-        }
-        ubicacion = ubicacionCell.getStringCellValue().trim();
+        String ubicacion = (ubicacionCell != null) ? ubicacionCell.getStringCellValue().trim() : "";
         if (ubicacion.isEmpty()) {
             throw new IllegalArgumentException("La ubicación no puede estar vacía");
         }
 
-        // Validar lote
+        // Lote
         Cell loteCell = row.getCell(3);
-        String lote;
-        if (loteCell == null) {
-            throw new IllegalArgumentException("El lote no puede estar vacío");
-        }
-        lote = loteCell.getStringCellValue().trim();
+        String lote = (loteCell != null) ? loteCell.getStringCellValue().trim() : "";
         if (lote.isEmpty()) {
             throw new IllegalArgumentException("El lote no puede estar vacío");
         }
 
-        // Validar fecha de vencimiento
+        // Fecha de vencimiento
         Cell fechaCell = row.getCell(4);
         String fechaVencimiento;
         if (fechaCell == null) {
             throw new IllegalArgumentException("La fecha de vencimiento no puede estar vacía");
         }
-        
+
         if (fechaCell.getCellType() == CellType.STRING) {
             fechaVencimiento = fechaCell.getStringCellValue().trim();
-        } else if (fechaCell.getCellType() == CellType.NUMERIC) {
-            fechaVencimiento = fechaCell.getDateCellValue().toString();
         } else {
-            throw new IllegalArgumentException("Fecha de vencimiento debe ser texto o fecha");
-        }
-        
-        if (fechaVencimiento.isEmpty()) {
-            throw new IllegalArgumentException("La fecha de vencimiento no puede estar vacía");
+            fechaVencimiento = fechaCell.getDateCellValue().toString(); // Puedes formatear si quieres
         }
 
-        // Crear y guardar el inventario
-        Inventario inventario = new Inventario();
-        inventario.setId_producto(idProducto);
-        inventario.setCantidad_disponible(cantidadDisponible);
-        inventario.setUbicacion(ubicacion);
-        inventario.setLote(lote);
-        inventario.setFecha_vencimiento(fechaVencimiento);
+        // Nombre farmacia
+        Cell farmaciaCell = row.getCell(5);
+        String nombreFarmacia = (farmaciaCell != null) ? farmaciaCell.getStringCellValue().trim() : "";
+        if (nombreFarmacia.isEmpty()) {
+            throw new IllegalArgumentException("El nombre de la farmacia no puede estar vacío");
+        }
 
-        inventarioRepository.save(inventario);
+        // Verificar si ya existe inventario para ese producto, lote y farmacia
+        Optional<Inventario> inventarioExistenteOpt = inventarioRepository
+                .findByProductoYLoteYFarmacia(idProducto, lote, nombreFarmacia);
+
+        if (inventarioExistenteOpt.isPresent()) {
+            // Actualizar cantidad existente
+            Inventario inventarioExistente = inventarioExistenteOpt.get();
+            inventarioExistente.setCantidad_disponible(
+                    inventarioExistente.getCantidad_disponible() + cantidadDisponible);
+            inventarioRepository.save(inventarioExistente);
+        } else {
+            // Crear nuevo inventario
+            Inventario nuevoInventario = new Inventario();
+            nuevoInventario.setId_producto(idProducto);
+            nuevoInventario.setCantidad_disponible(cantidadDisponible);
+            nuevoInventario.setUbicacion(ubicacion);
+            nuevoInventario.setLote(lote);
+            nuevoInventario.setFecha_vencimiento(fechaVencimiento);
+            nuevoInventario.setNombre_farmacia(nombreFarmacia);
+            inventarioRepository.save(nuevoInventario);
+        }
+    }
+
+    public List<InventarioProductoDTO> obtenerInventarioConProducto() {
+        List<Inventario> inventarios = inventarioRepository.findAll();
+        List<InventarioProductoDTO> resultado = new ArrayList<>();
+
+        for (Inventario inv : inventarios) {
+            Optional<Producto> productoOpt = productoRepository.findById(inv.getId_producto());
+
+            if (productoOpt.isPresent()) {
+                Producto prod = productoOpt.get();
+                InventarioProductoDTO dto = new InventarioProductoDTO();
+
+                dto.setId_inventario(inv.getId_inventario());
+                dto.setId_producto(prod.getId_producto());
+                dto.setNombre(prod.getNombre());
+                dto.setDescripcion(prod.getDescripcion());
+                dto.setLaboratorio(prod.getLaboratorio());
+                dto.setTipo(prod.getTipo());
+                dto.setPrecio_unitario(prod.getPrecio_unitario());
+
+                dto.setCantidad_disponible(inv.getCantidad_disponible());
+                dto.setUbicacion(inv.getUbicacion());
+                dto.setLote(inv.getLote());
+                dto.setFecha_vencimiento(inv.getFecha_vencimiento());
+                dto.setNombre_farmacia(inv.getNombre_farmacia());
+
+                resultado.add(dto);
+            }
+        }
+
+        return resultado;
     }
 
     public List<Inventario> getAllInventarios() {

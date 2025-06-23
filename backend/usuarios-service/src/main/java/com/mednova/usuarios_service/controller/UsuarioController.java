@@ -1,13 +1,15 @@
 package com.mednova.usuarios_service.controller;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.mednova.usuarios_service.repository.UsuarioRepository;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
 import com.mednova.usuarios_service.model.Permiso;
 import com.mednova.usuarios_service.model.Rol;
@@ -19,8 +21,12 @@ import com.mednova.usuarios_service.service.UsuarioService;
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
 
-    
     private final UsuarioService usuarioService;
+
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
@@ -55,5 +61,33 @@ public class UsuarioController {
     public ResponseEntity<Permiso> crearPermiso(@RequestBody Permiso permiso) {
         return ResponseEntity.ok(usuarioService.crearPermiso(permiso));
     }
-    
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<?> obtenerUsuarioPorEmail(@PathVariable String email) {
+        Optional<Usuario> usuarioOpt = usuarioService.obtenerPorEmail(email);
+
+        if (usuarioOpt.isPresent()) {
+            return ResponseEntity.ok(usuarioOpt.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+        }
+    }
+
+    @PostMapping("/hash-passwords")
+    public ResponseEntity<String> actualizarPasswords() {
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        for (Usuario usuario : usuarios) {
+            if (!usuario.getPassword().startsWith("$2a$")) {
+                usuario.setPassword(encoder.encode(usuario.getPassword()));
+                usuarioRepository.save(usuario);
+            }
+        }
+        return ResponseEntity.ok("Contraseñas actualizadas");
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarUsuario(@PathVariable Integer id) {
+        usuarioService.eliminarUsuario(id);
+        return ResponseEntity.ok("Usuario eliminado");
+    }
 }

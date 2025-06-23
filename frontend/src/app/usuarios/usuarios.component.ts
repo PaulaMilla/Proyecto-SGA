@@ -12,7 +12,9 @@ export class UsuariosComponent implements OnInit {
     nombre: '',
     apellido: '',
     correo: '',
-    rol: ''
+    rol: '',
+    estado: '',
+    fechaUltimoAcceso: ''
   };
 
   usuarios: any[] = [];
@@ -24,20 +26,20 @@ export class UsuariosComponent implements OnInit {
   }
 
   cargarUsuarios() {
-    this.http.get<any[]>('https://TUDOMINIO/api/usuarios').subscribe(data => {
+    this.http.get<any[]>('http://34.61.182.228/api/usuarios').subscribe(data => {
       this.usuarios = data;
     });
   }
 
   guardarUsuario() {
     if (this.usuario.id) {
-      this.http.put(`https://TUDOMINIO/api/usuarios/${this.usuario.id}`, this.usuario).subscribe(() => {
-        this.usuario = { nombre: '', apellido: '', correo: '', rol: '' };
+      this.http.put(`http://34.61.182.228/api/usuarios/${this.usuario.id}`, this.usuario).subscribe(() => {
+        this.resetFormulario();
         this.cargarUsuarios();
       });
     } else {
-      this.http.post('https://TUDOMINIO/api/usuarios', this.usuario).subscribe(() => {
-        this.usuario = { nombre: '', apellido: '', correo: '', rol: '' };
+      this.http.post('http://34.61.182.228/api/usuarios', this.usuario).subscribe(() => {
+        this.resetFormulario();
         this.cargarUsuarios();
       });
     }
@@ -48,8 +50,22 @@ export class UsuariosComponent implements OnInit {
   }
 
   eliminarUsuario(id: number) {
-    this.http.delete(`https://TUDOMINIO/api/usuarios/${id}`).subscribe(() => {
-      this.cargarUsuarios();
-    });
+    console.log(id);
+    if (confirm('¿Seguro que deseas eliminar este usuario?')) {
+      this.http.delete(`http://34.61.182.228/api/usuarios/${id}`).subscribe(() => {
+        this.cargarUsuarios();
+      });
+    }
+  }
+
+  resetFormulario() {
+    this.usuario = {
+      nombre: '',
+      apellido: '',
+      correo: '',
+      rol: '',
+      estado: '',
+      fechaUltimoAcceso: ''
+    };
   }
 }

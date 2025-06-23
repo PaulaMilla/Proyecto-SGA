@@ -4,4 +4,5 @@ export interface Inventario {
   ubicacion: string;
   lote: string;
   fecha_vencimiento: string;
+  nombre_farmacia: string;
 }

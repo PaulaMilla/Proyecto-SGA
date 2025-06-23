@@ -32,12 +32,36 @@
     />
 
     <label for="rol">Rol</label>
-    <input
+    <select
       id="rol"
-      type="text"
       [(ngModel)]="usuario.rol"
       name="rol"
-      placeholder="Ej: Administrador"
+      required
+    >
+      <option value="">Seleccione un rol</option>
+      <option value="ADMIN">ADMIN</option>
+      <option value="BODEGUERO">BODEGUERO</option>
+      <option value="FARMACEUTICO">FARMACEUTICO</option>
+      <option value="USUARIO">USUARIO</option>
+    </select>
+
+    <label for="estado">Estado</label>
+    <input
+      id="estado"
+      type="text"
+      [(ngModel)]="usuario.estado"
+      name="estado"
+      placeholder="Ej: Activo"
+    />
+
+    <label for="fechaUltimoAcceso">Último Acceso</label>
+    <input
+      id="fechaUltimoAcceso"
+      type="text"
+      [(ngModel)]="usuario.fechaUltimoAcceso"
+      name="fechaUltimoAcceso"
+      placeholder="dd/MM/yyyy HH:mm"
+      disabled
     />
 
     <button type="submit">Guardar Usuario</button>
