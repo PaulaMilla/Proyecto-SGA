@@ -13,7 +13,7 @@
     <a *ngIf="userRol === 'ADMIN' || userRol === 'FARMACEUTICO'" routerLink="/ventas" routerLinkActive="active">Ventas</a>
     <a *ngIf="userRol === 'ADMIN'" routerLink="/usuarios" routerLinkActive="active">Usuarios</a>
     <a *ngIf="userRol === 'ADMIN'" routerLink="/inventario-info" routerLinkActive="active">Inventario</a>
-    <a *ngIf="userRol" routerLink="/upload" routerLinkActive="active">Carga</a>
+    <a *ngIf="userRol === 'ADMIN'" routerLink="/carga-datos" routerLinkActive="active">Carga</a>
   </nav>
 
   <!-- Sección de perfil o login -->

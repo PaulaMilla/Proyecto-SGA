@@ -9,7 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { VentasComponent } from './ventas/ventas.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
-import { UploadComponent } from './inventario/upload/upload.component';
+import { UploadComponent as InventarioUploadComponent } from './inventario/upload/upload.component';
+import { UploadComponent as PacientesUploadComponent } from './pacientes/upload/upload.component';
 
 import { HomeComponent } from './components/home/home.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
@@ -23,7 +24,8 @@ import { InventarioInfoComponent } from './inventario/inventario-info/inventario
     VentasComponent,
     HeaderComponent,
     FooterComponent,
-    UploadComponent,
+    InventarioUploadComponent,
+    PacientesUploadComponent,
     HomeComponent,
     UsuariosComponent,
     CargaDatosComponent,

@@ -131,8 +131,8 @@ public class PacienteService {
     }
 
     private void processCSVRow(String[] row, int rowNumber) throws Exception {
-        if (row.length < 6) {
-            throw new IllegalArgumentException("La fila debe tener al menos 6 columnas incluyendo nombre_farmacia");
+        if (row.length < 5) {
+            throw new IllegalArgumentException("La fila debe tener al menos 5 columnas incluyendo nombre_farmacia");
         }
 
         String nombre = row[0].trim();
@@ -145,7 +145,7 @@ public class PacienteService {
         }
 
         String direccion = row[2].trim();
-        Boolean beneficiario = Boolean.valueOf(row[3].trim());
+        Boolean beneficiario = row[3].trim().equalsIgnoreCase("true");
         String nombreFarmacia = row[4].trim();
 
         // Crear nuevo inventario

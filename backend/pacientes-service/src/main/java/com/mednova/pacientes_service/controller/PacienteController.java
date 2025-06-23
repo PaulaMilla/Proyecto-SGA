@@ -52,6 +52,20 @@ public class PacienteController {
         return ResponseEntity.ok(pacienteService.obtenerPorBeneficiario(false));
     }
 
+    // Endpoint de prueba para diagnosticar problemas
+    @PostMapping("/test-upload")
+    public ResponseEntity<Map<String, String>> testUpload(@RequestPart("file") MultipartFile file) {
+        Map<String, String> response = new HashMap<>();
+
+        if (file.isEmpty()) {
+            response.put("message", "El archivo está vacío");
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        response.put("message", "Archivo recibido correctamente: " + file.getOriginalFilename());
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/upload")
     public ResponseEntity<Map<String, String>> uploadPacientes(@RequestPart("file") MultipartFile file) {
         Map<String, String> response = new HashMap<>();
