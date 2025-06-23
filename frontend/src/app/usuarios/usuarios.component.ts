@@ -55,6 +55,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   eliminarUsuario(id: number) {
+    console.log(id);
     if (confirm('¿Seguro que deseas eliminar este usuario?')) {
       this.http.delete(`${this.apiUrl}/${id}`).subscribe(() => {
         this.cargarUsuarios();
