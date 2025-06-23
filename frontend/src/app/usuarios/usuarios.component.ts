@@ -50,15 +50,12 @@ export class UsuariosComponent implements OnInit {
   }
 
   eliminarUsuario(id: number) {
-eliminarUsuario(id: number) {
-  console.log(id);
-  if (confirm('¿Seguro que deseas eliminar este usuario?')) {
-    this.http.delete(`http://34.61.182.228/api/usuarios/${id}`).subscribe(() => {
-      this.cargarUsuarios();
-    });
-  }
-}
-
+    console.log(id);
+    if (confirm('¿Seguro que deseas eliminar este usuario?')) {
+      this.http.delete(`http://34.61.182.228/api/usuarios/${id}`).subscribe(() => {
+        this.cargarUsuarios();
+      });
+    }
   }
 
   resetFormulario() {
