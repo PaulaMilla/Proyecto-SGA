@@ -23,7 +23,7 @@ export class UsuariosService {
 
   constructor(private http: HttpClient) { }
 
-  apiUrl = 'http://34.61.182.228/api/api/usuarios';
+  apiUrl = 'http://34.61.182.228/api/usuarios';
 
   // POST /usuarios
     registrarVenta(usuario: Usuario): Observable<Usuario> {
