@@ -1,0 +1,21 @@
+$primary-color: #004d40;
+$footer-bg: #263238;
+
+.text-primary-custom {
+  color: $primary-color;
+}
+
+.section-title {
+  color: $footer-bg;
+  font-weight: 600;
+}
+
+.custom-card {
+  background-color: #ffffff;
+  border: 1px solid lighten($footer-bg, 15%);
+  border-radius: 12px;
+}
+
+.bg-instruction {
+  background-color: lighten($footer-bg, 10%);
+}
