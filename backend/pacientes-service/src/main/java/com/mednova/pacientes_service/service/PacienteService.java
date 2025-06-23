@@ -131,8 +131,8 @@ public class PacienteService {
     }
 
     private void processCSVRow(String[] row, int rowNumber) throws Exception {
-        if (row.length < 6) {
-            throw new IllegalArgumentException("La fila debe tener al menos 6 columnas incluyendo nombre_farmacia");
+        if (row.length < 5) {
+            throw new IllegalArgumentException("La fila debe tener al menos 5 columnas incluyendo nombre_farmacia");
         }
 
         String nombre = row[0].trim();
