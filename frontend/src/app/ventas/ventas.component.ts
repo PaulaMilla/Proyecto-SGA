@@ -13,6 +13,9 @@ export class VentasComponent implements OnInit {
     precioUnitario: 0
   };
 
+  ventasRegistradas: any[] = [];
+
+  mostrarFormulario: boolean = false;  // controla si se ve el formulario
   mostrarBotonArriba = false;
 
   constructor() {}
@@ -21,10 +24,11 @@ export class VentasComponent implements OnInit {
 
   guardarVenta() {
     const total = this.venta.cantidad * this.venta.precioUnitario;
-    console.log('Venta guardada:', {
-      ...this.venta,
-      total
-    });
+    const ventaCompleta = { ...this.venta, total };
+
+    this.ventasRegistradas.push(ventaCompleta);
+
+    console.log('Venta guardada:', ventaCompleta);
 
     this.venta = {
       cliente: '',
@@ -32,6 +36,8 @@ export class VentasComponent implements OnInit {
       cantidad: 1,
       precioUnitario: 0
     };
+
+    this.mostrarFormulario = false; // ocultar formulario al guardar
   }
 
   get total(): number {
@@ -40,6 +46,14 @@ export class VentasComponent implements OnInit {
 
   get totalFormateado(): string {
     return '$' + this.total.toFixed(0);
+  }
+
+  mostrarAgregarVenta() {
+    this.mostrarFormulario = true;
+  }
+
+  cancelarAgregar() {
+    this.mostrarFormulario = false;
   }
 
   volverArriba() {

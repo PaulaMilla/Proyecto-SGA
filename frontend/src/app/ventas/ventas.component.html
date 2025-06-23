@@ -1,4 +1,26 @@
-<div class="formulario-venta">
+<h2 class="titulo-lista">Ventas Registradas</h2>
+
+<div class="ventas-lista" *ngIf="ventasRegistradas.length > 0; else sinVentas">
+  <div class="venta-card" *ngFor="let v of ventasRegistradas">
+    <p><strong>Cliente:</strong> {{ v.cliente }}</p>
+    <p><strong>Producto:</strong> {{ v.producto }}</p>
+    <p><strong>Cantidad:</strong> {{ v.cantidad }}</p>
+    <p><strong>Precio Unitario:</strong> {{ '$' + v.precioUnitario.toFixed(0) }}</p>
+    <p><strong>Total:</strong> {{ '$' + v.total.toFixed(0) }}</p>
+  </div>
+</div>
+
+<ng-template #sinVentas>
+  <p class="mensaje-sin-ventas">No hay ventas registradas aún.</p>
+</ng-template>
+
+<!-- Botón para mostrar formulario -->
+<button *ngIf="!mostrarFormulario" class="btn-agregar" (click)="mostrarAgregarVenta()">
+  + Agregar Venta
+</button>
+
+<!-- Formulario de agregar venta -->
+<div class="formulario-venta" *ngIf="mostrarFormulario">
   <h2 class="titulo">Registrar Venta</h2>
   <form (ngSubmit)="guardarVenta()" #form="ngForm">
     <label for="cliente">Nombre del cliente</label>
@@ -7,7 +29,7 @@
       type="text"
       [(ngModel)]="venta.cliente"
       name="cliente"
-      placeholder="Ej: Katalina Ramirez"
+      placeholder="Ej: Antonia Yevenes"
       required
     />
 
@@ -51,7 +73,10 @@
       readonly
     />
 
-    <button type="submit">Guardar Venta</button>
+    <div class="botones-formulario">
+      <button type="submit">Guardar Venta</button>
+      <button type="button" (click)="cancelarAgregar()">Cancelar</button>
+    </div>
   </form>
 </div>
 

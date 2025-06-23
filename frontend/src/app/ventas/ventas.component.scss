@@ -1,6 +1,36 @@
+// Botón para agregar venta
+.btn-agregar {
+  display: block;
+  margin: 2rem auto;
+  background-color: #207a5a;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 0.8rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #1a5e48;
+  }
+}
+
+// Mensaje cuando no hay ventas
+.mensaje-sin-ventas {
+  max-width: 700px;
+  margin: 1rem auto 2rem;
+  text-align: center;
+  font-style: italic;
+  color: #555;
+}
+
+// Contenedor formulario
 .formulario-venta {
   max-width: 500px;
-  margin: 3rem auto;
+  margin: 0 auto 3rem;
   background-color: white;
   padding: 2rem;
   border-radius: 10px;
@@ -48,24 +78,79 @@
       }
     }
 
-    button[type='submit'] {
-      background-color: #28a745;
-      color: white;
-      border: none;
-      padding: 0.8rem;
-      border-radius: 6px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s;
+    .botones-formulario {
+      display: flex;
+      justify-content: space-between;
 
-      &:hover {
-        background-color: #218838;
+      button {
+        flex: 1;
+        padding: 0.8rem;
+        border-radius: 6px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.3s;
+      }
+
+      button[type='submit'] {
+        background-color: #28a745;
+        color: white;
+        margin-right: 0.5rem;
+
+        &:hover {
+          background-color: #218838;
+        }
+      }
+
+      button[type='button'] {
+        background-color: #dc3545;
+        color: white;
+
+        &:hover {
+          background-color: #c82333;
+        }
       }
     }
   }
 }
 
+// Estilos para las tarjetas de ventas (igual que antes)
+.titulo-lista {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #207a5a;
+  margin: 3rem 0 1.5rem;
+}
+
+.ventas-lista {
+  max-width: 700px;
+  margin: 0 auto;
+  background-color: #f7f7f7;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+
+  .venta-card {
+    background-color: white;
+    padding: 1rem 1.2rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+
+    p {
+      margin: 0.3rem 0;
+      color: #333;
+    }
+
+    strong {
+      color: #207a5a;
+    }
+  }
+}
+
+/* Botón volver arriba */
 .btn-volver-arriba {
   position: fixed;
   bottom: 20px;
