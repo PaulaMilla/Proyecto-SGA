@@ -4,3 +4,14 @@ server:
 spring:
   application:
     name: auth-service
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus, health, info
+  endpoint:
+    prometheus:
+      enabled: true
+  server:
+    base-path: /actuator
