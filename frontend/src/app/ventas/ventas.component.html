@@ -23,21 +23,21 @@
 <div class="formulario-venta" *ngIf="mostrarFormulario">
   <h2 class="titulo">Registrar Venta</h2>
   <form (ngSubmit)="guardarVenta()" #form="ngForm">
-    <label for="cliente">Nombre del cliente</label>
+    <label for="cliente">ID del paciente</label>
     <input
       id="cliente"
       type="text"
-      [(ngModel)]="venta.cliente"
+      [(ngModel)]="venta.pacienteId"
       name="cliente"
       placeholder="Ej: Antonia Yevenes"
       required
     />
 
-    <label for="producto">Medicamento</label>
+    <label for="producto">ID del producto</label>
     <input
       id="producto"
       type="text"
-      [(ngModel)]="venta.producto"
+      [(ngModel)]="venta.productoId"
       name="producto"
       placeholder="Ej: Paracetamol 500mg"
       required

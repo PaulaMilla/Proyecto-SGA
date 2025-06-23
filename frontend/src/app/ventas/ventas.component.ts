@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { VentasService, Venta } from './services/ventas.service';
 
 @Component({
   selector: 'app-ventas',
@@ -7,10 +8,11 @@ import { Component, HostListener, OnInit } from '@angular/core';
 })
 export class VentasComponent implements OnInit {
   venta = {
-    cliente: '',
-    producto: '',
+    pacienteId: 0,
+    productoId: 0,
     cantidad: 1,
-    precioUnitario: 0
+    precioUnitario: 0,
+    usuarioId: 0
   };
 
   ventasRegistradas: any[] = [];
@@ -18,26 +20,32 @@ export class VentasComponent implements OnInit {
   mostrarFormulario: boolean = false;  // controla si se ve el formulario
   mostrarBotonArriba = false;
 
-  constructor() {}
+  constructor(private ventasService: VentasService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.cargarVentas();
+  }
 
   guardarVenta() {
     const total = this.venta.cantidad * this.venta.precioUnitario;
-    const ventaCompleta = { ...this.venta, total };
+    const ventaCompleta: Venta = {
+        pacienteId: this.venta.pacienteId,
+        fechaVenta: new Date().toISOString().slice(0,10),
+        total: total,
+        usuarioId: this.venta.usuarioId
+     };
 
-    this.ventasRegistradas.push(ventaCompleta);
-
-    console.log('Venta guardada:', ventaCompleta);
-
-    this.venta = {
-      cliente: '',
-      producto: '',
-      cantidad: 1,
-      precioUnitario: 0
-    };
-
-    this.mostrarFormulario = false; // ocultar formulario al guardar
+    this.ventasService.registrarVenta(ventaCompleta).subscribe(nuevaVenta => {
+      this.cargarVentas();
+      this.venta = {
+        pacienteId: 0,
+        productoId: 0,
+        cantidad: 1,
+        precioUnitario: 0,
+        usuarioId: 0
+      };
+      this.mostrarFormulario = false;
+    });
   }
 
   get total(): number {
@@ -64,4 +72,11 @@ export class VentasComponent implements OnInit {
   onWindowScroll() {
     this.mostrarBotonArriba = window.pageYOffset > 150;
   }
+
+  cargarVentas():void{
+    this.ventasService.obtenerTodas().subscribe(data => {
+      this.ventasRegistradas = data;
+    });
+  }
+  
 }
