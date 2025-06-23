@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,9 +9,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { VentasComponent } from './ventas/ventas.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
-import { UploadComponent } from './inventario/upload/upload.component';
+import { UploadComponent as InventarioUploadComponent } from './inventario/upload/upload.component';
+import { UploadComponent as PacientesUploadComponent } from './pacientes/upload/upload.component';
 
-import { UsuariosModule } from './usuarios/usuarios.module';
+import { HomeComponent } from './components/home/home.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { CargaDatosComponent } from './components/carga-datos/carga-datos.component';
+import { LoginComponent } from './components/login/login.component';
+import { InventarioInfoComponent } from './inventario/inventario-info/inventario-info.component';
 
 @NgModule({
   declarations: [
@@ -19,14 +24,20 @@ import { UsuariosModule } from './usuarios/usuarios.module';
     VentasComponent,
     HeaderComponent,
     FooterComponent,
-    UploadComponent
+    InventarioUploadComponent,
+    PacientesUploadComponent,
+    HomeComponent,
+    UsuariosComponent,
+    CargaDatosComponent,
+    LoginComponent,
+    InventarioInfoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    UsuariosModule
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

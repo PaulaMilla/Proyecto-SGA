@@ -18,6 +18,11 @@ spring:
                 regexp: /api/inventarios/(?<segment>.*)
                 replacement: /api/inventarios/${segment}
 
+        - id: pacientes-service
+          uri: http://pacientes-service.pacientes.svc.cluster.local:80
+          predicates:
+            - Path=/api/pacientes/**
+
         - id: ventas-service
           uri: http://ventas-service.ventas.svc.cluster.local:80
           predicates:
@@ -32,6 +37,10 @@ spring:
           uri: http://reportes-service.reportes.svc.cluster.local:80
           predicates:
             - Path=/api/reportes/**
+        - id: auth-service
+          uri: http://auth-service.auth.svc.cluster.local:80
+          predicates:
+            - Path=/api/auth/**
 
   servlet:
     multipart:
@@ -44,11 +53,10 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,prometheus
+        include: prometheus, health, info
   endpoint:
     prometheus:
       enabled: true
-  metrics:
-    export:
-      prometheus:
-        enabled: true
+  server:
+    base-path: /actuator
+

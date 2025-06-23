@@ -1,5 +1,6 @@
 package com.mednova.usuarios_service.service;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -60,4 +61,7 @@ public class UsuarioService {
         return permisoRepository.findAll();
     }
 
+    public Optional<Usuario> obtenerPorEmail(String email){
+        return usuarioRepository.findByCorreo(email);
+    }
 }
