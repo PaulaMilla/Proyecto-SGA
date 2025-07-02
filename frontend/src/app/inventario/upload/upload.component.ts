@@ -12,6 +12,8 @@ export class UploadComponent {
   loading: boolean = false;
   message: string = '';
   messageType: 'success' | 'error' | 'info' = 'info';
+  tipoInventario: 'general' | 'selectivo' | 'barrido' | '' = '';
+
 
   constructor(private inventarioService: InventarioService) {}
 
@@ -26,9 +28,19 @@ export class UploadComponent {
       this.showMessage('Por favor selecciona un archivo', 'error');
       return;
     }
-  
+
+    if (!this.tipoInventario) {
+      this.showMessage('Por favor selecciona el tipo de inventario', 'error');
+      return;
+    }
+
     this.loading = true;
-    this.inventarioService.subirArchivoInventario(this.file)
+
+    const formData = new FormData();
+    formData.append('file', this.file, this.file.name);
+    formData.append('tipoInventario', this.tipoInventario); // 🚀
+
+    this.inventarioService.subirArchivoInventario(formData)
       .subscribe({
         next: (res) => {
           // Si res tiene una propiedad 'message', muéstrala
@@ -49,7 +61,7 @@ export class UploadComponent {
       this.showMessage('Por favor selecciona un archivo', 'error');
       return;
     }
-  
+
     this.loading = true;
     this.inventarioService.testUpload(this.file)
       .subscribe({

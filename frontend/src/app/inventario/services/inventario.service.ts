@@ -16,9 +16,7 @@ export class InventarioService {
     return this.http.get<InventarioProducto[]>(`${this.apiUrl}/con-producto`);
   }
 
-  subirArchivoInventario(file: File): Observable<any> {
-    const formData = new FormData();
-    formData.append('file', file, file.name);
+  subirArchivoInventario(formData: FormData): Observable<any> {
 
     // No establecer Content-Type manualmente, dejar que el navegador lo haga
     const headers = new HttpHeaders();
