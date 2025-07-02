@@ -33,7 +33,7 @@ public class InventarioService {
         this.productoRepository = productoRepository;
     }
 
-    public void processFile(MultipartFile file) throws Exception {
+    public void processFile(MultipartFile file, String tipoInventario) throws Exception {
         if (file.isEmpty()) {
             throw new IllegalArgumentException("El archivo está vacío.");
         }
@@ -43,8 +43,19 @@ public class InventarioService {
             throw new IllegalArgumentException("Nombre de archivo no válido.");
         }
 
+        // Validar el tipo
+        String tipo = tipoInventario.toLowerCase();
+        if (!List.of("general", "selectivo", "barrido").contains(tipo)) {
+            throw new IllegalArgumentException("Tipo de inventario no soportado: " + tipoInventario);
+        }
+
+        // Si es inventario general, marcamos todo como no contado o stock cero ANTES
+        if (tipo.equals("general")) {
+            inventarioRepository.resetearCantidades();
+        }
+
         if (fileName.toLowerCase().endsWith(".csv")) {
-            processCSV(file);
+            processCSV(file, tipoInventario);
         } else if (fileName.toLowerCase().endsWith(".xlsx")) {
             processExcel(file);
         } else {
@@ -52,7 +63,7 @@ public class InventarioService {
         }
     }
 
-    private void processCSV(MultipartFile file) throws IOException {
+    private void processCSV(MultipartFile file, String tipoInventario) throws IOException {
         List<String> errors = new ArrayList<>();
         int processedRows = 0;
         int totalRows = 0;
@@ -82,7 +93,7 @@ public class InventarioService {
             for (int i = 1; i < rows.size(); i++) {
                 String[] row = rows.get(i);
                 try {
-                    processCSVRow(row, i + 1);
+                    processCSVRow(row, i + 1, tipoInventario);
                     processedRows++;
                 } catch (IllegalArgumentException e) {
                     // Si es error de producto no encontrado, agregar información útil
@@ -135,7 +146,7 @@ public class InventarioService {
         }
     }
 
-    private void processCSVRow(String[] row, int rowNumber) throws Exception {
+    private void processCSVRow(String[] row, int rowNumber, String tipoInventario) throws Exception {
         if (row.length < 6) {
             throw new IllegalArgumentException("La fila debe tener al menos 6 columnas incluyendo nombre_farmacia");
         }
@@ -178,8 +189,14 @@ public class InventarioService {
         if (inventarioExistenteOpt.isPresent()) {
             // Actualizar cantidad existente
             Inventario inventarioExistente = inventarioExistenteOpt.get();
-            inventarioExistente.setCantidad_disponible(
-                    inventarioExistente.getCantidad_disponible() + cantidadDisponible);
+            if (tipoInventario.equalsIgnoreCase("general") || tipoInventario.equalsIgnoreCase("barrido")) {
+                // Reemplaza cantidad en vez de sumar
+                inventarioExistente.setCantidad_disponible(cantidadDisponible);
+            } else {
+                // Suma cantidad
+                inventarioExistente.setCantidad_disponible(
+                        inventarioExistente.getCantidad_disponible() + cantidadDisponible);
+            }
             inventarioRepository.save(inventarioExistente);
         } else {
             // Crear nuevo inventario

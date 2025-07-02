@@ -127,7 +127,8 @@ public class InventarioController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<Map<String, String>> uploadInventario(@RequestPart("file") MultipartFile file) {
+    public ResponseEntity<Map<String, String>> uploadInventario(@RequestPart("file") MultipartFile file,
+                                                                @RequestPart("tipoInventario") String tipoInventario) {
         Map<String, String> response = new HashMap<>();
 
         System.out.println("=== CARGA DE INVENTARIO ===");
@@ -151,7 +152,7 @@ public class InventarioController {
             }
             
             System.out.println("Iniciando procesamiento del archivo...");
-            inventarioService.processFile(file);
+            inventarioService.processFile(file, tipoInventario);
             System.out.println("Archivo procesado exitosamente");
             return ResponseEntity.ok(response);
             
