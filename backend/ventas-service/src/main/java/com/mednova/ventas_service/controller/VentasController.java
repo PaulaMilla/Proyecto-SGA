@@ -23,8 +23,8 @@ public class VentasController {
 
     // POST /ventas - Registrar nueva venta
     @PostMapping
-    public ResponseEntity<Venta> registrarVenta(@RequestBody Venta venta) {
-        Venta nuevaVenta = ventaService.registrarVenta(venta);
+    public ResponseEntity<Venta> registrarVenta(@RequestBody Venta venta, DetalleVenta detalleVenta) {
+        Venta nuevaVenta = ventaService.registrarVenta(venta, (List<DetalleVenta>) detalleVenta);
         return ResponseEntity.ok(nuevaVenta);
     }
 
