@@ -5,7 +5,7 @@
     <p><strong>Cliente:</strong> {{ v.cliente }}</p>
     <p><strong>Producto:</strong> {{ v.producto }}</p>
     <p><strong>Cantidad:</strong> {{ v.cantidad }}</p>
-    <p><strong>Precio Unitario:</strong> {{ '$' + v.precioUnitario.toFixed(0) }}</p>
+    <p><strong>Precio Unitario:</strong> {{ v.precioUnitario | currency:'USD':'symbol':'1.0-0' }}</p>
     <p><strong>Total:</strong> {{ '$' + v.total.toFixed(0) }}</p>
   </div>
 </div>
