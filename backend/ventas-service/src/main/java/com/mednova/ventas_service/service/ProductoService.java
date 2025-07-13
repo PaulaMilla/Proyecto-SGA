@@ -12,8 +12,8 @@ public class ProductoService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public ProductoDTO obtenerProductoPorId(int productoId) {
-        String url = "http://inventarios-service:80" + productoId;
+    public ProductoDTO getProducto(int id_producto) {
+        String url = "http://inventarios-service:80" + id_producto;
         ResponseEntity<ProductoDTO> response = restTemplate.getForEntity(url, ProductoDTO.class);
         return response.getBody();
     }

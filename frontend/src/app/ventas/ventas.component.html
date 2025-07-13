@@ -40,6 +40,7 @@
       [(ngModel)]="venta.productoId"
       name="producto"
       placeholder="Ej: Paracetamol 500mg"
+      (change)="actualizarPrecioYTotal()"
       required
     />
 
@@ -58,12 +59,10 @@
     <input
       id="precioUnitario"
       type="number"
-      [(ngModel)]="venta.precioUnitario"
-      name="precioUnitario"
-      placeholder="Ej: 1500"
-      required
-      min="0"
+      [value]="venta.precioUnitario"
+      readonly
     />
+
 
     <label for="total">Total ($)</label>
     <input

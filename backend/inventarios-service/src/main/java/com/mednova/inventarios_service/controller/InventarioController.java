@@ -166,6 +166,13 @@ public class InventarioController {
         }
     }
 
+    @GetMapping("/productos/{id}")
+    public ResponseEntity<Producto> getProducto(@PathVariable int id) {
+        return productoRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     public Inventario createInventario(@RequestBody Inventario inventario) {
         return inventarioService.saveInventario(inventario);

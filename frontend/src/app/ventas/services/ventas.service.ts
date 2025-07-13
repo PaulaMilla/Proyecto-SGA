@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {Venta, VentaRegistrada} from "../model/ventas.model";
 
-export interface Venta {
+/* export interface Venta {
   id?: number;
   pacienteId: number;
   fechaVenta: string;
@@ -17,7 +18,8 @@ export interface DetalleVenta {
   cantidad: number;
   precioUnitario: number;
   subtotal: number;
-}
+} */
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,13 +30,17 @@ export class VentasService {
   constructor(private http: HttpClient) {}
 
   // POST /ventas
-  registrarVenta(venta: Venta): Observable<Venta> {
+  registrarVenta(venta: Venta): Observable<any> {
     return this.http.post<Venta>(`${this.apiUrl}`, venta);
   }
 
   // GET /ventas
-  obtenerTodas(): Observable<Venta[]> {
-    return this.http.get<Venta[]>(`${this.apiUrl}`);
+  obtenerTodas(): Observable<VentaRegistrada[]> {
+    return this.http.get<VentaRegistrada[]>(`${this.apiUrl}`);
+  }
+
+  getProductoPorId(productoId: number): Observable<any> {
+    return this.http.get(`http://34.61.182.228/api/inventarios/productos/${productoId}`);
   }
 
   // GET /ventas/{id}

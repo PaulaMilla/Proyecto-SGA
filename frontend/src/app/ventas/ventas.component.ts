@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { VentasService, Venta } from './services/ventas.service';
+import { VentasService } from './services/ventas.service';
+import {Venta, VentaRegistrada} from "./model/ventas.model";
 
 @Component({
   selector: 'app-ventas',
@@ -7,15 +8,18 @@ import { VentasService, Venta } from './services/ventas.service';
   styleUrls: ['./ventas.component.scss']
 })
 export class VentasComponent implements OnInit {
-  venta = {
+  /*venta = {
     pacienteId: 0,
     productoId: 0,
     cantidad: 1,
     precioUnitario: 0,
     usuarioId: 0
-  };
+  };*/
 
-  ventasRegistradas: any[] = [];
+  ventasRegistradas: VentaRegistrada[] = [];
+  venta: Venta = {
+    cantidad: 1
+  };
 
   mostrarFormulario: boolean = false;  // controla si se ve el formulario
   mostrarBotonArriba = false;
@@ -26,14 +30,32 @@ export class VentasComponent implements OnInit {
     this.cargarVentas();
   }
 
+  actualizarPrecioYTotal() {
+    if (this.venta.productoId) {
+      this.ventasService.getProductoPorId(this.venta.productoId).subscribe(prod => {
+        this.venta.precioUnitario = prod.precio_unitario;
+        this.venta.total = this.venta.cantidad * prod.precio_unitario;
+      });
+    }
+  }
+
+
   guardarVenta() {
-    const total = this.venta.cantidad * this.venta.precioUnitario;
-    const ventaCompleta: Venta = {
-        pacienteId: this.venta.pacienteId,
-        fechaVenta: new Date().toISOString().slice(0,10),
-        total: total,
-        usuarioId: this.venta.usuarioId
-     };
+    this.ventasService.registrarVenta(this.venta).subscribe(resp => {
+      alert('Venta registrada correctamente');
+      this.mostrarFormulario = false;
+      this.cargarVentas(); // si quieres refrescar la lista
+    });
+  }
+
+  /*  guardarVenta() {
+      const total = this.venta.cantidad * this.venta.precioUnitario;
+      const ventaCompleta: Venta = {
+          pacienteId: this.venta.pacienteId,
+          fechaVenta: new Date().toISOString().slice(0,10),
+          total: total,
+          usuarioId: this.venta.usuarioId
+       };
 
     this.ventasService.registrarVenta(ventaCompleta).subscribe(nuevaVenta => {
       this.cargarVentas();
@@ -50,11 +72,15 @@ export class VentasComponent implements OnInit {
 
   get total(): number {
     return this.venta.cantidad * this.venta.precioUnitario;
-  }
+  }*/
 
   get totalFormateado(): string {
-    return '$' + this.total.toFixed(0);
+    if (this.venta.total != null) {
+      return `$${this.venta.total.toFixed(0)}`;
+    }
+    return '$0';
   }
+
 
   mostrarAgregarVenta() {
     this.mostrarFormulario = true;
@@ -78,5 +104,5 @@ export class VentasComponent implements OnInit {
       this.ventasRegistradas = data;
     });
   }
-  
+
 }

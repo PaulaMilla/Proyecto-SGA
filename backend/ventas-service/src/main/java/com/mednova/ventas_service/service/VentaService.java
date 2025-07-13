@@ -35,7 +35,7 @@ public class VentaService {
 
         for (DetalleVenta detalle : detalles) {
             // Obtener datos del producto
-            ProductoDTO producto = productoService.obtenerProductoPorId(detalle.getProductoId());
+            ProductoDTO producto = productoService.getProducto(detalle.getProductoId());
 
             // Calcular subtotal
             double subtotal = detalle.getCantidad() * producto.getPrecio_unitario();
