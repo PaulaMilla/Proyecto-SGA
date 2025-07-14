@@ -1,6 +1,8 @@
 package com.mednova.ventas_service.service;
 
+import com.mednova.ventas_service.dto.DetalleVentaDTO;
 import com.mednova.ventas_service.dto.ProductoDTO;
+import com.mednova.ventas_service.dto.VentaConDetallesDTO;
 import com.mednova.ventas_service.model.DetalleVenta;
 import com.mednova.ventas_service.model.Venta;
 import com.mednova.ventas_service.repository.DetalleVentaRepository;
@@ -30,7 +32,39 @@ public class VentaService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public Venta registrarVenta(Venta venta, List<DetalleVenta> detalles) {
+    public Venta registrarVentaConDetalles(VentaConDetallesDTO dto) {
+        Venta venta = new Venta();
+        venta.setPacienteId(dto.getPacienteId());
+        venta.setIdUsuarioVendedor(dto.getUsuarioId());
+        venta.setFechaVenta(LocalDate.now());
+
+        Venta ventaGuardada = ventaRepository.save(venta);
+
+        double totalVenta = 0.0;
+
+        for (DetalleVentaDTO d : dto.getDetalles()) {
+            ProductoDTO producto = productoService.getProducto(d.getProductoId());
+
+            double subtotal = d.getCantidad() * producto.getPrecio_unitario();
+
+            DetalleVenta detalle = new DetalleVenta();
+            detalle.setVentaId(ventaGuardada.getId());
+            detalle.setProductoId(d.getProductoId());
+            detalle.setCantidad(d.getCantidad());
+            detalle.setPrecioUnitario(producto.getPrecio_unitario());
+            detalle.setSubtotal(subtotal);
+
+            detalleVentaRepository.save(detalle);
+            totalVenta += subtotal;
+        }
+
+        ventaGuardada.setTotal(totalVenta);
+        ventaRepository.save(ventaGuardada);
+
+        return ventaGuardada;
+    }
+
+   /* public Venta registrarVenta(Venta venta, List<DetalleVenta> detalles) {
         double totalVenta = 0.0;
 
         for (DetalleVenta detalle : detalles) {
@@ -60,7 +94,7 @@ public class VentaService {
         }
 
         return ventaGuardada;
-    }
+    }*/
 
   /**  public Venta registrarVenta(Venta venta){
         Venta ventaGuardada = ventaRepository.save(venta);

@@ -6,7 +6,7 @@
     <p><strong>Producto:</strong> {{ v.producto }}</p>
     <p><strong>Cantidad:</strong> {{ v.cantidad }}</p>
     <p><strong>Precio Unitario:</strong> {{ v.precioUnitario | currency:'USD':'symbol':'1.0-0' }}</p>
-    <p><strong>Total:</strong> {{ '$' + v.total.toFixed(0) }}</p>
+    <p><strong>Total:</strong> {{ v.total | currency:'USD':'symbol':'1.0-0' }}</p>
   </div>
 </div>
 
@@ -22,25 +22,38 @@
 <!-- Formulario de agregar venta -->
 <div class="formulario-venta" *ngIf="mostrarFormulario">
   <h2 class="titulo">Registrar Venta</h2>
+
   <form (ngSubmit)="guardarVenta()" #form="ngForm">
-    <label for="cliente">ID del paciente</label>
+
+    <label for="paciente">ID del paciente</label>
     <input
-      id="cliente"
-      type="text"
+      id="paciente"
+      type="number"
       [(ngModel)]="venta.pacienteId"
-      name="cliente"
-      placeholder="Ej: Antonia Yevenes"
+      name="pacienteId"
       required
     />
 
-    <label for="producto">ID del producto</label>
+    <!-- Lista de productos agregados -->
+    <h3>Productos seleccionados</h3>
+    <div *ngIf="venta.detalles.length === 0">
+      <p>No hay productos agregados.</p>
+    </div>
+    <ul>
+      <li *ngFor="let d of venta.detalles; index as i">
+        Producto ID: {{ d.productoId }} - Cantidad: {{ d.cantidad }}
+        <button type="button" (click)="quitarProducto(i)">Quitar</button>
+      </li>
+    </ul>
+
+    <!-- Campos para agregar un producto -->
+    <h3>Agregar Producto</h3>
+    <label for="productoId">ID del producto</label>
     <input
-      id="producto"
-      type="text"
-      [(ngModel)]="venta.productoId"
-      name="producto"
-      placeholder="Ej: Paracetamol 500mg"
-      (change)="actualizarPrecioYTotal()"
+      id="productoId"
+      type="number"
+      [(ngModel)]="nuevoDetalle.productoId"
+      name="nuevoProductoId"
       required
     />
 
@@ -48,36 +61,22 @@
     <input
       id="cantidad"
       type="number"
-      [(ngModel)]="venta.cantidad"
-      name="cantidad"
-      placeholder="Ej: 2"
-      required
+      [(ngModel)]="nuevoDetalle.cantidad"
+      name="nuevoCantidad"
       min="1"
+      required
     />
 
-    <label for="precioUnitario">Precio Unitario ($)</label>
-    <input
-      id="precioUnitario"
-      type="number"
-      [value]="venta.precioUnitario"
-      readonly
-    />
+    <button type="button" (click)="agregarProducto()">Agregar Producto</button>
 
-
-    <label for="total">Total ($)</label>
-    <input
-      id="total"
-      type="text"
-      [value]="totalFormateado"
-      readonly
-    />
-
+    <!-- Botones de acción -->
     <div class="botones-formulario">
       <button type="submit">Guardar Venta</button>
       <button type="button" (click)="cancelarAgregar()">Cancelar</button>
     </div>
   </form>
 </div>
+
 
 <!-- Botón volver arriba -->
 <button

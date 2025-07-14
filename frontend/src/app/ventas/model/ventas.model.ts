@@ -14,4 +14,16 @@ export interface VentaRegistrada {
   total: number;
 }
 
+export interface DetalleVenta {
+  productoId?: number;
+  cantidad: number;
+}
+
+export interface VentaConDetalles {
+  pacienteId?: number;
+  usuarioId?: number;
+  detalles: DetalleVenta[];
+}
+
+
 

@@ -1,5 +1,7 @@
 package com.mednova.ventas_service.controller;
 
+import com.mednova.ventas_service.dto.DetalleVentaDTO;
+import com.mednova.ventas_service.dto.VentaConDetallesDTO;
 import com.mednova.ventas_service.model.DetalleVenta;
 import com.mednova.ventas_service.service.VentaService;
 import com.mednova.ventas_service.model.Venta;
@@ -22,10 +24,11 @@ public class VentasController {
     }
 
     // POST /ventas - Registrar nueva venta
+
     @PostMapping
-    public ResponseEntity<Venta> registrarVenta(@RequestBody Venta venta, DetalleVenta detalleVenta) {
-        Venta nuevaVenta = ventaService.registrarVenta(venta, (List<DetalleVenta>) detalleVenta);
-        return ResponseEntity.ok(nuevaVenta);
+    public ResponseEntity<Venta> registrarVenta(@RequestBody VentaConDetallesDTO dto) {
+        Venta ventaRegistrada = ventaService.registrarVentaConDetalles(dto);
+        return ResponseEntity.ok(ventaRegistrada);
     }
 
     // GET /ventas - Listar todas las ventas

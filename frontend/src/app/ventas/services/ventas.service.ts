@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {Venta, VentaRegistrada} from "../model/ventas.model";
+import {Venta, VentaConDetalles, VentaRegistrada} from "../model/ventas.model";
 
 /* export interface Venta {
   id?: number;
@@ -30,8 +30,8 @@ export class VentasService {
   constructor(private http: HttpClient) {}
 
   // POST /ventas
-  registrarVenta(venta: Venta): Observable<any> {
-    return this.http.post<Venta>(`${this.apiUrl}`, venta);
+  registrarVenta(venta: VentaConDetalles): Observable<any> {
+    return this.http.post(`${this.apiUrl}`, venta);
   }
 
   // GET /ventas
