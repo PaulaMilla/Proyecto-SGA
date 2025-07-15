@@ -38,7 +38,8 @@ export class UploadComponent {
 
     const formData = new FormData();
     formData.append('file', this.file, this.file.name);
-    formData.append('tipoInventario', this.tipoInventario); // 🚀
+    formData.append('tipoInventario', this.tipoInventario);
+    formData.append('emailUsuario', localStorage.getItem('email') || '')
 
     this.inventarioService.subirArchivoInventario(formData)
       .subscribe({

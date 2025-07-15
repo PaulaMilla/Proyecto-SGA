@@ -1,6 +1,7 @@
 package com.mednova.inventarios_service.controller;
 
 import com.mednova.inventarios_service.dto.InventarioProductoDTO;
+import com.mednova.inventarios_service.model.Farmacia;
 import com.mednova.inventarios_service.model.Inventario;
 import com.mednova.inventarios_service.model.Producto;
 import com.mednova.inventarios_service.repository.ProductoRepository;
@@ -128,7 +129,7 @@ public class InventarioController {
 
     @PostMapping("/upload")
     public ResponseEntity<Map<String, String>> uploadInventario(@RequestPart("file") MultipartFile file,
-                                                                @RequestPart("tipoInventario") String tipoInventario) {
+                                                                @RequestPart("tipoInventario") String tipoInventario, @RequestPart("emailUsuario") String emailUsuario) {
         Map<String, String> response = new HashMap<>();
 
         System.out.println("=== CARGA DE INVENTARIO ===");
@@ -152,7 +153,7 @@ public class InventarioController {
             }
             
             System.out.println("Iniciando procesamiento del archivo...");
-            inventarioService.processFile(file, tipoInventario);
+            inventarioService.processFile(file, tipoInventario, emailUsuario);
             System.out.println("Archivo procesado exitosamente");
             return ResponseEntity.ok(response);
             
@@ -186,5 +187,10 @@ public class InventarioController {
     @DeleteMapping("/{id}")
     public void deleteInventario(@PathVariable int id) {
         inventarioService.deleteInventario(id);
+    }
+
+    @PostMapping("/crear-farmacia")
+    public Farmacia crearFarmacia(@RequestBody Farmacia farmacia) {
+        return inventarioService.saveFarmacia(farmacia);
     }
 }

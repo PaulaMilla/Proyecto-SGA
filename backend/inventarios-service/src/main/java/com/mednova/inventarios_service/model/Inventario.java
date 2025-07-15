@@ -9,8 +9,9 @@ public class Inventario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_inventario;
 
-    @Column (name = "id_producto")
-    private int id_producto;
+    @ManyToOne
+    @JoinColumn (name = "producto_id", nullable = false)
+    private Producto producto;
 
     @Column (name = "cantidad_disponible")
     private int cantidad_disponible;
@@ -24,9 +25,9 @@ public class Inventario {
     @Column (name = "fecha_vencimiento")
     private String fecha_vencimiento;
 
-    @Column (name = "nombre_farmacia")
-    private String nombre_farmacia;
-
+    @ManyToOne
+    @JoinColumn(name = "farmacia_id", nullable = false)
+    private Farmacia farmacia;
 
     // Getters and Setters
     public int getId_inventario() {
@@ -37,12 +38,12 @@ public class Inventario {
         this.id_inventario = id_inventario;
     }
 
-    public int getId_producto() {
-        return id_producto;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setId_producto(int id_producto) {
-        this.id_producto = id_producto;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 
     public int getCantidad_disponible() {
@@ -77,11 +78,11 @@ public class Inventario {
         this.fecha_vencimiento = fecha_vencimiento;
     }
 
-    public String getNombre_farmacia() {
-        return nombre_farmacia;
+    public Farmacia getFarmacia() {
+        return farmacia;
     }
 
-    public void setNombre_farmacia(String nombre_farmacia) {
-        this.nombre_farmacia = nombre_farmacia;
+    public void setFarmacia(Farmacia farmacia) {
+        this.farmacia = farmacia;
     }
 }
