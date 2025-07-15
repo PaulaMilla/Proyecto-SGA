@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.List;
 import java.util.Map;
 @Service
 public class AuthService {
@@ -13,6 +14,7 @@ public class AuthService {
     private final JwtUtils jwtUtils;
     private final PasswordEncoder passwordEncoder;
     private String rolActual;
+    private List<String> permisosActuales;
 
     public AuthService(WebClient.Builder builder, JwtUtils jwtUtils, PasswordEncoder passwordEncoder) {
         this.webClient = builder.baseUrl("http://usuarios-service.usuarios.svc.cluster.local").build();
@@ -22,6 +24,9 @@ public class AuthService {
 
     public String getRolActual() {
         return rolActual;
+    }
+    public List<String> getPermisos() {
+        return permisosActuales;
     }
 
     public String login(String email, String password){
@@ -36,7 +41,8 @@ public class AuthService {
         }
 
         rolActual = (String) usuario.get("rol");
-        //Generar JWT con claims
+        permisosActuales = (List<String>) usuario.get("permisos");
+
         return jwtUtils.generateToken((String) usuario.get("email"), rolActual);
     }
 
