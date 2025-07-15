@@ -3,10 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
-interface JwtResponse {
+export interface JwtResponse {
   token: string;
   email: string;
   rol: string;
+}
+
+export interface User {
+  email: string | null;
+  rol: string | null;
 }
 
 @Injectable({
@@ -15,28 +20,29 @@ interface JwtResponse {
 export class AuthService {
   private apiAuth = 'http://34.61.182.228/api/auth';
   private apiUsuarios = 'http://34.61.182.228/api/usuarios';
+
   private tokenKey = 'token';
   private emailKey = 'email';
   private rolKey = 'rol';
 
-  private userSubject = new BehaviorSubject<{ email: string | null; rol: string | null }>({
-    email: null,
-    rol: null
-  });
-
+  private userSubject = new BehaviorSubject<User>({ email: null, rol: null });
   user$ = this.userSubject.asObservable();
 
-constructor(private http: HttpClient) {
-  const token = this.getToken();
-  const email = localStorage.getItem(this.emailKey);
-  const rol = localStorage.getItem(this.rolKey);
-
-  if (token && email && rol) {
-    this.userSubject.next({ email, rol });
-  } else {
-    this.userSubject.next({ email: null, rol: null });
+  constructor(private http: HttpClient) {
+    this.loadUserFromStorage();
   }
-}
+
+  private loadUserFromStorage(): void {
+    const token = this.getToken();
+    const email = localStorage.getItem(this.emailKey);
+    const rol = localStorage.getItem(this.rolKey);
+
+    if (token && email && rol) {
+      this.userSubject.next({ email, rol });
+    } else {
+      this.userSubject.next({ email: null, rol: null });
+    }
+  }
 
   login(email: string, password: string): Observable<JwtResponse> {
     return new Observable(observer => {
@@ -54,6 +60,13 @@ constructor(private http: HttpClient) {
     });
   }
 
+  logout(): void {
+    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.emailKey);
+    localStorage.removeItem(this.rolKey);
+    this.userSubject.next({ email: null, rol: null });
+  }
+
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
@@ -66,14 +79,7 @@ constructor(private http: HttpClient) {
     }
   }
 
-  logout(): void {
-    localStorage.removeItem(this.tokenKey);
-    localStorage.removeItem(this.emailKey);
-    localStorage.removeItem(this.rolKey);
-    this.userSubject.next({ email: null, rol: null });
-  }
-
-  getCurrentUser() {
+  getCurrentUser(): User {
     return this.userSubject.getValue();
   }
 }

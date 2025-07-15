@@ -24,9 +24,10 @@ export class HeaderComponent {
 
   ngOnInit(): void {
     this.subscription = this.authService.user$.subscribe(user => {
-      this.userEmail = user.email;
-      this.userRol = user.rol;
-    });
+    this.userEmail = user.email ?? localStorage.getItem('email');
+    this.userRol = user.rol ?? localStorage.getItem('rol');
+    console.log('[Header] Email:', this.userEmail, '| Rol:', this.userRol);
+  });
   }
 
   ngOnDestroy(): void {
