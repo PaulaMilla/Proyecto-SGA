@@ -14,7 +14,14 @@ export class InventarioInfoComponent implements OnInit {
   constructor(private inventarioService: InventarioService) {}
 
   ngOnInit(): void {
-    this.inventarioService.getInventarioConProducto().subscribe({
+    const emailUsuario = localStorage.getItem('emailUsuario'); // o 'email' dependiendo cómo lo guardaste
+    if (!emailUsuario) {
+      console.warn('No se encontró email en localStorage');
+      this.loading = false;
+      return;
+    }
+  
+    this.inventarioService.getInventarioConProducto(emailUsuario).subscribe({
       next: (data) => {
         this.inventarioList = data;
         this.loading = false;

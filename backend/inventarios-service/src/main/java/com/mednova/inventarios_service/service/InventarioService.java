@@ -179,13 +179,13 @@ public class InventarioService {
         };
     }
 
-    public List<InventarioProductoDTO> obtenerInventarioConProducto() {
+    public List<InventarioProductoDTO> obtenerInventarioConProducto(String emailUsuario) {
         List<Inventario> inventarios = inventarioRepository.findAll();
         List<InventarioProductoDTO> resultado = new ArrayList<>();
+        String nombre_farmacia = obtenerNombreFarmaciaDesdeUsuario(emailUsuario);
 
         for (Inventario inv : inventarios) {
             Producto prod = inv.getProducto();
-            Farmacia farmacia = inv.getFarmacia();
 
             InventarioProductoDTO dto = new InventarioProductoDTO();
             dto.setId_inventario(inv.getId_inventario());
@@ -199,7 +199,7 @@ public class InventarioService {
             dto.setUbicacion(inv.getUbicacion());
             dto.setLote(inv.getLote());
             dto.setFecha_vencimiento(inv.getFecha_vencimiento());
-            dto.setNombre_farmacia(farmacia.getNombre());
+            dto.setNombre_farmacia(nombre_farmacia);
 
             resultado.add(dto);
         }

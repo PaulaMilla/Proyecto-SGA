@@ -12,8 +12,9 @@ export class InventarioService {
 
   constructor(private http: HttpClient) {}
 
-  getInventarioConProducto(): Observable<InventarioProducto[]> {
-    return this.http.get<InventarioProducto[]>(`${this.apiUrl}/con-producto`);
+  getInventarioConProducto(emailUsuario: string): Observable<InventarioProducto[]> {
+    const params = { emailUsuario }; // Esto genera { emailUsuario: "valor" }
+    return this.http.get<InventarioProducto[]>(`${this.apiUrl}/con-producto`, { params });
   }
 
   subirArchivoInventario(formData: FormData): Observable<any> {

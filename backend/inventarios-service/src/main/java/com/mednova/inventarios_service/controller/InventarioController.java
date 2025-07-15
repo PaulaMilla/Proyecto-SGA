@@ -61,8 +61,8 @@ public class InventarioController {
     }
 
     @GetMapping("/con-producto")
-    public ResponseEntity<List<InventarioProductoDTO>> getInventarioConProducto() {
-        List<InventarioProductoDTO> lista = inventarioService.obtenerInventarioConProducto();
+    public ResponseEntity<List<InventarioProductoDTO>> getInventarioConProducto(@RequestParam("emailUsuario") String emailUsuario) {
+        List<InventarioProductoDTO> lista = inventarioService.obtenerInventarioConProducto(emailUsuario);
         return ResponseEntity.ok(lista);
     }
 
