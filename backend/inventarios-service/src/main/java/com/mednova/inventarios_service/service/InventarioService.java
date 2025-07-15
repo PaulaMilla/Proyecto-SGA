@@ -180,15 +180,17 @@ public class InventarioService {
     }
 
     public List<InventarioProductoDTO> obtenerInventarioConProducto(String emailUsuario) {
-        List<Inventario> inventarios = inventarioRepository.findAll();
-        List<InventarioProductoDTO> resultado = new ArrayList<>();
         String nombre_farmacia = obtenerNombreFarmaciaDesdeUsuario(emailUsuario);
 
+        Farmacia farmacia = farmaciaRepository.findByNombre(nombre_farmacia)
+                .orElseThrow(() -> new IllegalArgumentException("Farmacia '" + nombre_farmacia + "' no existe."));
+
+        List<Inventario> inventarios = inventarioRepository.findByFarmacia(farmacia); // ← Solo los de esta farmacia
+
+        List<InventarioProductoDTO> resultado = new ArrayList<>();
 
         for (Inventario inv : inventarios) {
             Producto prod = inv.getProducto();
-            Farmacia farmacia = farmaciaRepository.findByNombre(nombre_farmacia)
-                    .orElseThrow(() -> new IllegalArgumentException("Farmacia '" + nombre_farmacia + "' no existe."));
 
             InventarioProductoDTO dto = new InventarioProductoDTO();
             dto.setId_inventario(inv.getId_inventario());

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface InventarioRepository extends JpaRepository<Inventario, Integer> {
@@ -18,4 +19,5 @@ public interface InventarioRepository extends JpaRepository<Inventario, Integer>
     @Query("UPDATE Inventario i SET i.cantidad_disponible = 0")
     void resetearCantidades();
 
+    List<Inventario> findByFarmacia(Farmacia farmacia);
 }
