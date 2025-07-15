@@ -10,7 +10,7 @@ public class Inventario {
     private int id_inventario;
 
     @ManyToOne
-    @JoinColumn (name = "id_producto", nullable = false)
+    @JoinColumn (name = "producto_id", nullable = false)
     private Producto producto;
 
     @Column (name = "cantidad_disponible")
@@ -26,7 +26,7 @@ public class Inventario {
     private String fecha_vencimiento;
 
     @ManyToOne
-    @JoinColumn(name = "id_farmacia", nullable = false)
+    @JoinColumn(name = "farmacia_id", nullable = false)
     private Farmacia farmacia;
 
     // Getters and Setters
