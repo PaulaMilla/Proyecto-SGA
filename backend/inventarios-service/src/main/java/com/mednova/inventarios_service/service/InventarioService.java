@@ -250,10 +250,10 @@ public class InventarioService {
     }
 
     public void deleteAllInventarios() {
-        inventarioRepository.deleteAllInventario(); // Este método debes crearlo en el repo
+        inventarioRepository.deleteAll(); // Este método debes crearlo en el repo
     }
 
     public void deleteAllFarmacias() {
-        farmaciaRepository.deleteAllFarmacias();
+        farmaciaRepository.deleteAll();
     }
 }

@@ -18,7 +18,4 @@ public interface InventarioRepository extends JpaRepository<Inventario, Integer>
     @Query("UPDATE Inventario i SET i.cantidad_disponible = 0")
     void resetearCantidades();
 
-    @Modifying
-    @Query("DELETE FROM Inventario i")
-    void deleteAllInventario();
 }
