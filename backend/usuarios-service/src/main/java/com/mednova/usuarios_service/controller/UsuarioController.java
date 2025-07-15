@@ -84,7 +84,13 @@ public class UsuarioController {
                 .map(Permiso::getNombre_permiso)
                 .collect(Collectors.toList());
 
-        UsuarioLoginDTO dto = new UsuarioLoginDTO(usuario.getCorreo(), rol, permisos);
+        UsuarioLoginDTO dto = new UsuarioLoginDTO(
+                usuario.getCorreo(),
+                rol,
+                permisos,
+                usuario.getPassword()
+        );
+
         return ResponseEntity.ok(dto);
     }
 

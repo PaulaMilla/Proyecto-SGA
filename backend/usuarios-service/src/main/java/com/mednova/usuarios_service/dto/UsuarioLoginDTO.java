@@ -6,11 +6,13 @@ public class UsuarioLoginDTO {
     private String email;
     private String rol;
     private List<String> permisos;
+    private String password;
 
-    public UsuarioLoginDTO(String email, String rol, List<String> permisos) {
+    public UsuarioLoginDTO(String email, String rol, List<String> permisos, String password) {
         this.email = email;
         this.rol = rol;
         this.permisos = permisos;
+        this.password = password;
     }
 
     // getters y setters
@@ -37,5 +39,13 @@ public class UsuarioLoginDTO {
 
     public void setPermisos(List<String> permisos) {
         this.permisos = permisos;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

@@ -12,7 +12,7 @@ public class UsuarioResponseDTO {
     private String correo;
     private String estado;
     private String nombreFarmacia;
-    private String nombreRol; // Nombre del rol, no el objeto completo
+    private String nombreRol;
     private Date fechaCreacion;
     private Date fechaModificacion;
 
