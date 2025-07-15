@@ -26,7 +26,6 @@ export class HeaderComponent {
     this.subscription = this.authService.user$.subscribe(user => {
     this.userEmail = user.email ?? localStorage.getItem('email');
     this.userRol = user.rol ?? localStorage.getItem('rol');
-    console.log('[Header] Email:', this.userEmail, '| Rol:', this.userRol);
   });
   }
 
