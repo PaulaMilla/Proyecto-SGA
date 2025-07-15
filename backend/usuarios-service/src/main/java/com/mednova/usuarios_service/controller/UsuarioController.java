@@ -72,9 +72,9 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("/nombre-farmacia/{email}")
-    public ResponseEntity<String> obtenerNombreFarmaciaPorEmail(@PathVariable String email) {
-        Optional<Usuario> usuarioOpt = usuarioService.obtenerPorEmail(email);
+    @GetMapping("/nombre-farmacia/{emailUsuario}")
+    public ResponseEntity<String> obtenerNombreFarmaciaPorEmail(@PathVariable String emailUsuario) {
+        Optional<Usuario> usuarioOpt = usuarioService.obtenerPorEmail(emailUsuario);
 
         if (usuarioOpt.isPresent()) {
             String nombreFarmacia = usuarioOpt.get().getNombre_farmacia();
