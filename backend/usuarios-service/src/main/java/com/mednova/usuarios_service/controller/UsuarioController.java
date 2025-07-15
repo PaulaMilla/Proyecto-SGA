@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import com.mednova.usuarios_service.dto.RolRequestDTO;
 import com.mednova.usuarios_service.dto.UsuarioLoginDTO;
+import com.mednova.usuarios_service.dto.UsuarioRequestDTO;
+import com.mednova.usuarios_service.dto.UsuarioResponseDTO;
 import com.mednova.usuarios_service.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,10 +35,14 @@ public class UsuarioController {
     public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
-  
+
     @GetMapping
-    public ResponseEntity<List<Usuario>> listarUsuarios() {
-        return ResponseEntity.ok(usuarioService.listarUsuarios());
+    public ResponseEntity<List<UsuarioResponseDTO>> listarUsuarios() {
+        List<Usuario> usuarios = usuarioService.listarUsuarios();
+        List<UsuarioResponseDTO> dtos = usuarios.stream()
+                .map(UsuarioResponseDTO::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("/roles")
@@ -50,8 +56,8 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> crearUsuario(@RequestBody Usuario usuario) {
-        return ResponseEntity.ok(usuarioService.crearUsuario(usuario));
+    public ResponseEntity<Usuario> crearUsuario(@RequestBody UsuarioRequestDTO usuarioDTO) {
+        return ResponseEntity.ok(usuarioService.crearUsuario(usuarioDTO));
     }
 
     @PostMapping("/roles")

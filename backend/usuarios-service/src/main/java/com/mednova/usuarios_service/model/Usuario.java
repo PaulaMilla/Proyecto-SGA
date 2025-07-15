@@ -5,7 +5,7 @@ import java.util.Date;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "usuario")  
+@Table(name = "usuario")
 public class Usuario {
 
     @Id
@@ -46,6 +46,20 @@ public class Usuario {
 
     @Column (name = "nombre_farmacia")
     private String nombre_farmacia;
+
+    //fechas
+
+    @PrePersist
+    protected void onCreate() {
+        Date now = new Date();
+        this.fechaCreacion = now;
+        this.fechaModificacion = now;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.fechaModificacion = new Date();
+    }
 
     // Getters y setters
 

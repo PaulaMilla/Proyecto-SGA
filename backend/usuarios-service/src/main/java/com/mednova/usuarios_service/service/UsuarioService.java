@@ -1,8 +1,14 @@
 package com.mednova.usuarios_service.service;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import com.mednova.usuarios_service.dto.RolRequestDTO;
+import com.mednova.usuarios_service.dto.UsuarioRequestDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.mednova.usuarios_service.model.Permiso;
@@ -18,13 +24,33 @@ public class UsuarioService {
     private final RolRepository rolRepository;
     private final PermisoRepository permisoRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     public UsuarioService(UsuarioRepository usuarioRepository, RolRepository rolRepository, PermisoRepository permisoRepository) {
         this.usuarioRepository = usuarioRepository;
         this.rolRepository = rolRepository;
         this.permisoRepository = permisoRepository;
     }
 
-    public Usuario crearUsuario(Usuario usuario) {
+    public Usuario crearUsuario(UsuarioRequestDTO dto) {
+        Usuario usuario = new Usuario();
+        usuario.setNombre(dto.getNombre());
+        usuario.setApellido(dto.getApellido());
+        usuario.setCorreo(dto.getCorreo());
+        usuario.setPassword(encoder.encode(dto.getPassword()));
+        usuario.setEstado(dto.getEstado());
+        usuario.setNombre_farmacia(dto.getNombre_farmacia());
+        usuario.setFechaCreacion(new Date());
+
+        Rol rol = rolRepository.findById(dto.getIdRol())
+                .orElseThrow(() -> new RuntimeException("Rol no encontrado con ID: " + dto.getIdRol()));
+        usuario.setRol(rol);
+
         return usuarioRepository.save(usuario);
     }
 
