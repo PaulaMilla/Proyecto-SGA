@@ -12,8 +12,8 @@
     <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
     <a *ngIf="userRol === 'ADMIN' || userRol === 'FARMACEUTICO'" routerLink="/ventas" routerLinkActive="active">Ventas</a>
     <a *ngIf="userRol === 'ADMIN'" routerLink="/usuarios" routerLinkActive="active">Usuarios</a>
-    <a *ngIf="userRol === 'ADMIN'" routerLink="/inventario-info" routerLinkActive="active">Inventario</a>
-    <a *ngIf="userRol === 'ADMIN'" routerLink="/carga-datos" routerLinkActive="active">Carga</a>
+    <a *ngIf="userRol === 'ADMIN' || userRol === 'BODEGUERO'" routerLink="/inventario-info" routerLinkActive="active">Inventario</a>
+    <a *ngIf="userRol === 'ADMIN' || userRol === 'BODEGUERO'"  routerLink="/carga-datos" routerLinkActive="active">Carga</a>
   </nav>
 
   <!-- Sección de perfil o login -->
