@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {InventarioProducto} from "../model/inventarioproducto.model";
 
@@ -13,7 +13,9 @@ export class InventarioService {
   constructor(private http: HttpClient) {}
 
   getInventarioConProducto(emailUsuario: string): Observable<InventarioProducto[]> {
-    const params = { emailUsuario }; // Esto genera { emailUsuario: "valor" }
+    let params = new HttpParams();
+    params = params.append('emailUsuario', emailUsuario); // Nombre EXACTO del parámetro
+
     return this.http.get<InventarioProducto[]>(`${this.apiUrl}/con-producto`, { params });
   }
 
