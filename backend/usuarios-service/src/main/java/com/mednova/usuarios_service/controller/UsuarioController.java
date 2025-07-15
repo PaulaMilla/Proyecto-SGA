@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.mednova.usuarios_service.repository.UsuarioRepository;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,6 +69,25 @@ public class UsuarioController {
             return ResponseEntity.ok(usuarioOpt.get());
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+        }
+    }
+
+    @GetMapping("/nombre-farmacia/{email}")
+    public ResponseEntity<String> obtenerNombreFarmaciaPorEmail(@PathVariable String email) {
+        Optional<Usuario> usuarioOpt = usuarioService.obtenerPorEmail(email);
+
+        if (usuarioOpt.isPresent()) {
+            String nombreFarmacia = usuarioOpt.get().getNombre_farmacia();
+
+            if (nombreFarmacia == null || nombreFarmacia.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("El usuario no tiene una farmacia asignada.");
+            }
+
+            return ResponseEntity.ok(nombreFarmacia);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Usuario no encontrado.");
         }
     }
 

@@ -209,20 +209,20 @@ public class InventarioService {
 
     private String obtenerNombreFarmaciaDesdeUsuario(String emailUsuario) {
         try {
-            Map<String, Object> response = webClient.get()
-                    .uri("/api/usuarios/email/" + emailUsuario)
+            String nombreFarmacia = webClient.get()
+                    .uri("/api/usuarios/nombre-farmacia/" + emailUsuario)
                     .retrieve()
-                    .bodyToMono(Map.class)
+                    .bodyToMono(String.class)
                     .block();
 
-            if (response == null || !response.containsKey("nombre_farmacia")) {
-                throw new RuntimeException("No se encontró la farmacia para el usuario: " + emailUsuario);
+            if (nombreFarmacia == null || nombreFarmacia.isEmpty()) {
+                throw new RuntimeException("Nombre de farmacia no disponible para el usuario: " + emailUsuario);
             }
 
-            return (String) response.get("nombre_farmacia");
+            return nombreFarmacia;
 
         } catch (Exception e) {
-            throw new RuntimeException("Error al consultar usuario en usuarios-service: " + e.getMessage());
+            throw new RuntimeException("Error al consultar nombre de farmacia: " + e.getMessage());
         }
     }
 
