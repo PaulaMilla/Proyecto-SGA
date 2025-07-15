@@ -248,4 +248,12 @@ public class InventarioService {
     public void deleteInventario(int id) {
         inventarioRepository.deleteById(id);
     }
+
+    public void deleteAllInventarios() {
+        inventarioRepository.deleteAllInventario(); // Este método debes crearlo en el repo
+    }
+
+    public void deleteAllFarmacias() {
+        farmaciaRepository.deleteAllFarmacias();
+    }
 }

@@ -42,7 +42,7 @@ public class InventarioController {
             if (productos.isEmpty()) {
                 return ResponseEntity.ok("No hay productos en la base de datos. Ejecuta /create-test-products primero.");
             }
-            
+
             StringBuilder info = new StringBuilder();
             info.append("Productos disponibles (").append(productos.size()).append("):\n");
             for (Producto p : productos) {
@@ -52,7 +52,7 @@ public class InventarioController {
                     .append(" | Precio: $").append(p.getPrecio_unitario())
                     .append("\n");
             }
-            
+
             return ResponseEntity.ok(info.toString());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -96,7 +96,7 @@ public class InventarioController {
                 producto3.setPrecio_unitario(12.50);
                 Producto saved3 = productoRepository.save(producto3);
 
-                return ResponseEntity.ok("Productos de prueba creados exitosamente. Total: " + productoRepository.count() + 
+                return ResponseEntity.ok("Productos de prueba creados exitosamente. Total: " + productoRepository.count() +
                     "\nIDs creados: " + saved1.getId_producto() + ", " + saved2.getId_producto() + ", " + saved3.getId_producto());
             } else {
                 List<Producto> productos = productoRepository.findAll();
@@ -104,7 +104,7 @@ public class InventarioController {
                 for (Producto p : productos) {
                     ids.append(p.getId_producto()).append(" (").append(p.getNombre()).append("), ");
                 }
-                return ResponseEntity.ok("Ya existen productos en la base de datos. Total: " + productoRepository.count() + 
+                return ResponseEntity.ok("Ya existen productos en la base de datos. Total: " + productoRepository.count() +
                     "\nProductos existentes: " + ids.toString());
             }
         } catch (Exception e) {
@@ -136,27 +136,27 @@ public class InventarioController {
         System.out.println("Recibido archivo: " + file.getOriginalFilename());
         System.out.println("Tamaño del archivo: " + file.getSize() + " bytes");
         System.out.println("Tipo de contenido: " + file.getContentType());
-        
+
         try {
             // Validaciones básicas del archivo
             if (file.isEmpty()) {
                 return ResponseEntity.badRequest().body(response);
             }
-            
+
             String fileName = file.getOriginalFilename();
             if (fileName == null || fileName.trim().isEmpty()) {
                 return ResponseEntity.badRequest().body(response);
             }
-            
+
             if (!fileName.toLowerCase().endsWith(".csv") && !fileName.toLowerCase().endsWith(".xlsx")) {
                 return ResponseEntity.badRequest().body(response);
             }
-            
+
             System.out.println("Iniciando procesamiento del archivo...");
             inventarioService.processFile(file, tipoInventario, emailUsuario);
             System.out.println("Archivo procesado exitosamente");
             return ResponseEntity.ok(response);
-            
+
         } catch (IllegalArgumentException e) {
             System.err.println("Error de validación: " + e.getMessage());
             return ResponseEntity.badRequest().body(response);
@@ -184,6 +184,17 @@ public class InventarioController {
         return inventarioService.getInventarioById(id);
     }
 
+    @DeleteMapping("/delete-all")
+    public ResponseEntity<String> deleteAllInventarios() {
+        try {
+            inventarioService.deleteAllInventarios();
+            return ResponseEntity.ok("Todos los inventarios han sido eliminados.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al eliminar inventarios: " + e.getMessage());
+        }
+    }
+
     @DeleteMapping("/{id}")
     public void deleteInventario(@PathVariable int id) {
         inventarioService.deleteInventario(id);
@@ -192,6 +203,17 @@ public class InventarioController {
     @PostMapping("/crear-farmacia")
     public Farmacia crearFarmacia(@RequestBody Farmacia farmacia) {
         return inventarioService.saveFarmacia(farmacia);
+    }
+
+    @DeleteMapping("delete-all-farmacia")
+    public ResponseEntity<String> deleteAllFarmacias() {
+        try {
+            inventarioService.deleteAllFarmacias();
+            return ResponseEntity.ok("Todas las farmacias han sido eliminados.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al eliminar farmacias: " + e.getMessage());
+        }
     }
 
 }
