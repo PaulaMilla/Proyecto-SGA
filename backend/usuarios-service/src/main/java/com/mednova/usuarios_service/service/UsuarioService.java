@@ -30,6 +30,7 @@ public class UsuarioService {
     public List<Usuario> listarUsuarios() {
         return usuarioRepository.findAll();
     }
+
     public Usuario actualizarUsuario(Integer id, Usuario usuario) {
         Usuario usuarioExistente = usuarioRepository.findById(id).orElse(null);
         if (usuarioExistente != null) {

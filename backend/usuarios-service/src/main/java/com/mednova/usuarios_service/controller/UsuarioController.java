@@ -2,7 +2,9 @@ package com.mednova.usuarios_service.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import com.mednova.usuarios_service.dto.UsuarioLoginDTO;
 import com.mednova.usuarios_service.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -65,11 +67,18 @@ public class UsuarioController {
     public ResponseEntity<?> obtenerUsuarioPorEmail(@PathVariable String email) {
         Optional<Usuario> usuarioOpt = usuarioService.obtenerPorEmail(email);
 
-        if (usuarioOpt.isPresent()) {
-            return ResponseEntity.ok(usuarioOpt.get());
-        } else {
+        if (usuarioOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
         }
+
+        Usuario usuario = usuarioOpt.get();
+        String rol = usuario.getRol().getNombre_rol();
+        List<String> permisos = usuario.getRol().getPermisos().stream()
+                .map(Permiso::getNombre_permiso)
+                .collect(Collectors.toList());
+
+        UsuarioLoginDTO dto = new UsuarioLoginDTO(usuario.getCorreo(), rol, permisos);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/nombre-farmacia/{emailUsuario}")
