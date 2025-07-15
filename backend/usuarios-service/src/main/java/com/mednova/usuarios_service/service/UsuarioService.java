@@ -65,4 +65,8 @@ public class UsuarioService {
     public Optional<Usuario> obtenerPorEmail(String email){
         return usuarioRepository.findByCorreo(email);
     }
+
+    public List<Rol> findRoles(String nombreRol){
+        return rolRepository.findByNombre_rol(nombreRol);
+    }
 }
