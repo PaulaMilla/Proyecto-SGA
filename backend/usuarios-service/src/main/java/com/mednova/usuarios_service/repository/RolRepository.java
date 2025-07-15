@@ -7,5 +7,4 @@ import com.mednova.usuarios_service.model.Rol;
 import java.util.List;
 
 public interface RolRepository extends JpaRepository<Rol, Integer> {
-    List<Rol> findByNombre_rol(String nombreRol);
 }
