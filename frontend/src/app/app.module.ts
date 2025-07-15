@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -17,6 +18,10 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { CargaDatosComponent } from './components/carga-datos/carga-datos.component';
 import { LoginComponent } from './components/login/login.component';
 import { InventarioInfoComponent } from './inventario/inventario-info/inventario-info.component';
+import { MenuPrincipalComponent } from './components/menu-principal/menu-principal.component';
+import { PublicHeaderComponent } from './public/public-header/public-header.component';
+import { PublicFooterComponent } from './public/public-footer/public-footer.component';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +35,10 @@ import { InventarioInfoComponent } from './inventario/inventario-info/inventario
     UsuariosComponent,
     CargaDatosComponent,
     LoginComponent,
-    InventarioInfoComponent
+    InventarioInfoComponent,
+    MenuPrincipalComponent,
+    PublicHeaderComponent,
+    PublicFooterComponent
   ],
   imports: [
     BrowserModule,

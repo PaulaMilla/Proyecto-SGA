@@ -1,0 +1,31 @@
+<app-public-header></app-public-header>
+
+<div class="contenedor">
+  <h2>Listado de Productos y Precios</h2>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Tipo</th>
+      <th>Precio</th>
+      <th>Stock</th>
+      <th>Ubicación</th>
+      <th>Laboratorio</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let p of productos">
+      <td>{{ p.nombre }}</td>
+      <td>{{ p.tipo }}</td>
+      <td>{{ p.precio_unitario | currency:'CLP' }}</td>
+      <td>{{ p.cantidad_disponible }}</td>
+      <td>{{ p.ubicacion }}</td>
+      <td>{{ p.laboratorio }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-public-footer></app-public-footer>
+
