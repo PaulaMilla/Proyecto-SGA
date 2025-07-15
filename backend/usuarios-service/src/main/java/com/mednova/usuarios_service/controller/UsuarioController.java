@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.mednova.usuarios_service.dto.RolRequestDTO;
 import com.mednova.usuarios_service.dto.UsuarioLoginDTO;
 import com.mednova.usuarios_service.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,8 +55,8 @@ public class UsuarioController {
     }
 
     @PostMapping("/roles")
-    public ResponseEntity<Rol> crearRol(@RequestBody Rol rol) {
-        return ResponseEntity.ok(usuarioService.crearRol(rol));
+    public ResponseEntity<Rol> crearRol(@RequestBody RolRequestDTO rolDTO) {
+        return ResponseEntity.ok(usuarioService.crearRol(rolDTO));
     }
 
     @PostMapping("/permisos")

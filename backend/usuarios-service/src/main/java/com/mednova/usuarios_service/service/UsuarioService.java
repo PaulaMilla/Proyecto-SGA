@@ -2,6 +2,7 @@ package com.mednova.usuarios_service.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.mednova.usuarios_service.dto.RolRequestDTO;
 import org.springframework.stereotype.Service;
 
 import com.mednova.usuarios_service.model.Permiso;
@@ -46,7 +47,15 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-    public Rol crearRol(Rol rol) {
+    public Rol crearRol(RolRequestDTO dto) {
+        Rol rol = new Rol();
+        rol.setNombre_rol(dto.getNombre_rol());
+        rol.setDescripcion_rol(dto.getDescripcion_rol());
+
+        // Buscar los permisos por ID
+        List<Permiso> permisos = permisoRepository.findAllById(dto.getPermisos());
+        rol.setPermisos(permisos);
+
         return rolRepository.save(rol);
     }
 
@@ -65,5 +74,5 @@ public class UsuarioService {
     public Optional<Usuario> obtenerPorEmail(String email){
         return usuarioRepository.findByCorreo(email);
     }
-    
+
 }
