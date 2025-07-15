@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token', res.token);
           localStorage.setItem('email', res.email);
           localStorage.setItem('rol', res.rol);
+          localStorage.setItem('permisos', JSON.stringify(res.permisos));
 
           this.modalMessage = '¡Bienvenido al sistema!';
           this.isSuccess = true;

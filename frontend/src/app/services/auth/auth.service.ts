@@ -7,6 +7,7 @@ export interface JwtResponse {
   token: string;
   email: string;
   rol: string;
+  permisos: Array<string>;
 }
 
 export interface User {
@@ -24,6 +25,7 @@ export class AuthService {
   private tokenKey = 'token';
   private emailKey = 'email';
   private rolKey = 'rol';
+  private permisosKey = 'permisos';
 
   private userSubject = new BehaviorSubject<User>({ email: null, rol: null });
   user$ = this.userSubject.asObservable();
@@ -36,6 +38,7 @@ export class AuthService {
     const token = this.getToken();
     const email = localStorage.getItem(this.emailKey);
     const rol = localStorage.getItem(this.rolKey);
+    const permisos = localStorage.getItem(this.permisosKey);
 
     if (token && email && rol) {
       this.userSubject.next({ email, rol });
@@ -51,6 +54,7 @@ export class AuthService {
           localStorage.setItem(this.tokenKey, res.token);
           localStorage.setItem(this.emailKey, res.email);
           localStorage.setItem(this.rolKey, res.rol);
+          localStorage.setItem(this.permisosKey, JSON.stringify(res.permisos))
           this.userSubject.next({ email: res.email, rol: res.rol });
           observer.next(res);
           observer.complete();
@@ -64,6 +68,7 @@ export class AuthService {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.emailKey);
     localStorage.removeItem(this.rolKey);
+    localStorage.removeItem(this.permisosKey);
     this.userSubject.next({ email: null, rol: null });
   }
 
