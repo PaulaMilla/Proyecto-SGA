@@ -40,8 +40,9 @@ public class Usuario {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "rol_usuario")
-    private String rol;
+    @ManyToOne
+    @JoinColumn(name = "id_rol") // este campo FK debe existir en la tabla
+    private Rol rol;
 
     @Column (name = "nombre_farmacia")
     private String nombre_farmacia;
@@ -120,11 +121,11 @@ public class Usuario {
         this.password = password;
     }
 
-    public String getRol() {
+    public Rol getRol() {
         return rol;
     }
 
-    public void setRol(String rol) {
+    public void setRol(Rol rol) {
         this.rol = rol;
     }
 

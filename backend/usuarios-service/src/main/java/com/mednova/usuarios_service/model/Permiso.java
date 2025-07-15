@@ -12,21 +12,27 @@ public class Permiso {
 
 
     // Getters and Setters
-    public Integer getId_permiso() {
+
+    public int getId_permiso() {
         return id_permiso;
     }
-    public void setId_permiso(Integer id_permiso) {
+
+    public void setId_permiso(int id_permiso) {
         this.id_permiso = id_permiso;
     }
+
     public String getNombre_permiso() {
         return nombre_permiso;
     }
+
     public void setNombre_permiso(String nombre_permiso) {
         this.nombre_permiso = nombre_permiso;
     }
+
     public String getDescripcion_permiso() {
         return descripcion_permiso;
     }
+
     public void setDescripcion_permiso(String descripcion_permiso) {
         this.descripcion_permiso = descripcion_permiso;
     }
