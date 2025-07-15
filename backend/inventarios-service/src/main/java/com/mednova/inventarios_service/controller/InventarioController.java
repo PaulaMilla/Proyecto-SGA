@@ -193,4 +193,5 @@ public class InventarioController {
     public Farmacia crearFarmacia(@RequestBody Farmacia farmacia) {
         return inventarioService.saveFarmacia(farmacia);
     }
+
 }
