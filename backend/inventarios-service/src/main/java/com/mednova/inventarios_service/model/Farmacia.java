@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class Farmacia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int id_farmacia;
 
     @Column(name = "nombre", nullable = false)
     private String nombre;
@@ -85,11 +85,11 @@ public class Farmacia {
         this.nombre = nombre;
     }
 
-    public int getId() {
-        return id;
+    public int getId_farmacia() {
+        return id_farmacia;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId_farmacia(int id_farmacia) {
+        this.id_farmacia = id_farmacia;
     }
 }
