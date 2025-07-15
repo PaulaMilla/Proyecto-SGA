@@ -6,9 +6,7 @@ import java.util.Optional;
 import com.mednova.usuarios_service.dto.RolRequestDTO;
 import com.mednova.usuarios_service.dto.UsuarioRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.mednova.usuarios_service.model.Permiso;
@@ -26,10 +24,6 @@ public class UsuarioService {
 
     @Autowired
     private BCryptPasswordEncoder encoder;
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     public UsuarioService(UsuarioRepository usuarioRepository, RolRepository rolRepository, PermisoRepository permisoRepository) {
         this.usuarioRepository = usuarioRepository;
