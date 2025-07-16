@@ -5,10 +5,10 @@ on:
     branches:
       - main
     paths:
-      - 'backend/ventas-service/**'
+      - 'backend/caja-service/**'
 
 jobs:
-  build-ventas-service:
+  build-caja-service:
     runs-on: ubuntu-latest
 
     permissions:
@@ -29,13 +29,13 @@ jobs:
           distribution: 'temurin'
       
       # Paso 2.5: Obtener hash del último commit en la carpeta del microservicio
-      - name: Get last commit hash for ventas-service
+      - name: Get last commit hash for caja-service
         id: get_hash
-        run: echo "IMAGE_TAG=$(git log -n 1 --pretty=format:%h -- backend/ventas-service)" >> $GITHUB_ENV
+        run: echo "IMAGE_TAG=$(git log -n 1 --pretty=format:%h -- backend/caja-service)" >> $GITHUB_ENV
 
       # Paso 3: Construir el microservicio con Maven
-      - name: Build ventas-service with Maven
-        run: mvn -f backend/ventas-service/pom.xml clean package -DskipTests
+      - name: Build caja-service with Maven
+        run: mvn -f backend/caja-service/pom.xml clean package -DskipTests
 
       # Paso 4: Configurar Docker Buildx
       - name: Set up Docker Buildx
@@ -57,15 +57,15 @@ jobs:
       # Paso 7: Build
       - name: Build Docker images
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/ventas-service:latest \
-                      -t ${{ secrets.DOCKERHUB_USERNAME }}/ventas-service:${{ env.IMAGE_TAG }} \
-                      backend/ventas-service
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/caja-service:latest \
+                      -t ${{ secrets.DOCKERHUB_USERNAME }}/caja-service:${{ env.IMAGE_TAG }} \
+                      backend/caja-service
 
       # Paso 8: Push
       - name: Push Docker images
         run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/ventas-service:latest
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/ventas-service:${{ env.IMAGE_TAG }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/caja-service:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/caja-service:${{ env.IMAGE_TAG }}
 
       # Paso 9: Clonar el repo de despliegue
       - name: Checkout deploy repo
@@ -78,7 +78,7 @@ jobs:
       # Paso 10: Actualizar el manifiesto con el nuevo tag
       - name: Update deployment manifest image tag
         run: |
-          sed -i "s|\(image: .*/ventas-service:\).*|\1${{ env.IMAGE_TAG }}|" deploy-repo/ventas-service/deployment.yaml
+          sed -i "s|\(image: .*/caja-service:\).*|\1${{ env.IMAGE_TAG }}|" deploy-repo/caja-service/deployment.yaml
 
       # Paso 11: Commit y push al repo de despliegue con reintento
       - name: Commit and push changes with retry
@@ -86,8 +86,8 @@ jobs:
           cd deploy-repo
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add ventas-service/deployment.yaml
-          git commit -m "Update ventas-service image tag to ${{ env.IMAGE_TAG }}" || echo "No changes to commit"
+          git add caja-service/deployment.yaml
+          git commit -m "Update caja-service image tag to ${{ env.IMAGE_TAG }}" || echo "No changes to commit"
           
           for i in {1..3}; do
             git pull --rebase && git push && break || {
