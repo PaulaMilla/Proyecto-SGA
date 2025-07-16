@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.ArrayList;
+
 
 @RestController
 @RequestMapping("/api/inventarios")
@@ -221,6 +223,23 @@ public class InventarioController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error al eliminar farmacias: " + e.getMessage());
         }
+    }
+
+    @GetMapping("/public-productos")
+    public ResponseEntity<List<Map<String, Object>>> getProductosPublicos() {
+        List<Producto> productos = productoRepository.findAll();
+
+        List<Map<String, Object>> resultado = new ArrayList<>();
+        for (Producto p : productos) {
+            Map<String, Object> item = new HashMap<>();
+            item.put("id_producto", p.getId_producto());
+            item.put("nombre", p.getNombre());
+            item.put("tipo", p.getTipo());
+            item.put("precio_unitario", p.getPrecio_unitario());
+            resultado.add(item);
+        }
+
+        return ResponseEntity.ok(resultado);
     }
 
 }
