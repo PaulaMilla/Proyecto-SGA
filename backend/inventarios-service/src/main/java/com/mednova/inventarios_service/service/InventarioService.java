@@ -235,8 +235,10 @@ public class InventarioService {
 
     @Transactional
     public void descontarStock(DescuentoStockRequest request) {
-        // Buscar inventario por producto
-        Inventario inventario = inventarioRepository.findByProductoId(request.getProductoId())
+        Producto productoEntity = productoRepository.findById(request.getProductoId())
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        Inventario inventario = inventarioRepository.findByproducto(productoEntity)
                 .orElseThrow(() -> new RuntimeException(
                         "Inventario no encontrado para el producto " + request.getProductoId()));
 
