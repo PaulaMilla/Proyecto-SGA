@@ -56,5 +56,12 @@ public class VentasController {
             @RequestParam("hasta") LocalDate hasta) {
         return ResponseEntity.ok(ventaService.obtenerPorRangoFechas(desde, hasta));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarVenta(@PathVariable int id) {
+        ventaService.eliminarVentaConDetalles(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
 

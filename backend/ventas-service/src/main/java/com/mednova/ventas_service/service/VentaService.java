@@ -10,6 +10,7 @@ import com.mednova.ventas_service.repository.VentaRepository;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
@@ -144,6 +145,14 @@ public class VentaService {
         // Crear un DTO simple para enviar al otro microservicio
         var request = new DescuentoRequest(productoId, cantidad);
         restTemplate.postForEntity(url, request, Void.class);
+    }
+
+    @Transactional
+    public void eliminarVentaConDetalles(int ventaId) {
+        // Primero eliminamos los detalles asociados
+        detalleVentaRepository.deleteByVentaId(ventaId);
+        // Luego eliminamos la venta
+        ventaRepository.deleteById(ventaId);
     }
 
     public static class DescuentoRequest {
