@@ -34,6 +34,15 @@
       required
     />
 
+    <label for="usuario">ID del usuario</label>
+    <input
+      id="usuario"
+      type="number"
+      [(ngModel)]="venta.usuarioId"
+      name="usuarioId"
+      required
+    />
+
     <!-- Lista de productos agregados -->
     <h3>Productos seleccionados</h3>
     <div *ngIf="venta.detalles.length === 0">
