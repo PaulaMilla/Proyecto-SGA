@@ -235,24 +235,15 @@ public class InventarioService {
 
     @Transactional
     public void descontarStock(DescuentoStockRequest request) {
-        Inventario inventario = inventarioRepository
-                .findByProductoIdAndFarmaciaIdAndLote(
-                        request.getProductoId(),
-                        request.getFarmaciaId(),
-                        request.getLote()
-                )
+        // Buscar inventario por producto
+        Inventario inventario = inventarioRepository.findByProductoId(request.getProductoId())
                 .orElseThrow(() -> new RuntimeException(
-                        "Inventario no encontrado para producto "
-                                + request.getProductoId()
-                                + " en farmacia "
-                                + request.getFarmaciaId()
-                                + " y lote " + request.getLote()
-                ));
+                        "Inventario no encontrado para el producto " + request.getProductoId()));
 
         int nuevaCantidad = inventario.getCantidad_disponible() - request.getCantidad();
 
         if (nuevaCantidad < 0) {
-            throw new RuntimeException("Stock insuficiente.");
+            throw new RuntimeException("Stock insuficiente para producto " + request.getProductoId());
         }
 
         inventario.setCantidad_disponible(nuevaCantidad);
