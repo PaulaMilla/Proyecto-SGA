@@ -32,7 +32,6 @@ spring:
           uri: http://alertas-service.alertas.svc.cluster.local:80
           predicates:
             - Path=/api/alertas/**
-
         - id: reportes-service
           uri: http://reportes-service.reportes.svc.cluster.local:80
           predicates:
