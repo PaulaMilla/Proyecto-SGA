@@ -1,5 +1,6 @@
 package com.mednova.inventarios_service.controller;
 
+import com.mednova.inventarios_service.dto.DescuentoStockRequest;
 import com.mednova.inventarios_service.dto.InventarioProductoDTO;
 import com.mednova.inventarios_service.model.Farmacia;
 import com.mednova.inventarios_service.model.Inventario;
@@ -203,6 +204,12 @@ public class InventarioController {
     @PostMapping("/crear-farmacia")
     public Farmacia crearFarmacia(@RequestBody Farmacia farmacia) {
         return inventarioService.saveFarmacia(farmacia);
+    }
+
+    @PostMapping("/descontar-stock")
+    public ResponseEntity<Void> descontarStock(@RequestBody DescuentoStockRequest request) {
+        inventarioService.descontarStock(request);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("delete-all-farmacia")

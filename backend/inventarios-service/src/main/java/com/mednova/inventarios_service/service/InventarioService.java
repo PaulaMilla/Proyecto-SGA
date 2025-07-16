@@ -1,5 +1,6 @@
 package com.mednova.inventarios_service.service;
 
+import com.mednova.inventarios_service.dto.DescuentoStockRequest;
 import com.mednova.inventarios_service.dto.InventarioProductoDTO;
 import com.mednova.inventarios_service.model.Farmacia;
 import com.mednova.inventarios_service.model.Inventario;
@@ -12,6 +13,7 @@ import com.opencsv.exceptions.CsvException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -230,6 +232,33 @@ public class InventarioService {
             throw new RuntimeException("Error al consultar nombre de farmacia: " + e.getMessage());
         }
     }
+
+    @Transactional
+    public void descontarStock(DescuentoStockRequest request) {
+        Inventario inventario = inventarioRepository
+                .findByProductoIdAndFarmaciaIdAndLote(
+                        request.getProductoId(),
+                        request.getFarmaciaId(),
+                        request.getLote()
+                )
+                .orElseThrow(() -> new RuntimeException(
+                        "Inventario no encontrado para producto "
+                                + request.getProductoId()
+                                + " en farmacia "
+                                + request.getFarmaciaId()
+                                + " y lote " + request.getLote()
+                ));
+
+        int nuevaCantidad = inventario.getCantidad_disponible() - request.getCantidad();
+
+        if (nuevaCantidad < 0) {
+            throw new RuntimeException("Stock insuficiente.");
+        }
+
+        inventario.setCantidad_disponible(nuevaCantidad);
+        inventarioRepository.save(inventario);
+    }
+
 
     public List<Inventario> getAllInventarios() {
         return inventarioRepository.findAll();

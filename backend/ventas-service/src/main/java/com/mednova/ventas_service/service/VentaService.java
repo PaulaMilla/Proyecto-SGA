@@ -1,5 +1,6 @@
 package com.mednova.ventas_service.service;
 
+import com.mednova.ventas_service.dto.DescuentoStockRequest;
 import com.mednova.ventas_service.dto.DetalleVentaDTO;
 import com.mednova.ventas_service.dto.ProductoDTO;
 import com.mednova.ventas_service.dto.VentaConDetallesDTO;
@@ -48,6 +49,7 @@ public class VentaService {
 
             double subtotal = d.getCantidad() * producto.getPrecio_unitario();
 
+            // Crear y guardar detalle
             DetalleVenta detalle = new DetalleVenta();
             detalle.setVentaId(ventaGuardada.getId());
             detalle.setProductoId(d.getProductoId());
@@ -56,7 +58,21 @@ public class VentaService {
             detalle.setSubtotal(subtotal);
 
             detalleVentaRepository.save(detalle);
+
             totalVenta += subtotal;
+
+            // ⬇️ DESCONTAR STOCK EN INVENTARIOS ⬇️
+            DescuentoStockRequest descuentoRequest = new DescuentoStockRequest();
+            descuentoRequest.setProductoId(d.getProductoId());
+            descuentoRequest.setCantidad(d.getCantidad());
+
+            try {
+                String url = "http://inventarios-service.inventarios.svc.cluster.local/api/inventarios/descontar-stock";
+                restTemplate.postForEntity(url, descuentoRequest, Void.class);
+            } catch (Exception e) {
+                throw new RuntimeException("Error al descontar stock para producto " + d.getProductoId(), e);
+            }
+            // ⬆️ FIN DESCUENTO STOCK ⬆️
         }
 
         ventaGuardada.setTotal(totalVenta);
@@ -64,6 +80,7 @@ public class VentaService {
 
         return ventaGuardada;
     }
+
 
    /* public Venta registrarVenta(Venta venta, List<DetalleVenta> detalles) {
         double totalVenta = 0.0;

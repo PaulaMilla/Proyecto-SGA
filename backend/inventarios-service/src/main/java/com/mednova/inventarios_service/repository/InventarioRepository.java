@@ -20,4 +20,11 @@ public interface InventarioRepository extends JpaRepository<Inventario, Integer>
     void resetearCantidades();
 
     List<Inventario> findByFarmacia(Farmacia farmacia);
+
+    Optional<Inventario> findByProductoIdAndFarmaciaIdAndLote(
+            int productoId,
+            int farmaciaId,
+            String lote
+    );
+
 }
