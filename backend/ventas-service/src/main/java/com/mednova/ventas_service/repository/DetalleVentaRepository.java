@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface DetalleVentaRepository extends JpaRepository<DetalleVenta, Integer> {
 
     DetalleVenta findByVentaId(Integer ventaId);
+    void deleteByVentaId(int ventaId);
 }

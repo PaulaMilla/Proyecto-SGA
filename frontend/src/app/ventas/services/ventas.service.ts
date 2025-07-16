@@ -39,6 +39,10 @@ export class VentasService {
     return this.http.get<VentaRegistrada[]>(`${this.apiUrl}`);
   }
 
+  eliminarVenta(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
   getProductoPorId(productoId: number): Observable<any> {
     return this.http.get(`http://34.61.182.228/api/inventarios/productos/${productoId}`);
   }

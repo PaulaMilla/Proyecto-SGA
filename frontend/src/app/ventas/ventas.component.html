@@ -7,6 +7,14 @@
     <p><strong>Cantidad:</strong> {{ v.cantidad }}</p>
     <p><strong>Precio Unitario:</strong> {{ v.precioUnitario | currency:'USD':'symbol':'1.0-0' }}</p>
     <p><strong>Total:</strong> {{ v.total | currency:'USD':'symbol':'1.0-0' }}</p>
+
+    <button
+      class="btn-eliminar"
+      title="Eliminar venta"
+      (click)="eliminarVenta(v.id)"
+    >
+      🗑️
+    </button>
   </div>
 </div>
 
@@ -31,6 +39,15 @@
       type="number"
       [(ngModel)]="venta.pacienteId"
       name="pacienteId"
+      required
+    />
+
+    <label for="usuario">ID del usuario</label>
+    <input
+      id="usuario"
+      type="number"
+      [(ngModel)]="venta.usuarioId"
+      name="usuarioId"
       required
     />
 

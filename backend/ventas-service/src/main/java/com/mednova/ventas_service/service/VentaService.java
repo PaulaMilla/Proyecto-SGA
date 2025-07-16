@@ -1,5 +1,6 @@
 package com.mednova.ventas_service.service;
 
+import com.mednova.ventas_service.dto.DescuentoStockRequest;
 import com.mednova.ventas_service.dto.DetalleVentaDTO;
 import com.mednova.ventas_service.dto.ProductoDTO;
 import com.mednova.ventas_service.dto.VentaConDetallesDTO;
@@ -10,6 +11,7 @@ import com.mednova.ventas_service.repository.VentaRepository;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
@@ -47,6 +49,7 @@ public class VentaService {
 
             double subtotal = d.getCantidad() * producto.getPrecio_unitario();
 
+            // Crear y guardar detalle
             DetalleVenta detalle = new DetalleVenta();
             detalle.setVentaId(ventaGuardada.getId());
             detalle.setProductoId(d.getProductoId());
@@ -55,7 +58,21 @@ public class VentaService {
             detalle.setSubtotal(subtotal);
 
             detalleVentaRepository.save(detalle);
+
             totalVenta += subtotal;
+
+            // ⬇️ DESCONTAR STOCK EN INVENTARIOS ⬇️
+            DescuentoStockRequest descuentoRequest = new DescuentoStockRequest();
+            descuentoRequest.setProductoId(d.getProductoId());
+            descuentoRequest.setCantidad(d.getCantidad());
+
+            try {
+                String url = "http://inventarios-service.inventarios.svc.cluster.local/api/inventarios/descontar-stock";
+                restTemplate.postForEntity(url, descuentoRequest, Void.class);
+            } catch (Exception e) {
+                throw new RuntimeException("Error al descontar stock para producto " + d.getProductoId(), e);
+            }
+            // ⬆️ FIN DESCUENTO STOCK ⬆️
         }
 
         ventaGuardada.setTotal(totalVenta);
@@ -63,6 +80,7 @@ public class VentaService {
 
         return ventaGuardada;
     }
+
 
    /* public Venta registrarVenta(Venta venta, List<DetalleVenta> detalles) {
         double totalVenta = 0.0;
@@ -144,6 +162,14 @@ public class VentaService {
         // Crear un DTO simple para enviar al otro microservicio
         var request = new DescuentoRequest(productoId, cantidad);
         restTemplate.postForEntity(url, request, Void.class);
+    }
+
+    @Transactional
+    public void eliminarVentaConDetalles(int ventaId) {
+        // Primero eliminamos los detalles asociados
+        detalleVentaRepository.deleteByVentaId(ventaId);
+        // Luego eliminamos la venta
+        ventaRepository.deleteById(ventaId);
     }
 
     public static class DescuentoRequest {

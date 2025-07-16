@@ -58,6 +58,16 @@ export class VentasComponent implements OnInit {
     this.venta.detalles.splice(index, 1);
   }
 
+  eliminarVenta(id: number) {
+    if (confirm('¿Estás seguro de que quieres eliminar esta venta?')) {
+      this.ventasService.eliminarVenta(id).subscribe(() => {
+        alert('Venta eliminada correctamente');
+        this.cargarVentas();
+      });
+    }
+  }
+
+
   guardarVenta() {
     if (!this.venta.pacienteId) {
       alert('Debe ingresar un ID de paciente.');
