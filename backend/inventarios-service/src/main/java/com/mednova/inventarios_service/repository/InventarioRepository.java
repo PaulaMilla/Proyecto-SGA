@@ -21,10 +21,7 @@ public interface InventarioRepository extends JpaRepository<Inventario, Integer>
 
     List<Inventario> findByFarmacia(Farmacia farmacia);
 
-    Optional<Inventario> findByProductoIdAndFarmaciaIdAndLote(
-            int productoId,
-            int farmaciaId,
-            String lote
-    );
+    Optional<Inventario> findByProductoId(int productoId);
+
 
 }
