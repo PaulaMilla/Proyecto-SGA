@@ -9,10 +9,10 @@ import { authGuard } from './guards/auth.guard';
 import { LoginComponent } from './components/login/login.component';
 import { InventarioInfoComponent } from './inventario/inventario-info/inventario-info.component';
 import { CargaDatosComponent } from './components/carga-datos/carga-datos.component';
-import { MenuPrincipalComponent } from './components/menu-principal/menu-principal.component'; // 👈 AGREGADO
+import { MenuPrincipalComponent } from './components/menu-principal/menu-principal.component';
 
 const routes: Routes = [
-  { path: '', component: MenuPrincipalComponent }, // 👈 CAMBIADO: ahora el inicio es público
+  { path: '', component: MenuPrincipalComponent }, // CAMBIADO: ahora el inicio es público
   { path: 'login', component: LoginComponent },
   { path: 'ventas', component: VentasComponent, canActivate: [authGuard] },
   { path: 'usuarios', component: UsuariosComponent, canActivate: [authGuard] },
