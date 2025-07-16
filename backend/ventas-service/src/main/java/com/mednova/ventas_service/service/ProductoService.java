@@ -15,7 +15,7 @@ public class ProductoService {
 
     public ProductoDTO getProducto(int id_producto) {
         try {
-            String url = "http://usuarios-service.usuarios.svc.cluster.local/api/inventarios/productos/" + id_producto;
+            String url = "http://inventarios-service.inventarios.svc.cluster.local/api/inventarios/productos/" + id_producto;
             ResponseEntity<ProductoDTO> response = restTemplate.getForEntity(url, ProductoDTO.class);
             return response.getBody();
         } catch (RestClientException e) {
