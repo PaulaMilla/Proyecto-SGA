@@ -31,7 +31,7 @@ public class CajaService {
     }
 
     public TurnoCajaDTO abrirTurno(int cajaId, int idUsuario, BigDecimal montoApertura){
-        turnoCajaRepo.findByCajaIdAndCerradoFalse(cajaId).ifPresent(
+        turnoCajaRepo.findByCaja_IdAndCerradoFalse(cajaId).ifPresent(
                 t -> {throw new RuntimeException("Ya hay un turno abierto para esta caja");}
         );
 
