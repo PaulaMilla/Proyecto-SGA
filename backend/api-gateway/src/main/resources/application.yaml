@@ -41,6 +41,22 @@ spring:
           uri: http://auth-service.auth.svc.cluster.local:80
           predicates:
             - Path=/api/auth/**
+        - id: caja-service
+          uri: http://caja-service.auth.svc.cluster.local:80
+          predicates:
+            - Path=/api/auth/**
+        - id: compras-service
+          uri: http://compras-service.auth.svc.cluster.local:80
+          predicates:
+            - Path=/api/auth/**
+        - id: dispersion-service
+          uri: http://dispersion-service.auth.svc.cluster.local:80
+          predicates:
+            - Path=/api/auth/**
+        - id: fraccionamiento-service
+          uri: http://fraccionamiento-service.auth.svc.cluster.local:80
+          predicates:
+            - Path=/api/auth/**
 
   servlet:
     multipart:
