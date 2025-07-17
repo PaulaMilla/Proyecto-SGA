@@ -15,7 +15,7 @@ public class Caja {
     private String descripcion;
 
     @Column (name = "ubicacion")
-    private String ubicacion;
+    private int idFarmacia;
 
     @Column (name = "activa")
     private boolean activa;
@@ -47,12 +47,12 @@ public class Caja {
         this.descripcion = descripcion;
     }
 
-    public String getUbicacion() {
-        return ubicacion;
+    public int getIdFarmacia() {
+        return idFarmacia;
     }
 
-    public void setUbicacion(String ubicacion) {
-        this.ubicacion = ubicacion;
+    public void setIdFarmacia(int idFarmacia) {
+        this.idFarmacia = idFarmacia;
     }
 
     public boolean isActiva() {
