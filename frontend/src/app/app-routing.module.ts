@@ -11,6 +11,7 @@ import { InventarioInfoComponent } from './inventario/inventario-info/inventario
 import { CargaDatosComponent } from './components/carga-datos/carga-datos.component';
 import { MenuPrincipalComponent } from './components/menu-principal/menu-principal.component';
 import { ListadoComponent } from './pacientes/listado/listado.component';
+import { PacientesInfoComponent } from './pacientes/pacientes-info/pacientes-info.component';
 
 const routes: Routes = [
   { path: '', component: MenuPrincipalComponent }, // CAMBIADO: ahora el inicio es público
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'inventario/upload', component: InventarioUploadComponent, canActivate: [authGuard] },
   { path: 'pacientes/upload', component: PacientesUploadComponent, canActivate: [authGuard] },
   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
+  { path: 'pacientes/info', component: PacientesInfoComponent, canActivate: [authGuard] },
   { path: 'pacientes/listado', component: ListadoComponent, canActivate: [authGuard] }
 ];
 
