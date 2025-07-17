@@ -10,6 +10,7 @@ import { LoginComponent } from './components/login/login.component';
 import { InventarioInfoComponent } from './inventario/inventario-info/inventario-info.component';
 import { CargaDatosComponent } from './components/carga-datos/carga-datos.component';
 import { MenuPrincipalComponent } from './components/menu-principal/menu-principal.component';
+import { ListadoComponent } from './pacientes/listado/listado.component';
 
 const routes: Routes = [
   { path: '', component: MenuPrincipalComponent }, // CAMBIADO: ahora el inicio es público
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'inventario-info', component: InventarioInfoComponent, canActivate: [authGuard] },
   { path: 'inventario/upload', component: InventarioUploadComponent, canActivate: [authGuard] },
   { path: 'pacientes/upload', component: PacientesUploadComponent, canActivate: [authGuard] },
-  { path: 'home', component: HomeComponent, canActivate: [authGuard] }
+  { path: 'home', component: HomeComponent, canActivate: [authGuard] },
+  { path: 'pacientes/listado', component: ListadoComponent, canActivate: [authGuard] }
 ];
 
 @NgModule({
