@@ -33,6 +33,10 @@ export class PacientesService {
 
     return this.http.post(`${this.apiUrl}/test-upload`, formData, { headers });
   }
+  obtenerPacientes(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
+
   listarTodos(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}`);
 

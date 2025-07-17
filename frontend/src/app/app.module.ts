@@ -22,6 +22,7 @@ import { MenuPrincipalComponent } from './components/menu-principal/menu-princip
 import { PublicHeaderComponent } from './public/public-header/public-header.component';
 import { PublicFooterComponent } from './public/public-footer/public-footer.component';
 import { ListadoComponent } from './pacientes/listado/listado.component';
+import { PacientesInfoComponent } from './pacientes/pacientes-info/pacientes-info.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { ListadoComponent } from './pacientes/listado/listado.component';
     MenuPrincipalComponent,
     PublicHeaderComponent,
     PublicFooterComponent,
-    ListadoComponent
+    ListadoComponent,
+    PacientesInfoComponent
   ],
   imports: [
     BrowserModule,
