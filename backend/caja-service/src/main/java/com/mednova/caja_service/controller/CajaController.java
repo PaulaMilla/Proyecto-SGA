@@ -31,7 +31,7 @@ public class CajaController {
 
     @PostMapping
     public ResponseEntity<Caja> crearCaja(@RequestBody Caja newCaja) {
-        if(cajaService.comprobarFarmacia(newCaja.getIdFarmacia())){
+        if(cajaService.comprobarFarmacia(newCaja.getIdFarmacia()) > 0){
             return ResponseEntity.ok(cajaService.crearCaja(newCaja));
         }
         return ResponseEntity.badRequest().build();

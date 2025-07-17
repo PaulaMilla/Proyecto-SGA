@@ -1,5 +1,6 @@
 package com.mednova.caja_service.service;
 
+import com.mednova.caja_service.dto.FarmaciaRequestDTO;
 import com.mednova.caja_service.dto.MovimientoCajaDTO;
 import com.mednova.caja_service.dto.PagoDTO;
 import com.mednova.caja_service.dto.TurnoCajaDTO;
@@ -202,16 +203,16 @@ public class CajaService {
         return resultado;
     }
 
-    public boolean comprobarFarmacia(int id){
-        int idFarmacia = webClient.get()
+    public int comprobarFarmacia(int id){
+        FarmaciaRequestDTO farmacia = webClient.get()
                 .uri("/api/inventarios/farmacia/"+ id)
                 .retrieve()
-                .bodyToMono(int.class)
+                .bodyToMono(FarmaciaRequestDTO.class)
                 .block();
 
-        if(idFarmacia<=0){
+        if(farmacia == null){
             throw new RuntimeException("Farmacia no encontrada, ID: "+ id);
         }
-        return true;
+        return farmacia.getId();
     }
 }
