@@ -3,6 +3,7 @@ package com.mednova.caja_service.controller;
 import com.mednova.caja_service.dto.MovimientoCajaDTO;
 import com.mednova.caja_service.dto.PagoDTO;
 import com.mednova.caja_service.dto.TurnoCajaDTO;
+import com.mednova.caja_service.model.Caja;
 import com.mednova.caja_service.model.MetodoPago;
 import com.mednova.caja_service.model.TipoMovimiento;
 import com.mednova.caja_service.model.TurnoCaja;
@@ -24,8 +25,8 @@ public class CajaController {
     }
 
     @GetMapping
-    public ResponseEntity<String> getCaja() {
-        return ResponseEntity.ok("Caja Service");
+    public ResponseEntity<List<Caja>> obtenerTodasLasCajas() {
+        return ResponseEntity.ok(cajaService.obtenerTodasLasCajas());
     }
 
     @PostMapping("/abrir-turno")
@@ -75,5 +76,26 @@ public class CajaController {
     public ResponseEntity<List<PagoDTO>> getPagos(@PathVariable int turnoId) {
         List<PagoDTO> pagos = cajaService.obtenerPagosPorTurno(turnoId);
         return ResponseEntity.ok(pagos);
+    }
+
+    // Obtener una caja por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Caja> obtenerCajaPorId(@PathVariable int id) {
+        Caja caja = cajaService.obtenerCajaPorId(id);
+        return ResponseEntity.ok(caja);
+    }
+
+    // Activar o desactivar una caja
+    @PutMapping("/{id}/estado")
+    public ResponseEntity<Caja> actualizarEstadoCaja(@PathVariable int id, @RequestParam boolean activa) {
+        Caja actualizada = cajaService.actualizarEstadoCaja(id, activa);
+        return ResponseEntity.ok(actualizada);
+    }
+
+    // Eliminar una caja
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarCaja(@PathVariable int id) {
+        cajaService.eliminarCaja(id);
+        return ResponseEntity.noContent().build();
     }
 }

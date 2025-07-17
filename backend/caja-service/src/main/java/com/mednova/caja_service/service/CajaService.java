@@ -30,6 +30,25 @@ public class CajaService {
         this.pagoRepo = pagoRepo;
     }
 
+    public List<Caja> obtenerTodasLasCajas() {
+        return cajaRepo.findAll();
+    }
+
+    public Caja obtenerCajaPorId(int id) {
+        return cajaRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Caja no encontrada con id: " + id));
+    }
+
+    public Caja actualizarEstadoCaja(int id, boolean activa) {
+        Caja caja = obtenerCajaPorId(id);
+        caja.setActiva(activa);
+        return cajaRepo.save(caja);
+    }
+
+    public void eliminarCaja(int id) {
+        cajaRepo.deleteById(id);
+    }
+
     public TurnoCajaDTO abrirTurno(int cajaId, int idUsuario, BigDecimal montoApertura){
         turnoCajaRepo.findTurnoAbiertoPorCaja(cajaId).ifPresent(
                 t -> {throw new RuntimeException("Ya hay un turno abierto para esta caja");}
