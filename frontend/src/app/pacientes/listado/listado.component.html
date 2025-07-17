@@ -1,7 +1,7 @@
 <div class="contenedor">
   <h2>Listado de Pacientes</h2>
 
-  <table *ngIf="pacientes.length > 0; else sinPacientes">
+  <table>
     <thead>
     <tr>
       <th>Nombre</th>
@@ -9,6 +9,7 @@
       <th>Dirección</th>
       <th>Beneficiario</th>
       <th>Farmacia</th>
+      <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
@@ -18,9 +19,13 @@
       <td>{{ p.direccion }}</td>
       <td>{{ p.beneficiario ? 'Sí' : 'No' }}</td>
       <td>{{ p.nombre_farmacia }}</td>
+      <td>
+        <button (click)="eliminar(p.id_paciente)" class="btn btn-danger btn-sm">Eliminar</button>
+      </td>
     </tr>
     </tbody>
   </table>
+
 
   <ng-template #sinPacientes>
     <p>No hay pacientes cargados.</p>
