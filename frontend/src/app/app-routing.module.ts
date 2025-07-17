@@ -24,6 +24,7 @@ const routes: Routes = [
   { path: 'pacientes/upload', component: PacientesUploadComponent, canActivate: [authGuard] },
   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
   { path: 'pacientes/info', component: PacientesInfoComponent, canActivate: [authGuard] },
+  { path: 'pacientes', component: ListadoComponent, canActivate: [authGuard] },
   { path: 'pacientes/listado', component: ListadoComponent, canActivate: [authGuard] }
 ];
 

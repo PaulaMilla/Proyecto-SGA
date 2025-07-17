@@ -1,22 +1,28 @@
-<h2>Listado de Pacientes</h2>
+<div class="contenedor">
+  <h2>Listado de Pacientes</h2>
 
-<table>
-  <thead>
-  <tr>
-    <th>Nombre</th>
-    <th>Edad</th>
-    <th>Dirección</th>
-    <th>Beneficiario</th>
-    <th>Farmacia</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let p of pacientes">
-    <td>{{ p.nombre }}</td>
-    <td>{{ p.edad }}</td>
-    <td>{{ p.direccion }}</td>
-    <td>{{ p.beneficiario ? 'Sí' : 'No' }}</td>
-    <td>{{ p.nombre_farmacia }}</td>
-  </tr>
-  </tbody>
-</table>
+  <table *ngIf="pacientes.length > 0; else sinPacientes">
+    <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Edad</th>
+      <th>Dirección</th>
+      <th>Beneficiario</th>
+      <th>Farmacia</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let p of pacientes">
+      <td>{{ p.nombre }}</td>
+      <td>{{ p.edad }}</td>
+      <td>{{ p.direccion }}</td>
+      <td>{{ p.beneficiario ? 'Sí' : 'No' }}</td>
+      <td>{{ p.nombre_farmacia }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <ng-template #sinPacientes>
+    <p>No hay pacientes cargados.</p>
+  </ng-template>
+</div>

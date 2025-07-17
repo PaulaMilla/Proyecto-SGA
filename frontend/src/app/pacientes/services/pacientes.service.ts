@@ -12,8 +12,9 @@ export class PacientesService {
   constructor(private http: HttpClient) {}
 
   obtenerTodos(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}`);
+    return this.http.get<any[]>('http://34.61.182.228/api/pacientes');
   }
+
   subirArchivoPacientes(file: File): Observable<any> {
     const formData = new FormData();
     formData.append('file', file, file.name);
