@@ -1,6 +1,7 @@
 package com.mednova.inventarios_service.controller;
 
 import com.mednova.inventarios_service.dto.DescuentoStockRequest;
+import com.mednova.inventarios_service.dto.FarmaciaResponseDTO;
 import com.mednova.inventarios_service.dto.InventarioProductoDTO;
 import com.mednova.inventarios_service.model.Farmacia;
 import com.mednova.inventarios_service.model.Inventario;
@@ -8,6 +9,7 @@ import com.mednova.inventarios_service.model.Producto;
 import com.mednova.inventarios_service.repository.ProductoRepository;
 import com.mednova.inventarios_service.service.InventarioService;
 
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -243,13 +245,13 @@ public class InventarioController {
     }
 
     @GetMapping("/farmacia/{id}")
-    public int getFarmacia(@PathVariable int id) {
-        Optional<Farmacia> opt = inventarioService.getFarmaciaById(id);
+    public ResponseEntity<FarmaciaResponseDTO> getFarmacia(@PathVariable int id) {
+        Optional<FarmaciaResponseDTO> opt = inventarioService.getFarmaciaById(id);
         if (opt.isPresent()) {
-            Farmacia farmacia = opt.get();
-            return farmacia.getId();
+            FarmaciaResponseDTO farmacia = opt.get();
+            return ResponseEntity.ok(farmacia);
         }
-        return -1;
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/farmacia")

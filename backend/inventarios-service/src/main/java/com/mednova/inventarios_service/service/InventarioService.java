@@ -1,6 +1,7 @@
 package com.mednova.inventarios_service.service;
 
 import com.mednova.inventarios_service.dto.DescuentoStockRequest;
+import com.mednova.inventarios_service.dto.FarmaciaResponseDTO;
 import com.mednova.inventarios_service.dto.InventarioProductoDTO;
 import com.mednova.inventarios_service.model.Farmacia;
 import com.mednova.inventarios_service.model.Inventario;
@@ -283,7 +284,21 @@ public class InventarioService {
         farmaciaRepository.deleteAll();
     }
 
-    public Optional<Farmacia> getFarmaciaById(int id) {
-        return farmaciaRepository.findById(id);
+    public Optional<FarmaciaResponseDTO> getFarmaciaById(int id) {
+        Optional<Farmacia> opt = farmaciaRepository.findById(id);
+        if (opt.isPresent()) {
+            Farmacia farmacia = opt.get();
+            FarmaciaResponseDTO dto = new FarmaciaResponseDTO();
+            dto.setId(farmacia.getId());
+            dto.setNombre(farmacia.getNombre());
+            dto.setDireccion(farmacia.getDireccion());
+            dto.setComuna(farmacia.getComuna());
+            dto.setTelefono(farmacia.getTelefono());
+            dto.setEmailContacto(farmacia.getEmailContacto());
+            dto.setHorarioAtencion(farmacia.getHorarioAtencion());
+            dto.setActivo(farmacia.isActivo());
+            return Optional.of(dto);
+        }
+        return Optional.empty();
     }
 }
