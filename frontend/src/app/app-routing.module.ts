@@ -6,6 +6,7 @@ import { UploadComponent as PacientesUploadComponent } from './pacientes/upload/
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { HomeComponent } from './components/home/home.component';
 import { authGuard } from './guards/auth.guard';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
 import { InventarioInfoComponent } from './inventario/inventario-info/inventario-info.component';
 import { CargaDatosComponent } from './components/carga-datos/carga-datos.component';
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
   { path: 'pacientes/info', component: PacientesInfoComponent, canActivate: [authGuard] },
   { path: 'pacientes', component: ListadoComponent, canActivate: [authGuard] },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
   { path: 'pacientes/listado', component: ListadoComponent, canActivate: [authGuard] }
 ];
 
