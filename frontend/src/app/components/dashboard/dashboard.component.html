@@ -1,0 +1,11 @@
+<div class="dashboard-container">
+  <h2>Indicadores Clave (KPIs)</h2>
+
+  <div class="kpi-grid">
+    <div class="kpi-card" *ngFor="let kpi of kpis">
+      <div class="kpi-icon">{{ kpi.icon }}</div>
+      <div class="kpi-title">{{ kpi.titulo }}</div>
+      <div class="kpi-description">{{ kpi.descripcion }}</div>
+    </div>
+  </div>
+</div>

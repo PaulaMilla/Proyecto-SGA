@@ -23,6 +23,7 @@ import { PublicHeaderComponent } from './public/public-header/public-header.comp
 import { PublicFooterComponent } from './public/public-footer/public-footer.component';
 import { ListadoComponent } from './pacientes/listado/listado.component';
 import { PacientesInfoComponent } from './pacientes/pacientes-info/pacientes-info.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { PacientesInfoComponent } from './pacientes/pacientes-info/pacientes-inf
     PublicHeaderComponent,
     PublicFooterComponent,
     ListadoComponent,
-    PacientesInfoComponent
+    PacientesInfoComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
