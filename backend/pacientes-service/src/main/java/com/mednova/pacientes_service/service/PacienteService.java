@@ -276,4 +276,5 @@ public class PacienteService {
     public List<Paciente> obtenerPorBeneficiario(boolean esBeneficiario) {
         return pacienteRepository.findByBeneficiario(esBeneficiario);
     }
+    
 }
