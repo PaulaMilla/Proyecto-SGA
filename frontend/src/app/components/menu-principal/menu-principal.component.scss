@@ -1,95 +1,51 @@
 .contenedor {
-  padding: 30px;
+  max-width: 1000px;
+  margin: 40px 0 40px 40px;;
+  padding: 20px;
+  text-align: left;
+  background-color: #fff;
+}
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+h2 {
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
 
-    th, td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: left;
-    }
+.tabla-precios {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
 
-    th {
-      background-color: #f0f0f0;
-
-      .boton-login {
-        text-align: right;
-        margin-bottom: 15px;
-
-        .btn-ir-login {
-          background-color: #007bff;
-          color: white;
-          padding: 8px 16px;
-          border-radius: 5px;
-          text-decoration: none;
-          font-weight: bold;
-        }
-
-        .btn-ir-login:hover {
-          background-color: #0056b3;
-        }
-      }
-
-    }
-  }
-  .menu-container {
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #fdfdfd;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    text-align: center;
-
-    h2 {
-      color: #2c3e50;
-      margin-bottom: 20px;
-    }
-
-    .tabla-productos {
-      width: 100%;
-      border-collapse: collapse;
-
-      th, td {
-        padding: 12px;
-        border: 1px solid #ddd;
-        text-align: center;
-      }
-
-      th {
-        background-color: #4CAF50;
-        color: white;
-      }
-
-      tr:nth-child(even) {
-        background-color: #f9f9f9;
-      }
-
-      td {
-        font-size: 15px;
-      }
-    }
-
-    .acciones {
-      margin-top: 30px;
-
-      .btn-login {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #007BFF;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        font-weight: bold;
-
-        &:hover {
-          background-color: #0056b3;
-        }
-      }
-    }
+  th, td {
+    border: 1px solid #ccc;
+    padding: 10px 14px;
+    text-align: left;
   }
 
+  th {
+    background-color: #004d40;
+    color: white;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+}
+
+.boton-login {
+  margin-top: 20px;
+
+  .btn-volver {
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
 }
