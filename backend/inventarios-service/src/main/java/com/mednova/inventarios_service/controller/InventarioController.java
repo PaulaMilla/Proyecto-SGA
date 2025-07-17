@@ -242,4 +242,14 @@ public class InventarioController {
         return ResponseEntity.ok(resultado);
     }
 
+    @GetMapping("/farmacia/{id}")
+    public int getFarmacia(@PathVariable int id) {
+        Optional<Farmacia> opt = inventarioService.getFarmaciaById(id);
+        if (opt.isPresent()) {
+            Farmacia farmacia = opt.get();
+            return farmacia.getId();
+        }
+        return -1;
+    }
+
 }

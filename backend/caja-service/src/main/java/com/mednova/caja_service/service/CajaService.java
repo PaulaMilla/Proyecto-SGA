@@ -9,6 +9,7 @@ import com.mednova.caja_service.repository.MovimientoCajaRepository;
 import com.mednova.caja_service.repository.PagoRepository;
 import com.mednova.caja_service.repository.TurnoCajaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -22,8 +23,10 @@ public class CajaService {
     private final CajaRepository cajaRepo;
     private final MovimientoCajaRepository movimientoCajaRepo;
     private final PagoRepository pagoRepo;
+    private final WebClient webClient;
 
-    public CajaService(TurnoCajaRepository turnoCajaRepo, CajaRepository cajaRepo, MovimientoCajaRepository movimientoCajaRepo, PagoRepository pagoRepo) {
+    public CajaService(WebClient.Builder builder, TurnoCajaRepository turnoCajaRepo, CajaRepository cajaRepo, MovimientoCajaRepository movimientoCajaRepo, PagoRepository pagoRepo) {
+        this.webClient = builder.baseUrl("http://inventarios-service.inventarios.svc.cluster.local").build();
         this.turnoCajaRepo = turnoCajaRepo;
         this.cajaRepo = cajaRepo;
         this.movimientoCajaRepo = movimientoCajaRepo;
@@ -32,6 +35,10 @@ public class CajaService {
 
     public List<Caja> obtenerTodasLasCajas() {
         return cajaRepo.findAll();
+    }
+
+    public Caja crearCaja(Caja caja) {
+        return cajaRepo.save(caja);
     }
 
     public Caja obtenerCajaPorId(int id) {
@@ -193,5 +200,18 @@ public class CajaService {
         }
 
         return resultado;
+    }
+
+    public boolean comprobarFarmacia(int id){
+        int idFarmacia = webClient.get()
+                .uri("/api/inventarios/farmacia/"+ id)
+                .retrieve()
+                .bodyToMono(int.class)
+                .block();
+
+        if(idFarmacia<=0){
+            throw new RuntimeException("Farmacia no encontrada, ID: "+ id);
+        }
+        return true;
     }
 }

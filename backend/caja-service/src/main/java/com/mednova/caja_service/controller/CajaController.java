@@ -29,6 +29,14 @@ public class CajaController {
         return ResponseEntity.ok(cajaService.obtenerTodasLasCajas());
     }
 
+    @PostMapping
+    public ResponseEntity<Caja> crearCaja(@RequestBody Caja newCaja) {
+        if(cajaService.comprobarFarmacia(newCaja.getId_caja())){
+            return ResponseEntity.ok(cajaService.crearCaja(newCaja));
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
     @PostMapping("/abrir-turno")
     public ResponseEntity<TurnoCajaDTO> abrirTurno(@RequestParam int cajaId, @RequestParam int idUsuario, @RequestParam BigDecimal montoApertura) {
         TurnoCajaDTO dto = cajaService.abrirTurno(cajaId, idUsuario, montoApertura);

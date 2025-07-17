@@ -280,4 +280,8 @@ public class InventarioService {
     public void deleteAllFarmacias() {
         farmaciaRepository.deleteAll();
     }
+
+    public Optional<Farmacia> getFarmaciaById(int id) {
+        return farmaciaRepository.findById(id);
+    }
 }
