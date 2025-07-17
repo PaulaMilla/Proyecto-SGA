@@ -47,7 +47,7 @@ export class InventarioService {
     return this.http.post(`${this.apiUrl}/create-test-products`, {}, { responseType: 'text' });
   }
   getProductosPublicos(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/public-productos`);
+    return this.http.get<any[]>('http://34.61.182.228/api/inventarios/public-productos');
   }
 
 }
