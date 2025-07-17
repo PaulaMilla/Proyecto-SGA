@@ -21,6 +21,7 @@ import { InventarioInfoComponent } from './inventario/inventario-info/inventario
 import { MenuPrincipalComponent } from './components/menu-principal/menu-principal.component';
 import { PublicHeaderComponent } from './public/public-header/public-header.component';
 import { PublicFooterComponent } from './public/public-footer/public-footer.component';
+import { ListadoComponent } from './pacientes/listado/listado.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { PublicFooterComponent } from './public/public-footer/public-footer.comp
     InventarioInfoComponent,
     MenuPrincipalComponent,
     PublicHeaderComponent,
-    PublicFooterComponent
+    PublicFooterComponent,
+    ListadoComponent
   ],
   imports: [
     BrowserModule,

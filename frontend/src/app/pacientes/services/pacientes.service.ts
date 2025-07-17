@@ -11,6 +11,9 @@ export class PacientesService {
 
   constructor(private http: HttpClient) {}
 
+  obtenerTodos(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}`);
+  }
   subirArchivoPacientes(file: File): Observable<any> {
     const formData = new FormData();
     formData.append('file', file, file.name);
@@ -29,5 +32,10 @@ export class PacientesService {
     const headers = new HttpHeaders();
 
     return this.http.post(`${this.apiUrl}/test-upload`, formData, { headers });
+  }
+  listarTodos(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}`);
+
+
   }
 }
