@@ -265,6 +265,8 @@ public class InventarioService {
         return inventarioRepository.save(inventario);
     }
 
+    public List<Farmacia> getAllFarmacias() { return farmaciaRepository.findAll(); }
+
     public Farmacia saveFarmacia(Farmacia farmacia) {
         return farmaciaRepository.save(farmacia);
     }

@@ -252,4 +252,9 @@ public class InventarioController {
         return -1;
     }
 
+    @GetMapping("/farmacia")
+    public ResponseEntity<List<Farmacia>> getAllFarmacias(){
+        return ResponseEntity.ok(inventarioService.getAllFarmacias());
+    }
+
 }
