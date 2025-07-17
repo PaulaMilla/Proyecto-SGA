@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Mednova';
-}
+  constructor(private router: Router) {}
 
+  usaLayoutPublico(): boolean {
+    // Solo estas rutas usarán layout público
+    return this.router.url === '/';
+  }
+}
