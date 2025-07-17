@@ -34,6 +34,11 @@ export class PacientesService {
 
     return this.http.post(`${this.apiUrl}/test-upload`, formData, { headers });
   }
+  eliminarPaciente(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
+
   obtenerPacientes(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
