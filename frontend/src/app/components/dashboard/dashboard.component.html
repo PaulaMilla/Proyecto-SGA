@@ -3,7 +3,12 @@
   <p>Bienvenido/a al panel de indicadores.</p>
 
   <div class="kpi-grid">
-    <div class="kpi-card" *ngFor="let kpi of kpis">
+    <div
+      class="kpi-card"
+      *ngFor="let kpi of kpis"
+      (click)="irAKPI(kpi)"
+      [class.disabled]="!kpi.ruta"
+    >
       <div class="kpi-icon">{{ kpi.icon }}</div>
       <div class="kpi-title">{{ kpi.titulo }}</div>
       <div class="kpi-description">{{ kpi.descripcion }}</div>
