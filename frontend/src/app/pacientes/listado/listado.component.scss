@@ -23,5 +23,20 @@ table {
   .btn-danger:hover {
     background-color: #7a1b1e;
   }
+  .btn-exportar {
+    margin-bottom: 15px;
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-exportar:hover {
+    background-color: #0056b3;
+  }
 
 }

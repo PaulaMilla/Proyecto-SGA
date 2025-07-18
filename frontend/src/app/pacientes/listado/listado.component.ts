@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PacientesService } from '../services/pacientes.service';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+
 
 @Component({
   selector: 'app-listado',
@@ -11,6 +14,16 @@ export class ListadoComponent implements OnInit {
   pacientes: any[] = [];
 
   constructor(private pacientesService: PacientesService) {}
+
+  exportarAExcel(): void {
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.pacientes);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Pacientes');
+
+    const excelBuffer: any = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    const blobData: Blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+    FileSaver.saveAs(blobData, 'pacientes.xlsx');
+  }
 
   eliminar(id: number): void {
     if (confirm('¿Estás seguro de que deseas eliminar este paciente?')) {
