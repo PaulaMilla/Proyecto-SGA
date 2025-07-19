@@ -44,7 +44,7 @@ export class VentasService {
   }
 
   getDetallesPorVentaId(ventaId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/ventas/${ventaId}/detalles`);
+    return this.http.get<any[]>(`${this.apiUrl}/${ventaId}/detalles`);
   }
 
   getProductoPorId(productoId: number): Observable<any> {

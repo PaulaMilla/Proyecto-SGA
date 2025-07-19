@@ -46,10 +46,8 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> getUsuario(@PathVariable int id) {
-        return usuarioRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Optional<Usuario>> obtenerPorId(@PathVariable Integer id) {
+        return ResponseEntity.ok(usuarioService.obtenerPorId(id));
     }
 
     @GetMapping("/roles")
