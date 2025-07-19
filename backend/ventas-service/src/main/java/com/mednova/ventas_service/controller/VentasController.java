@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+
 @RestController
 @RequestMapping("/api/ventas")
 public class VentasController {
@@ -30,6 +31,12 @@ public class VentasController {
         Venta ventaRegistrada = ventaService.registrarVentaConDetalles(dto);
         return ResponseEntity.ok(ventaRegistrada);
     }
+
+    @GetMapping("/{ventaId}/detalles")
+    public List<DetalleVenta> obtenerDetallesPorVentaId(@PathVariable int ventaId) {
+        return ventaService.obtenerDetallesPorVentaId(ventaId);
+    }
+
 
     // GET /ventas - Listar todas las ventas
     @GetMapping
@@ -56,5 +63,12 @@ public class VentasController {
             @RequestParam("hasta") LocalDate hasta) {
         return ResponseEntity.ok(ventaService.obtenerPorRangoFechas(desde, hasta));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarVenta(@PathVariable int id) {
+        ventaService.eliminarVentaConDetalles(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
 

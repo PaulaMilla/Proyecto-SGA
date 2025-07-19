@@ -31,6 +31,10 @@ public class UsuarioService {
         this.permisoRepository = permisoRepository;
     }
 
+    public Optional<Usuario> obtenerPorId(Integer id) {
+        return usuarioRepository.findById(id);
+    }
+
     public Usuario crearUsuario(UsuarioRequestDTO dto) {
         Usuario usuario = new Usuario();
         usuario.setNombre(dto.getNombre());
