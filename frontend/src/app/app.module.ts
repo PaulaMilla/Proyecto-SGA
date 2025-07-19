@@ -24,6 +24,7 @@ import { PublicFooterComponent } from './public/public-footer/public-footer.comp
 import { ListadoComponent } from './pacientes/listado/listado.component';
 import { PacientesInfoComponent } from './pacientes/pacientes-info/pacientes-info.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { InformesComponent } from './components/informes/informes.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     PublicFooterComponent,
     ListadoComponent,
     PacientesInfoComponent,
-    DashboardComponent
+    DashboardComponent,
+    InformesComponent
   ],
   imports: [
     BrowserModule,

@@ -4,6 +4,7 @@ import { DetalleVentaDTO, Paciente, Producto, Usuario,
   Venta, VentaConDetallesDTO, VentaForm,
   VentaRegistrada
 } from "./model/ventas.model";
+import {DetalleVentaConNombre, VentaConNombresYDetalles} from "./model/venta-con-detalles-view.dto";
 
 @Component({
   selector: 'app-ventas',
@@ -32,7 +33,6 @@ export class VentasComponent implements OnInit {
     detalles: []
   };
 
-  ventasRegistradas: any[] = [];
   mostrarFormulario: boolean = false;
 
   nuevoDetalle: DetalleVentaDTO = {
@@ -63,6 +63,60 @@ export class VentasComponent implements OnInit {
       });
     }
   }*/
+
+  ventasRegistradas: VentaConNombresYDetalles[] = [];
+
+  cargarVentas(): void {
+    this.ventasService.obtenerTodas().subscribe((ventas: any[]) => {
+      const ventasConTodo: VentaConNombresYDetalles[] = [];
+
+      ventas.forEach((v) => {
+        const ventaExtendida: VentaConNombresYDetalles = {
+          id: v.id,
+          pacienteId: v.pacienteId,
+          usuarioId: v.usuarioId,
+          fechaVenta: v.fechaVenta,
+          total: v.total,
+          nombrePaciente: '',
+          nombreUsuario: '',
+          detalles: []
+        };
+
+        // Obtener nombres por ID
+        this.ventasService.getPacientePorId(v.pacienteId).subscribe((p) => {
+          ventaExtendida.nombrePaciente = p.nombre;
+        });
+
+        this.ventasService.getUsuarioPorId(v.usuarioId).subscribe((u) => {
+          ventaExtendida.nombreUsuario = u.nombre;
+        });
+
+        // Obtener detalles de la venta
+        this.ventasService.getDetallesPorVentaId(v.id).subscribe((detalles: any[]) => {
+          detalles.forEach((d) => {
+            const detalleExtendido: DetalleVentaConNombre = {
+              productoId: d.productoId,
+              cantidad: d.cantidad,
+              precioUnitario: d.precioUnitario,
+              subtotal: d.subtotal,
+              nombreProducto: ''
+            };
+
+            this.ventasService.getProductoPorId(d.productoId).subscribe((prod) => {
+              detalleExtendido.nombreProducto = prod.nombre;
+            });
+
+            ventaExtendida.detalles.push(detalleExtendido);
+          });
+        });
+
+        ventasConTodo.push(ventaExtendida);
+      });
+
+      this.ventasRegistradas = ventasConTodo;
+    });
+  }
+
 
 
   agregarProducto(): void {
@@ -148,10 +202,5 @@ export class VentasComponent implements OnInit {
     this.mostrarBotonArriba = window.pageYOffset > 150;
   }
 
-  cargarVentas():void{
-    this.ventasService.obtenerTodas().subscribe(data => {
-      this.ventasRegistradas = data;
-    });
-  }
 
 }

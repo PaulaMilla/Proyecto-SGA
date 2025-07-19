@@ -32,6 +32,12 @@ public class VentasController {
         return ResponseEntity.ok(ventaRegistrada);
     }
 
+    @GetMapping("/{ventaId}/detalles")
+    public List<DetalleVenta> obtenerDetallesPorVentaId(@PathVariable int ventaId) {
+        return ventaService.obtenerDetallesPorVentaId(ventaId);
+    }
+
+
     // GET /ventas - Listar todas las ventas
     @GetMapping
     public ResponseEntity<List<Venta>> listarVentas() {

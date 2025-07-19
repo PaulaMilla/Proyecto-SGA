@@ -35,12 +35,16 @@ export class VentasService {
   }
 
   // GET /ventas
-  obtenerTodas(): Observable<VentaConDetallesDTO[]> {
-    return this.http.get<VentaConDetallesDTO[]>(`${this.apiUrl}`);
+  obtenerTodas(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}`);
   }
 
   eliminarVenta(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  getDetallesPorVentaId(ventaId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/ventas/${ventaId}/detalles`);
   }
 
   getProductoPorId(productoId: number): Observable<any> {

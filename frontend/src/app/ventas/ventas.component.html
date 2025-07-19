@@ -2,11 +2,20 @@
 
 <div class="ventas-lista" *ngIf="ventasRegistradas.length > 0; else sinVentas">
   <div class="venta-card" *ngFor="let v of ventasRegistradas">
-    <p><strong>Cliente:</strong> {{ v.cliente }}</p>
-    <p><strong>Producto:</strong> {{ v.producto }}</p>
-    <p><strong>Cantidad:</strong> {{ v.cantidad }}</p>
-    <p><strong>Precio Unitario:</strong> {{ v.precioUnitario | currency:'USD':'symbol':'1.0-0' }}</p>
-    <p><strong>Total:</strong> {{ v.total | currency:'USD':'symbol':'1.0-0' }}</p>
+    <p><strong>Paciente:</strong> {{ v.nombrePaciente }}</p>
+    <p><strong>Usuario:</strong> {{ v.nombreUsuario }}</p>
+    <p><strong>Fecha:</strong> {{ v.fechaVenta }}</p>
+    <p><strong>Total:</strong> {{ v.total | currency:'USD' }}</p>
+
+    <h4>Detalles</h4>
+    <ul>
+      <li *ngFor="let d of v.detalles">
+        Producto: {{ d.nombreProducto }} -
+        Cantidad: {{ d.cantidad }} -
+        Precio: {{ d.precioUnitario | currency:'USD' }} -
+        Subtotal: {{ d.subtotal | currency:'USD' }}
+      </li>
+    </ul>
 
     <button
       class="btn-eliminar"
@@ -17,6 +26,7 @@
     </button>
   </div>
 </div>
+
 
 <ng-template #sinVentas>
   <p class="mensaje-sin-ventas">No hay ventas registradas aún.</p>

@@ -34,6 +34,10 @@ public class VentaService {
     @Autowired
     private RestTemplate restTemplate;
 
+    public List<DetalleVenta> obtenerDetallesPorVentaId(int ventaId) {
+        return detalleVentaRepository.findByVentaId(ventaId);
+    }
+
     public Venta registrarVentaConDetalles(VentaConDetallesDTO dto) {
         Venta venta = new Venta();
         venta.setPacienteId(dto.getPacienteId());
@@ -152,9 +156,6 @@ public class VentaService {
         return ventaRepository.findByFechaVentaBetween(desde, hasta);
     }
 
-    public DetalleVenta obtenerDetallePorVenta(Integer ventaId) {
-        return detalleVentaRepository.findByVentaId(ventaId);
-    }
 
     private void descontarStock(int productoId, int cantidad) {
         String url = "http://inventarios-service/api/inventario/descontar"; // Ajusta según tu ruta real
