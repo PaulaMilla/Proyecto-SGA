@@ -44,8 +44,9 @@ export class InventarioService {
   }
 
   fraccionarInventario(request: any) {
-    return this.http.post('http://34.61.182.228/api/inventarios/fraccionar', request);
+    return this.http.post('http://34.61.182.228/api/fraccionamiento', request);
   }
+
 
   // Método para crear productos de prueba
   createTestProducts(): Observable<any> {
