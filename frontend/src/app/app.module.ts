@@ -48,7 +48,7 @@ import { InformesComponent } from './components/informes/informes.component';
     ListadoComponent,
     PacientesInfoComponent,
     DashboardComponent,
-    FraccionamientoComponent
+    FraccionamientoComponent,
     InformesComponent
 
   ],
