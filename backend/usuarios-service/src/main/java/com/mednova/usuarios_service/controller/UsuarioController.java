@@ -45,6 +45,13 @@ public class UsuarioController {
         return ResponseEntity.ok(dtos);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Usuario> getUsuario(@PathVariable int id) {
+        return usuarioRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @GetMapping("/roles")
     public ResponseEntity<List<Rol>> listarRoles() {
         return ResponseEntity.ok(usuarioService.listarRoles());

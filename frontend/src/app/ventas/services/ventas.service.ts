@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {Venta, VentaConDetalles, VentaRegistrada} from "../model/ventas.model";
+import {Venta, VentaConDetallesDTO, VentaRegistrada} from "../model/ventas.model";
 
 /* export interface Venta {
   id?: number;
@@ -30,13 +30,13 @@ export class VentasService {
   constructor(private http: HttpClient) {}
 
   // POST /ventas
-  registrarVenta(venta: VentaConDetalles): Observable<any> {
-    return this.http.post(`${this.apiUrl}`, venta);
+  registrarVenta(dto: VentaConDetallesDTO): Observable<any> {
+    return this.http.post(`${this.apiUrl}`, dto);
   }
 
   // GET /ventas
-  obtenerTodas(): Observable<VentaRegistrada[]> {
-    return this.http.get<VentaRegistrada[]>(`${this.apiUrl}`);
+  obtenerTodas(): Observable<VentaConDetallesDTO[]> {
+    return this.http.get<VentaConDetallesDTO[]>(`${this.apiUrl}`);
   }
 
   eliminarVenta(id: number): Observable<void> {
@@ -45,6 +45,14 @@ export class VentasService {
 
   getProductoPorId(productoId: number): Observable<any> {
     return this.http.get(`http://34.61.182.228/api/inventarios/productos/${productoId}`);
+  }
+
+  getPacientePorId(id: number): Observable<any> {
+    return this.http.get(`http://34.61.182.228/api/pacientes/${id}`);
+  }
+
+  getUsuarioPorId(id: number): Observable<any> {
+    return this.http.get(`http://34.61.182.228/api/usuarios/${id}`);
   }
 
   // GET /ventas/{id}
