@@ -4,6 +4,7 @@ import com.mednova.ventas_service.dto.ProductoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
@@ -13,9 +14,14 @@ public class ProductoService {
     private RestTemplate restTemplate;
 
     public ProductoDTO getProducto(int id_producto) {
-        String url = "http://inventarios-service:80" + id_producto;
-        ResponseEntity<ProductoDTO> response = restTemplate.getForEntity(url, ProductoDTO.class);
-        return response.getBody();
+        try {
+            String url = "http://inventarios-service.inventarios.svc.cluster.local/api/inventarios/productos/" + id_producto;
+            ResponseEntity<ProductoDTO> response = restTemplate.getForEntity(url, ProductoDTO.class);
+            return response.getBody();
+        } catch (RestClientException e) {
+            throw new RuntimeException("Error al obtener producto desde inventarios-service", e);
+        }
     }
+
 }
 

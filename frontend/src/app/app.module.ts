@@ -25,6 +25,8 @@ import { ListadoComponent } from './pacientes/listado/listado.component';
 import { PacientesInfoComponent } from './pacientes/pacientes-info/pacientes-info.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FraccionamientoComponent } from './components/fraccionamiento/fraccionamiento.component';
+import { InformesComponent } from './components/informes/informes.component';
+
 
 
 @NgModule({
@@ -47,6 +49,8 @@ import { FraccionamientoComponent } from './components/fraccionamiento/fracciona
     PacientesInfoComponent,
     DashboardComponent,
     FraccionamientoComponent
+    InformesComponent
+
   ],
   imports: [
     BrowserModule,

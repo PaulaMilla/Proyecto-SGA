@@ -1,5 +1,7 @@
 package com.mednova.inventarios_service.controller;
 
+import com.mednova.inventarios_service.dto.DescuentoStockRequest;
+import com.mednova.inventarios_service.dto.FarmaciaResponseDTO;
 import com.mednova.inventarios_service.dto.InventarioProductoDTO;
 import com.mednova.inventarios_service.model.Farmacia;
 import com.mednova.inventarios_service.model.Inventario;
@@ -7,6 +9,7 @@ import com.mednova.inventarios_service.model.Producto;
 import com.mednova.inventarios_service.repository.ProductoRepository;
 import com.mednova.inventarios_service.service.InventarioService;
 
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -207,6 +210,12 @@ public class InventarioController {
         return inventarioService.saveFarmacia(farmacia);
     }
 
+    @PostMapping("/descontar-stock")
+    public ResponseEntity<Void> descontarStock(@RequestBody DescuentoStockRequest request) {
+        inventarioService.descontarStock(request);
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping("delete-all-farmacia")
     public ResponseEntity<String> deleteAllFarmacias() {
         try {
@@ -233,6 +242,21 @@ public class InventarioController {
         }
 
         return ResponseEntity.ok(resultado);
+    }
+
+    @GetMapping("/farmacia/{id}")
+    public ResponseEntity<FarmaciaResponseDTO> getFarmacia(@PathVariable int id) {
+        Optional<FarmaciaResponseDTO> opt = inventarioService.getFarmaciaById(id);
+        if (opt.isPresent()) {
+            FarmaciaResponseDTO farmacia = opt.get();
+            return ResponseEntity.ok(farmacia);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/farmacia")
+    public ResponseEntity<List<Farmacia>> getAllFarmacias(){
+        return ResponseEntity.ok(inventarioService.getAllFarmacias());
     }
 
 }

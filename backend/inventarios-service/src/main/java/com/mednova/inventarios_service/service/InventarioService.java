@@ -1,5 +1,7 @@
 package com.mednova.inventarios_service.service;
 
+import com.mednova.inventarios_service.dto.DescuentoStockRequest;
+import com.mednova.inventarios_service.dto.FarmaciaResponseDTO;
 import com.mednova.inventarios_service.dto.InventarioProductoDTO;
 import com.mednova.inventarios_service.model.Farmacia;
 import com.mednova.inventarios_service.model.Inventario;
@@ -12,6 +14,7 @@ import com.opencsv.exceptions.CsvException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 import com.mednova.inventarios_service.dto.FraccionamientoRequest;
@@ -258,6 +261,26 @@ public class InventarioService {
         }
     }
 
+    @Transactional
+    public void descontarStock(DescuentoStockRequest request) {
+        Producto productoEntity = productoRepository.findById(request.getProductoId())
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        Inventario inventario = inventarioRepository.findByproducto(productoEntity)
+                .orElseThrow(() -> new RuntimeException(
+                        "Inventario no encontrado para el producto " + request.getProductoId()));
+
+        int nuevaCantidad = inventario.getCantidad_disponible() - request.getCantidad();
+
+        if (nuevaCantidad < 0) {
+            throw new RuntimeException("Stock insuficiente para producto " + request.getProductoId());
+        }
+
+        inventario.setCantidad_disponible(nuevaCantidad);
+        inventarioRepository.save(inventario);
+    }
+
+
     public List<Inventario> getAllInventarios() {
         return inventarioRepository.findAll();
     }
@@ -269,6 +292,8 @@ public class InventarioService {
     public Inventario saveInventario(Inventario inventario) {
         return inventarioRepository.save(inventario);
     }
+
+    public List<Farmacia> getAllFarmacias() { return farmaciaRepository.findAll(); }
 
     public Farmacia saveFarmacia(Farmacia farmacia) {
         return farmaciaRepository.save(farmacia);
@@ -284,5 +309,23 @@ public class InventarioService {
 
     public void deleteAllFarmacias() {
         farmaciaRepository.deleteAll();
+    }
+
+    public Optional<FarmaciaResponseDTO> getFarmaciaById(int id) {
+        Optional<Farmacia> opt = farmaciaRepository.findById(id);
+        if (opt.isPresent()) {
+            Farmacia farmacia = opt.get();
+            FarmaciaResponseDTO dto = new FarmaciaResponseDTO();
+            dto.setId(farmacia.getId());
+            dto.setNombre(farmacia.getNombre());
+            dto.setDireccion(farmacia.getDireccion());
+            dto.setComuna(farmacia.getComuna());
+            dto.setTelefono(farmacia.getTelefono());
+            dto.setEmailContacto(farmacia.getEmailContacto());
+            dto.setHorarioAtencion(farmacia.getHorarioAtencion());
+            dto.setActivo(farmacia.isActivo());
+            return Optional.of(dto);
+        }
+        return Optional.empty();
     }
 }
