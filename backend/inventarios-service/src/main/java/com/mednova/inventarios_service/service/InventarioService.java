@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
+import com.mednova.inventarios_service.dto.FraccionamientoRequest;
+
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -214,6 +216,31 @@ public class InventarioService {
 
         return resultado;
     }
+
+    public void realizarFraccionamiento(FraccionamientoRequest request) {
+        Inventario inventario = inventarioRepository.findById(request.getIdInventario())
+                .orElseThrow(() -> new IllegalArgumentException("Inventario no encontrado"));
+
+        if (request.getCantidadFraccionada() <= 0 || request.getCantidadFraccionada() > inventario.getCantidad_disponible()) {
+            throw new IllegalArgumentException("Cantidad inválida para fraccionar");
+        }
+
+        // Reducir inventario original
+        inventario.setCantidad_disponible(inventario.getCantidad_disponible() - request.getCantidadFraccionada());
+        inventarioRepository.save(inventario);
+
+        // Crear nuevo inventario fraccionado
+        Inventario fraccionado = new Inventario();
+        fraccionado.setProducto(inventario.getProducto());
+        fraccionado.setFarmacia(inventario.getFarmacia());
+        fraccionado.setCantidad_disponible(request.getCantidadFraccionada());
+        fraccionado.setUbicacion(inventario.getUbicacion());
+        fraccionado.setLote(request.getNuevoLote());
+        fraccionado.setFecha_vencimiento(inventario.getFecha_vencimiento());
+
+        inventarioRepository.save(fraccionado);
+    }
+
 
     private String obtenerNombreFarmaciaDesdeUsuario(String emailUsuario) {
         try {

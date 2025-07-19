@@ -37,9 +37,14 @@ export class InventarioService {
     return this.http.post(`${this.apiUrl}/test-upload`, formData, { headers });
   }
 
+
   // Método para obtener información de productos
   getProductosInfo(): Observable<any> {
     return this.http.get(`${this.apiUrl}/productos-info`, { responseType: 'text' });
+  }
+
+  fraccionarInventario(request: any) {
+    return this.http.post('http://34.61.182.228/api/inventarios/fraccionar', request);
   }
 
   // Método para crear productos de prueba

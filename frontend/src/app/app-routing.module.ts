@@ -13,6 +13,7 @@ import { CargaDatosComponent } from './components/carga-datos/carga-datos.compon
 import { MenuPrincipalComponent } from './components/menu-principal/menu-principal.component';
 import { ListadoComponent } from './pacientes/listado/listado.component';
 import { PacientesInfoComponent } from './pacientes/pacientes-info/pacientes-info.component';
+import { FraccionamientoComponent } from './components/fraccionamiento/fraccionamiento.component';
 
 const routes: Routes = [
   { path: '', component: MenuPrincipalComponent }, // CAMBIADO: ahora el inicio es público
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
   { path: 'pacientes/info', component: PacientesInfoComponent, canActivate: [authGuard] },
   { path: 'pacientes', component: ListadoComponent, canActivate: [authGuard] },
+  { path: 'fraccionamiento', component: FraccionamientoComponent, canActivate: [authGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
   { path: 'pacientes/listado', component: ListadoComponent, canActivate: [authGuard] }
 ];
