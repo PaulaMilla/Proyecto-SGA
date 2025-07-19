@@ -59,7 +59,7 @@
     <ul>
       <li *ngFor="let d of venta.detalles; index as i">
         Producto ID: {{ d.productoId }} - Cantidad: {{ d.cantidad }}
-        <button type="button" (click)="quitarProducto(i)">Quitar</button>
+        <button type="button" (click)="eliminarProducto(i)">Quitar</button>
       </li>
     </ul>
 

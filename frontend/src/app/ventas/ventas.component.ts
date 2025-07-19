@@ -32,6 +32,14 @@ export class VentasComponent implements OnInit {
     detalles: []
   };
 
+  ventasRegistradas: any[] = [];
+  mostrarFormulario: boolean = false;
+
+  nuevoDetalle: DetalleVentaDTO = {
+    productoId: 0,
+    cantidad: 1
+  };
+
   detallesVenta: DetalleVentaDTO[] = [];
   productosInfo: { [id: number]: Producto } = {};
   total: number = 0;
@@ -78,14 +86,14 @@ export class VentasComponent implements OnInit {
     }
   }
 
-/*  eliminarVenta(id: number) {
+  eliminarVenta(id: number) {
     if (confirm('¿Estás seguro de que quieres eliminar esta venta?')) {
       this.ventasService.eliminarVenta(id).subscribe(() => {
         alert('Venta eliminada correctamente');
         this.cargarVentas();
       });
     }
-  }*/
+  }
 
   actualizarTotal(): void {
     this.total = this.detallesVenta.reduce((sum, d) => {
@@ -123,13 +131,13 @@ export class VentasComponent implements OnInit {
     });
   }
 
-/*  mostrarAgregarVenta() {
+  mostrarAgregarVenta() {
     this.mostrarFormulario = true;
   }
 
   cancelarAgregar() {
     this.mostrarFormulario = false;
-  }*/
+  }
 
   volverArriba() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -140,10 +148,10 @@ export class VentasComponent implements OnInit {
     this.mostrarBotonArriba = window.pageYOffset > 150;
   }
 
-/*  cargarVentas():void{
+  cargarVentas():void{
     this.ventasService.obtenerTodas().subscribe(data => {
       this.ventasRegistradas = data;
     });
-  }*/
+  }
 
 }
