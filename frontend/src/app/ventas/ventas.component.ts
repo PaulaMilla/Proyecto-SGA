@@ -52,7 +52,7 @@ export class VentasComponent implements OnInit {
   constructor(private ventasService: VentasService) {}
 
   ngOnInit(): void {
-  //  this.cargarVentas();
+    this.cargarVentas();
   }
 
 /*  actualizarPrecioYTotal() {
