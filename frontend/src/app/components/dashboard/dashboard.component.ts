@@ -26,7 +26,7 @@ export class DashboardComponent {
       icon: '📦',
       titulo: 'Fraccionamientos hoy',
       descripcion: 'Cuántos fraccionamientos se realizaron en el día actual',
-      ruta: ''
+      ruta: '/fraccionamiento'
     },
     {
       icon: '🧾',
