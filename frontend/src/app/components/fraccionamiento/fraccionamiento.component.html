@@ -1,0 +1,25 @@
+<div class="fraccionamiento-container">
+  <h2>Fraccionar Inventario</h2>
+
+  <div class="form-group">
+    <label for="inventario">Seleccionar inventario:</label>
+    <select [(ngModel)]="idSeleccionado">
+      <option [value]="null">-- Selecciona un inventario --</option>
+      <option *ngFor="let item of inventario" [value]="item.id_inventario">
+        {{ item.nombre }} (ID: {{ item.id_inventario }}) - Cantidad: {{ item.cantidad_disponible }}
+      </option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="cantidad">Cantidad a fraccionar:</label>
+    <input type="number" [(ngModel)]="cantidadFraccionada" min="1">
+  </div>
+
+  <div class="form-group">
+    <label for="nuevoLote">Nuevo lote:</label>
+    <input type="text" [(ngModel)]="nuevoLote">
+  </div>
+
+  <button (click)="fraccionar()">Fraccionar</button>
+</div>

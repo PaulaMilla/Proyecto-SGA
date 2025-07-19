@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
+
+
 export class DashboardComponent {
   kpis = [
     {
@@ -47,7 +49,9 @@ export class DashboardComponent {
   ];
 
   constructor(private router: Router) {}
-
+  irAFraccionamiento() {
+    this.router.navigate(['/fraccionamiento']);
+  }
   irAKPI(kpi: any) {
     if (kpi.ruta) {
       this.router.navigate([kpi.ruta]);
