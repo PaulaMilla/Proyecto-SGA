@@ -309,4 +309,13 @@ public class InventarioController {
         return ResponseEntity.ok(inventarioService.getAllFarmacias());
     }
 
+    @GetMapping("/farmacia/nombre/{nombre}")
+    public ResponseEntity<Integer> getIdFarmaciaPorNombre(@PathVariable String nombre) {
+        Optional<Farmacia> opt = inventarioService.getFarmaciaByNombre(nombre);
+        if (opt.isPresent()) {
+            return ResponseEntity.ok(opt.get().getId());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 }

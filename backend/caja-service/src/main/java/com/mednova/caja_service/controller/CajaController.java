@@ -8,6 +8,7 @@ import com.mednova.caja_service.model.MetodoPago;
 import com.mednova.caja_service.model.TipoMovimiento;
 import com.mednova.caja_service.model.TurnoCaja;
 import com.mednova.caja_service.service.CajaService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,16 @@ public class CajaController {
     @GetMapping
     public ResponseEntity<List<Caja>> obtenerTodasLasCajas() {
         return ResponseEntity.ok(cajaService.obtenerTodasLasCajas());
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Caja>> obtenerTodasLasCajasFarmacia(@RequestParam String emailUsuario){
+        try {
+            List<Caja> cajas = cajaService.obtenerCajasPorEmailUsuario(emailUsuario);
+            return ResponseEntity.ok(cajas);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PostMapping

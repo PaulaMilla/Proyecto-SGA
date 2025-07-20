@@ -396,6 +396,9 @@ public class InventarioService {
         inventarioRepository.save(inventario);
     }
 
+    public Optional<Farmacia> getFarmaciaByNombre(String nombre) {
+        return farmaciaRepository.findByNombre(nombre);
+    }
 
     public List<Inventario> getAllInventarios() {
         return inventarioRepository.findAll();

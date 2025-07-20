@@ -295,4 +295,33 @@ public class CajaService {
 
         return null;
     }
+
+    public List<Caja> obtenerCajasPorEmailUsuario(String emailUsuario) {
+        // Paso 1: Obtener el nombre de la farmacia desde usuarios-service
+        String nombreFarmacia = webClientUsuario
+                .get()
+                .uri("/nombre-farmacia/{email}", emailUsuario)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+
+        if (nombreFarmacia == null || nombreFarmacia.isEmpty()) {
+            throw new RuntimeException("No se pudo obtener el nombre de la farmacia para el usuario: " + emailUsuario);
+        }
+
+        // Paso 2: Obtener el ID de la farmacia desde inventarios-service
+        Integer idFarmacia = webClientInventario
+                .get()
+                .uri("/farmacia/nombre/{nombre}", nombreFarmacia)
+                .retrieve()
+                .bodyToMono(Integer.class)
+                .block();
+
+        if (idFarmacia == null) {
+            throw new RuntimeException("No se encontró una farmacia con nombre: " + nombreFarmacia);
+        }
+
+        // Paso 3: Buscar las cajas asociadas a esa farmacia en la base local
+        return cajaRepo.findByIdFarmacia(idFarmacia);
+    }
 }

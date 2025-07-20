@@ -16,7 +16,14 @@ export class SeleccionarCajaComponent {
   constructor(private cajaService: CajaService) {}
 
   ngOnInit(): void {
-    this.cajaService.obtenerTodas().subscribe(data => this.cajas = data);
+    const email = localStorage.getItem('email');
+    if (email) {
+      this.cajaService.obtenerCajasPorEmail(email).subscribe(data => {
+        this.cajas = data;
+      });
+    } else {
+      console.error('No se encontró el correo del usuario en localStorage.');
+    }
   }
 
   onCajaChange(event: Event) {

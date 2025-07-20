@@ -19,6 +19,12 @@ export class CajaService {
     return this.http.get<Caja[]>(this.apiUrl);
   }
 
+  obtenerCajasPorEmail(emailUsuario: string): Observable<Caja[]> {
+    return this.http.get<Caja[]>(`${this.apiUrl}`, {
+      params: { emailUsuario }
+    });
+  }
+
   obtenerTurnoActual(cajaId: number): Observable<TurnoCaja> {
     return this.http.get<TurnoCaja>(`${this.apiUrl}/turno-actual/${cajaId}`);
   }
