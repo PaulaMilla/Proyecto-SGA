@@ -99,7 +99,7 @@ public class UsuarioController {
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("usuario-email/{email}")
+    @GetMapping("/usuario-email/{email}")
     public ResponseEntity<?> obtenerUsuarioPorCorreo(@PathVariable String email) {
         Optional<Usuario> usuarioOpt = usuarioService.obtenerPorEmail(email);
 
