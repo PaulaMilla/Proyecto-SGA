@@ -14,6 +14,8 @@ export class CargaDatosComponent {
       this.router.navigate(['/inventario/upload']);
     } else if (tipo === 'pacientes') {
       this.router.navigate(['/pacientes/upload']);
+    } else if (tipo === 'precios') {
+      this.router.navigate(['/inventario/upload-precios']);
     }
     // Puedes agregar más condiciones si tienes más tipos de carga
   }
