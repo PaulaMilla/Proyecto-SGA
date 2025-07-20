@@ -85,8 +85,10 @@ export class VentasComponent implements OnInit {
   }
 
   cargarProductos(): void {
-    this.inventarioService.getTodosProductos().subscribe(data => this.productos = data);
-    console.log('Productos cargados:', this.productos);
+    this.inventarioService.getTodosProductos().subscribe(data => {
+      this.productos = data;
+      console.log('Productos cargados:', this.productos);
+    });
   }
 
   getNombreProducto(id: number): string {
