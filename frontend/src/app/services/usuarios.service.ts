@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {Usuario} from "../usuarios/model/usuarios.model";
+import {Usuario, UsuarioRequestDTO} from "../usuarios/model/usuarios.model";
 
 
 /*export interface Usuario {
@@ -35,8 +35,8 @@ export class UsuariosService {
     return this.http.get<Usuario>(`${this.apiUrl}/${id}`);
   }
 
-  crear(usuario: Usuario): Observable<Usuario> {
-    return this.http.post<Usuario>(this.apiUrl, usuario);
+  crear(usuario: UsuarioRequestDTO): Observable<any> {
+    return this.http.post('/api/usuarios', usuario); // cambia el endpoint según tu ruta real
   }
 
   actualizar(id: number, usuario: Usuario): Observable<Usuario> {

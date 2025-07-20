@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Usuario} from "./model/usuarios.model";
+import {Usuario, UsuarioRequestDTO} from "./model/usuarios.model";
 import {UsuariosService} from "../services/usuarios.service";
 
 @Component({
@@ -11,6 +11,16 @@ import {UsuariosService} from "../services/usuarios.service";
 export class UsuariosComponent implements OnInit {
 
   usuarios: Usuario[] = [];
+
+  usuarioDTO: UsuarioRequestDTO = {
+    nombre: '',
+    apellido: '',
+    correo: '',
+    password: '',
+    estado: '',
+    nombre_farmacia: '',
+    idRol: 0 // o null si prefieres validar antes
+  };
 
   constructor(private usuarioService: UsuariosService) {}
 
@@ -27,18 +37,31 @@ export class UsuariosComponent implements OnInit {
     });
   }¨*/
 
-  /*guardarUsuario() {
-    if (this.usuarios.id) {
-      this.http.put(`http://34.61.182.228/api/usuarios/${this.usuario.id}`, this.usuario).subscribe(() => {
-        this.resetFormulario();
-        this.cargarUsuarios();
-      });
-    } else {
-      this.http.post('http://34.61.182.228/api/usuarios', this.usuarios).subscribe(() => {
-        this.resetFormulario();
-      });
+  guardarUsuario(): void {
+    if (!this.usuarioDTO.idRol) {
+      alert('Debe seleccionar un rol válido');
+      return;
     }
-  }*/
+
+    this.usuarioService.crear(this.usuarioDTO).subscribe({
+      next: res => {
+        alert('Usuario registrado');
+        this.usuarioDTO = {
+          nombre: '',
+          apellido: '',
+          correo: '',
+          password: '',
+          estado: '',
+          nombre_farmacia: '',
+          idRol: 0
+        };
+      },
+      error: err => {
+        console.error(err);
+        alert('Error al registrar usuario');
+      }
+    });
+  }
 
   editarUsuario(u: any) {
     this.usuarios = { ...u };

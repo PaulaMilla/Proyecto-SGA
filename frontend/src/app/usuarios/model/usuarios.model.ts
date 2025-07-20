@@ -4,7 +4,7 @@ export interface Rol {
 }
 
 export interface Usuario {
-  id: number; // opcional en POST
+  id: number;
   nombre: string;
   apellido: string;
   correo: string;
@@ -16,3 +16,15 @@ export interface Usuario {
   rol: Rol;
   nombre_farmacia: string;
 }
+
+export interface UsuarioRequestDTO {
+  nombre: string;
+  apellido: string;
+  correo: string;
+  password: string;
+  estado: string;
+  nombre_farmacia: string;
+  idRol: number;
+}
+
+

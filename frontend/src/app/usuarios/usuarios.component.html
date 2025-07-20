@@ -1,11 +1,11 @@
-<!--  <div class="formulario-usuario">
+ <div class="formulario-usuario">
 <h2 class="titulo">Registrar Usuario</h2>
   <form (ngSubmit)="guardarUsuario()" #form="ngForm" class="formulario">
     <label for="nombre">Nombre</label>
     <input
       id="nombre"
       type="text"
-      [(ngModel)]="usuarios.nombre"
+      [(ngModel)]="usuarioDTO.nombre"
       name="nombre"
       placeholder="Ej: Paula"
       required
@@ -15,7 +15,7 @@
     <input
       id="apellido"
       type="text"
-      [(ngModel)]="usuarios.apellido"
+      [(ngModel)]="usuarioDTO.apellido"
       name="apellido"
       placeholder="Ej: Veloso"
       required
@@ -25,7 +25,7 @@
     <input
       id="correo"
       type="email"
-      [(ngModel)]="usuario.correo"
+      [(ngModel)]="usuarioDTO.correo"
       name="correo"
       placeholder="Ej: ana@example.com"
       required
@@ -34,39 +34,40 @@
     <label for="rol">Rol</label>
     <select
       id="rol"
-      [(ngModel)]="usuario.rol"
-      name="rol"
+      [(ngModel)]="usuarioDTO.idRol"
+      name="idRol"
       required
     >
       <option value="">Seleccione un rol</option>
-      <option value="ADMIN">ADMIN</option>
-      <option value="BODEGUERO">BODEGUERO</option>
-      <option value="FARMACEUTICO">FARMACEUTICO</option>
-      <option value="USUARIO">USUARIO</option>
+      <option [value]="1">ADMIN</option>
+      <option [value]="2">BODEGUERO</option>
+      <option [value]="3">FARMACEUTICO</option>
+      <option [value]="4">USUARIO</option>
     </select>
+
 
     <label for="estado">Estado</label>
     <input
       id="estado"
       type="text"
-      [(ngModel)]="usuario.estado"
+      [(ngModel)]="usuarioDTO.estado"
       name="estado"
       placeholder="Ej: Activo"
     />
 
-    <label for="fechaUltimoAcceso">Último Acceso</label>
+    <label for="password">Contraseña</label>
     <input
-      id="fechaUltimoAcceso"
-      type="text"
-      [(ngModel)]="usuario.fechaUltimoAcceso"
-      name="fechaUltimoAcceso"
-      placeholder="dd/MM/yyyy HH:mm"
-      disabled
+      id="password"
+      type="password"
+      [(ngModel)]="usuarioDTO.password"
+      name="password"
+      required
     />
+
 
     <button type="submit">Guardar Usuario</button>
   </form>
-</div>-->
+</div>
 
 <h2 class="titulo-lista">Usuarios Registrados</h2>
 <div class="usuarios-lista">
