@@ -43,6 +43,7 @@ public class VentaService {
         venta.setPacienteId(dto.getPacienteId());
         venta.setIdUsuarioVendedor(dto.getUsuarioId());
         venta.setFechaVenta(LocalDate.now());
+        venta.setPagada(false);
 
         Venta ventaGuardada = ventaRepository.save(venta);
 
