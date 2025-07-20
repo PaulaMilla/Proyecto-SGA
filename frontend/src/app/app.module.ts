@@ -28,6 +28,13 @@ import { FraccionamientoComponent } from './components/fraccionamiento/fracciona
 import { InformesComponent } from './components/informes/informes.component';
 import { DispersarMedicamentoComponent } from './components/dispersar-medicamento/dispersar-medicamento.component';
 import { UploadPreciosComponent } from './inventario/upload-precios/upload-precios.component';
+import { ComprasComponent } from './components/compras/compras.component';
+import { CajaComponent } from './components/caja/caja.component';
+import { SeleccionarCajaComponent } from './components/caja/seleccionar-caja/seleccionar-caja.component';
+import { EstadoCajaComponent } from './components/caja/estado-caja/estado-caja.component';
+import { RegistrarPagoComponent } from './components/caja/registrar-pago/registrar-pago.component';
+import { RegistrarMovimientoComponent } from './components/caja/registrar-movimiento/registrar-movimiento.component';
+import { ListadoMovimientoComponent } from './components/caja/listado-movimiento/listado-movimiento.component';
 
 
 
@@ -54,7 +61,14 @@ import { UploadPreciosComponent } from './inventario/upload-precios/upload-preci
     FraccionamientoComponent,
     InformesComponent,
     DispersarMedicamentoComponent,
-    UploadPreciosComponent
+    UploadPreciosComponent,
+    ComprasComponent,
+    CajaComponent,
+    SeleccionarCajaComponent,
+    EstadoCajaComponent,
+    RegistrarPagoComponent,
+    RegistrarMovimientoComponent,
+    ListadoMovimientoComponent
 
 
   ],
