@@ -5,6 +5,7 @@
     📥 Exportar a Excel
   </button>
 
+  <h3>Pacientes Beneficiarios</h3>
   <table>
     <thead>
     <tr>
@@ -17,11 +18,38 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let p of pacientes">
+    <tr *ngFor="let p of pacientesBeneficiarios">
+
+    <td>{{ p.nombre }}</td>
+      <td>{{ p.edad }}</td>
+      <td>{{ p.direccion }}</td>
+      <td>Sí</td>
+      <td>{{ p.nombre_farmacia }}</td>
+      <td>
+        <button (click)="eliminar(p.id_paciente)" class="btn btn-danger btn-sm">Eliminar</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h3>Pacientes No Beneficiarios</h3>
+  <table>
+    <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Edad</th>
+      <th>Dirección</th>
+      <th>Beneficiario</th>
+      <th>Farmacia</th>
+      <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let p of pacientesNoBeneficiarios">
       <td>{{ p.nombre }}</td>
       <td>{{ p.edad }}</td>
       <td>{{ p.direccion }}</td>
-      <td>{{ p.beneficiario ? 'Sí' : 'No' }}</td>
+      <td>No</td>
       <td>{{ p.nombre_farmacia }}</td>
       <td>
         <button (click)="eliminar(p.id_paciente)" class="btn btn-danger btn-sm">Eliminar</button>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PacientesService } from '../services/pacientes.service';
 import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
+import {Paciente} from "../model/pacientes.model";
 
 
 @Component({
@@ -12,6 +13,8 @@ import * as FileSaver from 'file-saver';
 export class ListadoComponent implements OnInit {
 
   pacientes: any[] = [];
+  pacientesBeneficiarios: any[] = [];
+  pacientesNoBeneficiarios: any[] = [];
 
   constructor(private pacientesService: PacientesService) {}
 
@@ -39,10 +42,12 @@ export class ListadoComponent implements OnInit {
 
   ngOnInit(): void {
     this.pacientesService.obtenerTodos().subscribe({
-      next: (data) => this.pacientes = data,
+      next: (data) => {
+        this.pacientes = data;
+        this.pacientesBeneficiarios = this.pacientes.filter(p => p.beneficiario === true);
+        this.pacientesNoBeneficiarios = this.pacientes.filter(p => p.beneficiario === false);
+      },
       error: (err) => console.error('Error al cargar pacientes:', err)
     });
-
   }
-
 }
