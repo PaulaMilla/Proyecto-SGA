@@ -22,6 +22,9 @@ public class Venta {
     @Column(name = "usuarioId")
     private int usuarioId;
 
+    @Column(name = "pagada")
+    private boolean pagada;
+
     public int getId() {
         return id;
     }
@@ -60,5 +63,13 @@ public class Venta {
 
     public void setIdUsuarioVendedor(int usuarioId) {
         this.usuarioId = usuarioId;
+    }
+
+    public boolean isPagada() {
+        return pagada;
+    }
+
+    public void setPagada(boolean pagada) {
+        this.pagada = pagada;
     }
 }
