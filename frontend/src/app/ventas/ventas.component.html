@@ -3,7 +3,7 @@
 <div class="ventas-lista" *ngIf="ventasRegistradas.length > 0; else sinVentas">
   <div class="venta-card" *ngFor="let v of ventasRegistradas">
     <p><strong>Paciente:</strong> {{ v.nombrePaciente }}</p>
-    <p><strong>Usuario:</strong> {{ v.nombreUsuario }}  {{v.apellidoUsuario}} </p>
+    <p><strong>Usuario:</strong> {{ v.nombreUsuario }} + {{v.apellidoUsuario}} </p>
     <p><strong>Fecha:</strong> {{ v.fechaVenta }}</p>
     <p><strong>Total:</strong> {{ v.total | currency:'USD' }}</p>
 
