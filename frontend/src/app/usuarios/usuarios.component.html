@@ -85,7 +85,7 @@
     <p><strong>Nombre:</strong> {{ u.nombre }} {{ u.apellido }}</p>
     <p><strong>Correo:</strong> {{ u.correo }}</p>
     <p><strong>Estado:</strong> {{ u.estado }}</p>
-    <p><strong>Rol:</strong> {{ u.rol.id }}</p>
+    <p><strong>Rol:</strong> {{ u.rol.nombre }}</p>
     <!-- Selector de Estado -->
     <td>
       <select [(ngModel)]="u.estado">
