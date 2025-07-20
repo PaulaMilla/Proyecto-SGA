@@ -206,7 +206,7 @@ export class VentasComponent implements OnInit {
       alert('Agrega al menos un producto.');
       return;
     }
-
+    console.log('Venta a guardar: ', this.venta);
     this.ventasService.registrarVenta(this.venta).subscribe(() => {
       alert('Venta guardada correctamente');
       this.venta = { pacienteId: 0, usuarioId: 0, detalles: [] };
