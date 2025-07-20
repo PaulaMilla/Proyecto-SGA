@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ComprasService } from './compras.service';
 import { InventarioService } from '../../inventario/services/inventario.service';
+import { Compra, DetalleCompra } from './model/compra.model';
 
 @Component({
   selector: 'app-compras',
@@ -41,7 +42,7 @@ export class ComprasComponent {
     this.inventariosService.getProductosPublicos().subscribe(data => this.productos = data);
   }
 
-  
+
   agregarDetalle(): void {
     const nuevoDetalle: DetalleCompra = {
       productoId: null,

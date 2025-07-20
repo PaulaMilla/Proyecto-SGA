@@ -1,14 +1,14 @@
-interface DetalleCompra {
+export interface DetalleCompra {
   productoId: number | null;
   cantidad: number;
   precioUnitario: number;
   lote: string;
-  fechaVencimiento: string;
+  fechaVencimiento: string; // formato ISO (yyyy-mm-dd)
 }
 
-interface Compra {
+export interface Compra {
   numeroDocumento: string;
-  tipo: string;
+  tipo: 'FACTURA' | 'GUIA_DESPACHO' | 'NOTA_CREDITO';
   proveedorId: number | null;
   observacion: string;
   bodega: string;
