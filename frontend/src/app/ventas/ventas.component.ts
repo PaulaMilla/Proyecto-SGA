@@ -5,6 +5,8 @@ import { DetalleVentaDTO, Paciente, Producto, Usuario,
   VentaRegistrada
 } from "./model/ventas.model";
 import {DetalleVentaConNombre, VentaConNombresYDetalles} from "./model/venta-con-detalles-view.dto";
+import {UsuariosService} from "../services/usuarios.service";
+import {InventarioService} from "../inventario/services/inventario.service";
 
 @Component({
   selector: 'app-ventas',
@@ -48,11 +50,19 @@ export class VentasComponent implements OnInit {
 
   mostrarBotonArriba = false;
 
+  pacientes: any[] = [];
+  usuarios: any[] = [];
+  productos: any[] = [];
 
-  constructor(private ventasService: VentasService) {}
+
+  constructor(private ventasService: VentasService, private usuariosService: UsuariosService,
+              private inventarioService: InventarioService) {}
 
   ngOnInit(): void {
     this.cargarVentas();
+    this.cargarPacientes();
+    this.cargarUsuarios();
+    this.cargarProductos();
   }
 
 /*  actualizarPrecioYTotal() {
@@ -65,6 +75,23 @@ export class VentasComponent implements OnInit {
   }*/
 
   ventasRegistradas: VentaConNombresYDetalles[] = [];
+
+  cargarPacientes(): void {
+    this.ventasService.getTodosPacientes().subscribe(data => this.pacientes = data);
+  }
+
+  cargarUsuarios(): void {
+    this.usuariosService.obtenerTodas().subscribe(data => this.usuarios = data);
+  }
+
+  cargarProductos(): void {
+    this.inventarioService.getProductosInfo().subscribe(data => this.productos = data);
+  }
+
+  getNombreProducto(id: number): string {
+    const producto = this.productos.find(p => p.id === id);
+    return producto ? producto.nombre : 'Desconocido';
+  }
 
   cargarVentas(): void {
     this.ventasService.obtenerTodas().subscribe((ventas: any[]) => {
@@ -118,10 +145,11 @@ export class VentasComponent implements OnInit {
     });
   }
 
-
-
   agregarProducto(): void {
-    this.detallesVenta.push({ productoId: 0, cantidad: 1 });
+    if (this.nuevoDetalle.productoId && this.nuevoDetalle.cantidad > 0) {
+      this.venta.detalles.push({ ...this.nuevoDetalle });
+      this.nuevoDetalle = { productoId: 0, cantidad: 1 };
+    }
   }
 
   eliminarProducto(i: number): void {
@@ -174,15 +202,16 @@ export class VentasComponent implements OnInit {
   }
 
   guardarVenta(): void {
-    this.venta.detalles = this.detallesVenta;
+    if (this.venta.detalles.length === 0) {
+      alert('Agrega al menos un producto.');
+      return;
+    }
+
     this.ventasService.registrarVenta(this.venta).subscribe(() => {
-      alert('Venta registrada correctamente');
+      alert('Venta guardada correctamente');
       this.venta = { pacienteId: 0, usuarioId: 0, detalles: [] };
-      this.detallesVenta = [];
-      this.productosInfo = {};
-      this.total = 0;
-      this.nombrePaciente = '';
-      this.nombreUsuario = '';
+      this.nuevoDetalle = { productoId: 0, cantidad: 1 };
+      this.mostrarFormulario = false;
     });
   }
 

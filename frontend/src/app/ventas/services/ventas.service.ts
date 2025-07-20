@@ -39,6 +39,18 @@ export class VentasService {
     return this.http.get<any[]>(`${this.apiUrl}`);
   }
 
+  getTodosPacientes(): Observable<any[]> {
+    return this.http.get<any[]>('/api/pacientes');
+  }
+
+  getTodosUsuarios(): Observable<any[]> {
+    return this.http.get<any[]>('/api/usuarios');
+  }
+
+  getTodosProductos(): Observable<any[]> {
+    return this.http.get<any[]>('/api/inventarios/productos');
+  }
+
   eliminarVenta(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }

@@ -3,7 +3,7 @@
 <div class="ventas-lista" *ngIf="ventasRegistradas.length > 0; else sinVentas">
   <div class="venta-card" *ngFor="let v of ventasRegistradas">
     <p><strong>Paciente:</strong> {{ v.nombrePaciente }}</p>
-    <p><strong>Usuario:</strong> {{ v.nombreUsuario }} + {{v.apellidoUsuario}} </p>
+    <p><strong>Usuario:</strong> {{ v.nombreUsuario }} , {{v.apellidoUsuario}} </p>
     <p><strong>Fecha:</strong> {{ v.fechaVenta }}</p>
     <p><strong>Total:</strong> {{ v.total | currency:'USD' }}</p>
 
@@ -42,24 +42,21 @@
   <h2 class="titulo">Registrar Venta</h2>
 
   <form (ngSubmit)="guardarVenta()" #form="ngForm">
+    <!-- PACIENTE -->
+    <label for="paciente">Paciente</label>
+    <select id="paciente" [(ngModel)]="venta.pacienteId" name="pacienteId" required>
+      <option *ngFor="let p of pacientes" [value]="p.id">
+        {{ p.nombre }}
+      </option>
+    </select>
 
-    <label for="paciente">ID del paciente</label>
-    <input
-      id="paciente"
-      type="number"
-      [(ngModel)]="venta.pacienteId"
-      name="pacienteId"
-      required
-    />
-
-    <label for="usuario">ID del usuario</label>
-    <input
-      id="usuario"
-      type="number"
-      [(ngModel)]="venta.usuarioId"
-      name="usuarioId"
-      required
-    />
+    <!-- USUARIO -->
+    <label for="usuario">Usuario</label>
+    <select id="usuario" [(ngModel)]="venta.usuarioId" name="usuarioId" required>
+      <option *ngFor="let u of usuarios" [value]="u.id">
+        {{ u.nombre }}
+      </option>
+    </select>
 
     <!-- Lista de productos agregados -->
     <h3>Productos seleccionados</h3>
@@ -68,21 +65,19 @@
     </div>
     <ul>
       <li *ngFor="let d of venta.detalles; index as i">
-        Producto ID: {{ d.productoId }} - Cantidad: {{ d.cantidad }}
+        Producto: {{ getNombreProducto(d.productoId) }} - Cantidad: {{ d.cantidad }}
         <button type="button" (click)="eliminarProducto(i)">Quitar</button>
       </li>
     </ul>
 
-    <!-- Campos para agregar un producto -->
+    <!-- Agregar producto -->
     <h3>Agregar Producto</h3>
-    <label for="productoId">ID del producto</label>
-    <input
-      id="productoId"
-      type="number"
-      [(ngModel)]="nuevoDetalle.productoId"
-      name="nuevoProductoId"
-      required
-    />
+    <label for="productoId">Producto</label>
+    <select id="productoId" [(ngModel)]="nuevoDetalle.productoId" name="nuevoProductoId" required>
+      <option *ngFor="let prod of productos" [value]="prod.id">
+        {{ prod.nombre }}
+      </option>
+    </select>
 
     <label for="cantidad">Cantidad</label>
     <input
@@ -96,12 +91,13 @@
 
     <button type="button" (click)="agregarProducto()">Agregar Producto</button>
 
-    <!-- Botones de acción -->
+    <!-- Botones -->
     <div class="botones-formulario">
       <button type="submit">Guardar Venta</button>
       <button type="button" (click)="cancelarAgregar()">Cancelar</button>
     </div>
   </form>
+
 </div>
 
 
