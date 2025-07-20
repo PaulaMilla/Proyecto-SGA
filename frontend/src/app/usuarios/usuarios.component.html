@@ -64,7 +64,7 @@
       required
     />
 
-     <label for="rol">Farmacia</label>
+     <label for="nombreFarmacia">Farmacia</label>
      <select
        id="nombreFarmacia"
        [(ngModel)]="usuarioDTO.nombre_farmacia"
@@ -72,10 +72,10 @@
        required
      >
        <option value="">Seleccione una farmacia</option>
+       <option *ngFor="let f of farmacias" [value]="f">{{ f }}</option>
      </select>
 
-
-    <button type="submit">Guardar Usuario</button>
+     <button type="submit">Guardar Usuario</button>
   </form>
 </div>
 

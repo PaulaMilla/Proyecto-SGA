@@ -68,6 +68,11 @@ public class UsuarioService {
         return null;
     }
 
+    public List<String> obtenerNombresDeFarmacias() {
+        return usuarioRepository.obtenerNombresDeFarmacias();
+    }
+
+
     public Usuario actualizarUsuario(UsuarioUpdateDTO dto) {
         Usuario usuario = usuarioRepository.findById(dto.getId())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + dto.getId()));

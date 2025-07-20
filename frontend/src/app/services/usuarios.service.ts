@@ -35,6 +35,10 @@ export class UsuariosService {
     return this.http.get<Usuario>(`${this.apiUrl}/${id}`);
   }
 
+  obtenerNombresFarmacias(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/farmacias`);
+  }
+
   crear(usuario: UsuarioRequestDTO): Observable<any> {
     return this.http.post(`${this.apiUrl}`, usuario); // cambia el endpoint según tu ruta real
   }

@@ -52,6 +52,11 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.listarRoles());
     }
 
+    @GetMapping("/farmacias")
+    public ResponseEntity<List<String>> obtenerNombresDeFarmacias() {
+        return ResponseEntity.ok(usuarioService.obtenerNombresDeFarmacias());
+    }
+
     @GetMapping("/permisos")
     public ResponseEntity<List<Permiso>> listarPermisos() {
         return ResponseEntity.ok(usuarioService.listarPermisos());

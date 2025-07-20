@@ -24,6 +24,7 @@ export class UsuariosComponent implements OnInit {
   };
 
   usuarioEditando: Usuario | null = null;
+  farmacias: string[] = [];
 
 
   constructor(private usuarioService: UsuariosService) {}
@@ -31,6 +32,14 @@ export class UsuariosComponent implements OnInit {
   ngOnInit(): void {
     this.cargarUsuarios();
     this.cargarRoles();
+    this.cargarFarmacias();
+  }
+
+  cargarFarmacias(): void {
+    this.usuarioService.obtenerNombresFarmacias().subscribe({
+      next: data => this.farmacias = data,
+      error: err => console.error('Error al cargar farmacias:', err)
+    });
   }
 
   cargarUsuarios(): void {
