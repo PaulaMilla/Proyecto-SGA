@@ -189,7 +189,15 @@ export class VentasComponent implements OnInit {
   }
 
   guardarVenta(): void {
+    // Agregar logs para debug
+    console.log('Valores actuales:', {
+      pacienteId: this.venta.pacienteId,
+      usuarioId: this.venta.usuarioId,
+      detalles: this.venta.detalles
+    });
+  
     if (!this.venta.pacienteId || !this.venta.usuarioId) {
+      console.log('Error: Faltan paciente o usuario');
       alert('Selecciona paciente y usuario');
       return;
     }

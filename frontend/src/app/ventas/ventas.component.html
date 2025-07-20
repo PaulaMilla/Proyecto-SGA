@@ -45,12 +45,14 @@
     <!-- PACIENTE -->
     <label for="paciente">Paciente</label>
     <select id="paciente" [(ngModel)]="venta.pacienteId" name="pacienteId" required>
+      <option [ngValue]="0" disabled selected>Selecciona un paciente</option>
       <option *ngFor="let p of pacientes" [ngValue]="p.id">{{ p.nombre }}</option>
     </select>
 
     <!-- USUARIO -->
     <label for="usuario">Usuario</label>
     <select id="usuario" [(ngModel)]="venta.usuarioId" name="usuarioId" required>
+      <option [ngValue]="0" disabled selected>Selecciona un usuario</option>
       <option *ngFor="let u of usuarios" [ngValue]="u.id">{{ u.nombre }}</option>
     </select>
 
