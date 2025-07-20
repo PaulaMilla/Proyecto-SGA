@@ -13,13 +13,15 @@ export class ComprasComponent {
   productos: any[] = [];
   detalles: DetalleCompra[] = [];
 
+  selectedFile: File | undefined;
+
   compra: Compra = {
     numeroDocumento: '',
     tipo: 'FACTURA',
     proveedorId: null,
     observacion: '',
     bodega: '',
-    farmaciaId: 1, // podrías reemplazarlo por uno obtenido del perfil o token
+    farmaciaId: 1, 
     detalles: []
   };
 
@@ -58,10 +60,14 @@ export class ComprasComponent {
     this.detalles.splice(index, 1);
   }
 
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
+
   registrarCompra(): void {
     this.compra.detalles = this.detalles;
-
-    this.comprasService.crearCompra(this.compra).subscribe({
+  
+    this.comprasService.crearCompra(this.compra, this.selectedFile).subscribe({
       next: () => {
         alert('Compra registrada con éxito');
         this.resetFormulario();
@@ -71,7 +77,7 @@ export class ComprasComponent {
       }
     });
   }
-
+  
   resetFormulario(): void {
     this.compra = {
       numeroDocumento: '',

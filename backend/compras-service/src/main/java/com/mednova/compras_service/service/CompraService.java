@@ -10,9 +10,15 @@ import com.mednova.compras_service.repository.CompraRepository;
 import com.mednova.compras_service.repository.ProveedorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -116,5 +122,19 @@ public class CompraService {
 
     public List<Proveedor> listarProveedores(){
         return proveedorRepository.findAll();
+    }
+
+    public void guardarArchivoFactura(int compraId, MultipartFile file) throws IOException {
+        Compra compra = compraRepository.findById(compraId)
+                .orElseThrow(() -> new RuntimeException("Compra no encontrada"));
+
+        String nombreArchivo = "compra_" + compraId + "_" + file.getOriginalFilename();
+        Path ruta = Paths.get("documentos/compras").resolve(nombreArchivo);
+
+        Files.createDirectories(ruta.getParent());
+        Files.copy(file.getInputStream(), ruta, StandardCopyOption.REPLACE_EXISTING);
+
+        compra.setRutaDocumento(ruta.toString());
+        compraRepository.save(compra);
     }
 }
