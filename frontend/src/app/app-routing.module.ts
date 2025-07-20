@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { VentasComponent } from './ventas/ventas.component';
 import { UploadComponent as InventarioUploadComponent } from './inventario/upload/upload.component';
 import { UploadComponent as PacientesUploadComponent } from './pacientes/upload/upload.component';
+import { UploadPreciosComponent} from "./inventario/upload-precios/upload-precios.component";
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { HomeComponent } from './components/home/home.component';
 import { authGuard } from './guards/auth.guard';
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'inventario-info', component: InventarioInfoComponent, canActivate: [authGuard] },
   { path: 'inventario/upload', component: InventarioUploadComponent, canActivate: [authGuard] },
   { path: 'pacientes/upload', component: PacientesUploadComponent, canActivate: [authGuard] },
+  { path: 'inventario/upload-precios', component: UploadPreciosComponent, canActivate: [authGuard] },
   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
   { path: 'pacientes/info', component: PacientesInfoComponent, canActivate: [authGuard] },
   { path: 'pacientes', component: ListadoComponent, canActivate: [authGuard] },

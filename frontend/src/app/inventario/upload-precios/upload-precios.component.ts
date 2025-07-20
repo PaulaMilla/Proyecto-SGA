@@ -33,7 +33,7 @@ export class UploadPreciosComponent {
     formData.append('file', this.file, this.file.name);
     formData.append('emailUsuario', localStorage.getItem('email') || '')
 
-    this.inventarioService.subirArchivoInventario(formData)
+    this.inventarioService.subirArchivoPrecios(formData)
       .subscribe({
         next: (res) => {
           // Si res tiene una propiedad 'message', muéstrala
@@ -83,22 +83,6 @@ export class UploadPreciosComponent {
         error: (err) => {
           console.error('Error al obtener productos:', err);
           this.showMessage('Error al obtener productos: ' + (err.error || err.message || 'Error desconocido'), 'error');
-          this.loading = false;
-        }
-      });
-  }
-
-  createTestProducts(): void {
-    this.loading = true;
-    this.inventarioService.createTestProducts()
-      .subscribe({
-        next: (res) => {
-          this.showMessage('Productos de prueba creados: ' + res, 'success');
-          this.loading = false;
-        },
-        error: (err) => {
-          console.error('Error al crear productos:', err);
-          this.showMessage('Error al crear productos: ' + (err.error || err.message || 'Error desconocido'), 'error');
           this.loading = false;
         }
       });

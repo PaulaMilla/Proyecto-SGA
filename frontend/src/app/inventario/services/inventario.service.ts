@@ -27,6 +27,14 @@ export class InventarioService {
     return this.http.post(`${this.apiUrl}/upload`, formData, { headers });
   }
 
+  subirArchivoPrecios(formData: FormData): Observable<any> {
+
+    // No establecer Content-Type manualmente, dejar que el navegador lo haga
+    const headers = new HttpHeaders();
+
+    return this.http.post(`${this.apiUrl}/upload-precios`, formData, { headers });
+  }
+
   // Método para probar la carga de archivos
   testUpload(file: File): Observable<any> {
     const formData = new FormData();
