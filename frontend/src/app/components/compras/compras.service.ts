@@ -15,6 +15,6 @@ export class ComprasService {
     }
   
     getProveedores(): Observable<any[]> {
-      return this.http.get<any[]>('/api/proveedores');
+      return this.http.get<any[]>(`${this.baseUrl}` + '/proveedores');
     }
 }
