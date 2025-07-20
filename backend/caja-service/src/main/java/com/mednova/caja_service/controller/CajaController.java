@@ -36,6 +36,7 @@ public class CajaController {
         return ResponseEntity.badRequest().build();
     }
 
+
     @PostMapping("/abrir-turno")
     public ResponseEntity<TurnoCajaDTO> abrirTurno(@RequestParam int cajaId, @RequestParam String emailUsuario, @RequestParam BigDecimal montoApertura) {
         int idUsuario = cajaService.obtenerIdUsuario(emailUsuario);
@@ -110,4 +111,14 @@ public class CajaController {
         cajaService.eliminarCaja(id);
         return ResponseEntity.noContent().build();
     }
+
+    //obtener turno actual
+    @GetMapping("/turno-actual/{cajaId}")
+    public ResponseEntity<TurnoCajaDTO> obtenerTurnoActual(@PathVariable int cajaId) {
+        TurnoCajaDTO turno = cajaService.obtenerTurnoActual(cajaId);
+        return turno != null ? ResponseEntity.ok(turno) : ResponseEntity.notFound().build();
+    }
+
+
+
 }

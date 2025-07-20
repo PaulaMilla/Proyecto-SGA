@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CajaService {
@@ -250,5 +251,26 @@ public class CajaService {
         }catch (Exception e) {
             throw new RuntimeException("Error al consultar id: " + e.getMessage());
         }
+    }
+
+    public TurnoCajaDTO obtenerTurnoActual(int cajaId){
+        Optional<TurnoCaja> turnoActivo = turnoCajaRepo.findByCajaIdAndActivoTrue(cajaId);
+
+        if (turnoActivo.isPresent()) {
+            TurnoCaja turno = turnoActivo.get();
+            TurnoCajaDTO dto = new TurnoCajaDTO();
+            dto.setId(turno.getId());
+            dto.setCajaId(turno.getCaja().getId_caja());
+            dto.setIdUsuario(turno.getIdUsuario());
+            dto.setHoraApertura(turno.getHoraApertura());
+            dto.setMontoApertura(turno.getMontoApertura());
+            dto.setHoraCierre(turno.getHoraCierre());
+            dto.setMontoCierre(turno.getMontoCierre());
+            dto.setCerrado(turno.getCerrado());
+
+            return dto;
+        }
+
+        return null;
     }
 }

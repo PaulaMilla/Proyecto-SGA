@@ -1,1 +1,16 @@
-<p>registrar-pago works!</p>
+<div class="card p-3 mb-3">
+  <h5>Registrar Pago</h5>
+  <select class="form-select mb-2" [(ngModel)]="ventaSeleccionada">
+    <option *ngFor="let venta of ventas" [value]="venta.id">
+      #{{ venta.id }} - ${{ venta.total }} - {{ venta.fechaVenta }}
+    </option>
+  </select>
+
+  <select class="form-select mb-2" [(ngModel)]="metodoPago">
+    <option value="EFECTIVO">Efectivo</option>
+    <option value="TRANSFERENCIA">Transferencia</option>
+    <option value="TARJETA">Tarjeta</option>
+  </select>
+
+  <button class="btn btn-success" (click)="pagar()">Pagar</button>
+</div>

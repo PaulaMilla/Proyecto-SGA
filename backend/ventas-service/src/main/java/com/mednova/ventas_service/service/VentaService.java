@@ -94,6 +94,10 @@ public class VentaService {
         ventaRepository.save(venta);
     }
 
+    public List<Venta> obtenerNoPagadas() {
+        return ventaRepository.findByPagadaFalse();
+    }
+
 
    /* public Venta registrarVenta(Venta venta, List<DetalleVenta> detalles) {
         double totalVenta = 0.0;

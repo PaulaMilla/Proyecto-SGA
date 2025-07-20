@@ -1,1 +1,8 @@
-<p>listado-movimiento works!</p>
+<div class="card p-3">
+  <h5>Últimos Movimientos</h5>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let m of movimientos">
+      {{ m.tipo }} - ${{ m.monto }} - {{ m.descripcion }} - {{ m.fechaHora | date:'short' }}
+    </li>
+  </ul>
+</div>

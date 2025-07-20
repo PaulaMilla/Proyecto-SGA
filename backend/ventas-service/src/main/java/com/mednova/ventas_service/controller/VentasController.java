@@ -78,5 +78,9 @@ public class VentasController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/no-pagadas")
+    public List<Venta> obtenerNoPagadas() {
+        return ventaService.obtenerNoPagadas();
+    }
 }
 

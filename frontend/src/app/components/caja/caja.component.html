@@ -1,1 +1,20 @@
-<p>caja works!</p>
+<div class="container py-3">
+  <!-- Selección de caja -->
+  <app-seleccionar-caja (cajaSeleccionada)="onCajaSeleccionada($event)"></app-seleccionar-caja>
+
+  <!-- Mostrar módulo solo si hay caja seleccionada -->
+  <div *ngIf="cajaSeleccionada">
+    <app-estado-caja [caja]="cajaSeleccionada"></app-estado-caja>
+
+    <div class="row">
+      <div class="col-md-6">
+        <app-registrar-pago [caja]="cajaSeleccionada"></app-registrar-pago>
+      </div>
+      <div class="col-md-6">
+        <app-registrar-movimiento [caja]="cajaSeleccionada"></app-registrar-movimiento>
+      </div>
+    </div>
+
+    <app-listado-movimiento [caja]="cajaSeleccionada"></app-listado-movimiento>
+  </div>
+</div>

@@ -1,1 +1,12 @@
-<p>registrar-movimiento works!</p>
+<div class="card p-3 mb-3">
+  <h5>Registrar Movimiento</h5>
+  <select class="form-select mb-2" [(ngModel)]="tipo">
+    <option value="INGRESO">Ingreso</option>
+    <option value="EGRESO">Egreso</option>
+  </select>
+
+  <input type="number" class="form-control mb-2" [(ngModel)]="monto" placeholder="Monto" />
+  <input type="text" class="form-control mb-2" [(ngModel)]="descripcion" placeholder="Descripción" />
+
+  <button class="btn btn-secondary" (click)="registrar()">Registrar</button>
+</div>

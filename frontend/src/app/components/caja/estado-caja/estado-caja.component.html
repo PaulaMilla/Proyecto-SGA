@@ -1,1 +1,14 @@
-<p>estado-caja works!</p>
+<div class="card p-3 mb-3 bg-light">
+  <h5>Caja: {{ caja.nombre }}</h5>
+  <p>{{ caja.descripcion }}</p>
+  <p><strong>Estado:</strong> {{ caja.activa ? 'Activa' : 'Inactiva' }}</p>
+
+  <ng-container *ngIf="turnoActual; else noTurno">
+    <p><strong>Turno abierto:</strong> {{ turnoActual.horaApertura | date:'short' }}</p>
+    <p><strong>Monto apertura:</strong> ${{ turnoActual.montoApertura }}</p>
+  </ng-container>
+
+  <ng-template #noTurno>
+    <p class="text-warning">No hay turno abierto en esta caja</p>
+  </ng-template>
+</div>

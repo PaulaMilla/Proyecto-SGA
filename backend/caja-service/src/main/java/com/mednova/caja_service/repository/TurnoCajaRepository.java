@@ -10,4 +10,8 @@ import java.util.Optional;
 public interface TurnoCajaRepository extends JpaRepository<TurnoCaja, Integer> {
     @Query("SELECT t FROM TurnoCaja t WHERE t.caja.id_caja = :cajaId AND t.cerrado = false")
     Optional<TurnoCaja> findTurnoAbiertoPorCaja(@Param("cajaId") int cajaId);
+
+    @Query("SELECT t FROM TurnoCaja t WHERE t.caja.id_caja = :cajaId AND t.cerrado = false")
+    Optional<TurnoCaja> findByCajaIdAndActivoTrue(@Param("cajaId") int cajaId);
+
 }

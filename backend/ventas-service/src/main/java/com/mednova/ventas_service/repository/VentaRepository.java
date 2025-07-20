@@ -10,4 +10,5 @@ public interface VentaRepository extends JpaRepository<Venta, Integer> {
     List<Venta> findByPacienteId(int pacienteId);
     List<Venta> findByUsuarioId(int usuarioId);
     List<Venta> findByFechaVentaBetween(LocalDate fechaInicial, LocalDate fechaFinal);
+    List<Venta> findByPagadaFalse();
 }

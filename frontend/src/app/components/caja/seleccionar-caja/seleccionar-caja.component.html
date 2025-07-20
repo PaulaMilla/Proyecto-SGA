@@ -1,1 +1,6 @@
-<p>seleccionar-caja works!</p>
+<div class="mb-3">
+  <label for="cajaSelect" class="form-label">Selecciona una Caja:</label>
+  <select class="form-select" id="cajaSelect" (change)="seleccionarCaja($event)">
+    <option *ngFor="let caja of cajas" [value]="caja.id_caja">{{ caja.nombre }}</option>
+  </select>
+</div>
