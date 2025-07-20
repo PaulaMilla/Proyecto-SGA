@@ -27,6 +27,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FraccionamientoComponent } from './components/fraccionamiento/fraccionamiento.component';
 import { InformesComponent } from './components/informes/informes.component';
 import { DispersarMedicamentoComponent } from './components/dispersar-medicamento/dispersar-medicamento.component';
+import { UploadPreciosComponent } from './inventario/upload-precios/upload-precios.component';
+
 
 
 
@@ -51,7 +53,9 @@ import { DispersarMedicamentoComponent } from './components/dispersar-medicament
     DashboardComponent,
     FraccionamientoComponent,
     InformesComponent,
-    DispersarMedicamentoComponent
+    DispersarMedicamentoComponent,
+    UploadPreciosComponent
+
 
   ],
   imports: [
