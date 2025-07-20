@@ -54,4 +54,23 @@ export class CajaService {
   obtenerMovimientosPorCaja(cajaId: number): Observable<Movimiento[]> {
     return this.http.get<Movimiento[]>(`${this.apiUrl}/movimientos/${cajaId}`);
   }
+
+  abrirTurno(cajaId: number, emailUsuario: string, montoApertura: number): Observable<TurnoCaja> {
+    return this.http.post<TurnoCaja>(`${this.apiUrl}/abrir-turno`, null, {
+      params: {
+        cajaId: cajaId.toString(),
+        emailUsuario,
+        montoApertura: montoApertura.toString()
+      }
+    });
+  }
+  
+  cerrarTurno(turnoId: number, montoCierre: number): Observable<TurnoCaja> {
+    return this.http.post<TurnoCaja>(`${this.apiUrl}/cerrar-turno`, null, {
+      params: {
+        turnoId: turnoId.toString(),
+        montoCierre: montoCierre.toString()
+      }
+    });
+  }
 }

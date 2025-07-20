@@ -1,8 +1,9 @@
 <div class="mb-3">
   <label for="cajaSelect" class="form-label">Selecciona una Caja:</label>
   <select class="form-select" id="cajaSelect" (change)="onCajaChange($event)">
-    <option *ngFor="let caja of cajas" [value]="caja.id_caja">{{ caja.nombre }}</option>
-  </select>
+  <option value="" disabled selected>-- Selecciona una caja --</option>
+  <option *ngFor="let caja of cajas" [value]="caja.id_caja">{{ caja.nombre }}</option>
+</select>
 </div>
 
 <button class="btn btn-primary" (click)="emitirCajaSeleccionada()">Cargar Caja</button>

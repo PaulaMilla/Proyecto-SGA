@@ -6,9 +6,16 @@
   <ng-container *ngIf="turnoActual; else noTurno">
     <p><strong>Turno abierto:</strong> {{ turnoActual.horaApertura | date:'short' }}</p>
     <p><strong>Monto apertura:</strong> ${{ turnoActual.montoApertura }}</p>
+    <button class="btn btn-danger" (click)="cerrarTurno()">Cerrar turno</button>
   </ng-container>
 
   <ng-template #noTurno>
     <p class="text-warning">No hay turno abierto en esta caja</p>
+
+    <div class="mb-2">
+      <label for="montoApertura">Monto de apertura:</label>
+      <input type="number" [(ngModel)]="montoApertura" class="form-control" id="montoApertura">
+    </div>
+    <button class="btn btn-success" (click)="abrirTurno()">Abrir turno</button>
   </ng-template>
 </div>
