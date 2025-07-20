@@ -25,17 +25,16 @@ export class UsuariosComponent implements OnInit {
   constructor(private usuarioService: UsuariosService) {}
 
   ngOnInit(): void {
+    this.cargarUsuarios()
+  }
+
+  cargarUsuarios(): void {
     this.usuarioService.obtenerTodas().subscribe({
-      next: data => this.usuarios = data,
-      error: err => console.error('Error al obtener usuarios:', err)
+      next: (data) => this.usuarios = data,
+      error: (err) => console.error('Error al cargar usuarios:', err)
     });
   }
 
-  /*cargarUsuarios() {
-    this.http.get<any[]>('http://34.61.182.228/api/usuarios').subscribe(data => {
-      this.usuarios = data;
-    });
-  }¨*/
 
   guardarUsuario(): void {
     if (!this.usuarioDTO.idRol) {
@@ -55,6 +54,7 @@ export class UsuariosComponent implements OnInit {
           nombre_farmacia: '',
           idRol: 0
         };
+        this.cargarUsuarios();
       },
       error: err => {
         console.error(err);
@@ -71,7 +71,7 @@ export class UsuariosComponent implements OnInit {
     console.log(id);
     if (confirm('¿Seguro que deseas eliminar este usuario?')) {
       this.usuarioService.eliminar(id).subscribe({
-        next: () => this.usuarios = this.usuarios.filter(u => u.id !== id),
+        next: () => this.cargarUsuarios(),
         error: err => console.error('Error al eliminar:', err)
       });
     }
