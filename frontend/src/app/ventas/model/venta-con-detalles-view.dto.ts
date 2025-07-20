@@ -6,6 +6,7 @@ export interface VentaConNombresYDetalles {
   total: number;
   nombrePaciente: string;
   nombreUsuario: string;
+  apellidoUsuario: string;
   detalles: DetalleVentaConNombre[];
 }
 

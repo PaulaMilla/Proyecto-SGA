@@ -79,6 +79,7 @@ export class VentasComponent implements OnInit {
           total: v.total,
           nombrePaciente: '',
           nombreUsuario: '',
+          apellidoUsuario: '',
           detalles: []
         };
         // Obtener nombres por ID
@@ -88,6 +89,7 @@ export class VentasComponent implements OnInit {
 
         this.ventasService.getUsuarioPorId(v.idUsuarioVendedor).subscribe((u) => {
           ventaExtendida.nombreUsuario = u.nombre;
+          ventaExtendida.apellidoUsuario = u.apellido;
         });
 
         // Obtener detalles de la venta
