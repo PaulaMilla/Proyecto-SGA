@@ -189,14 +189,30 @@ export class VentasComponent implements OnInit {
   }
 
   guardarVenta(): void {
-    // Agregar logs para debug
-    console.log('Valores actuales:', {
-      pacienteId: this.venta.pacienteId,
-      usuarioId: this.venta.usuarioId,
-      detalles: this.venta.detalles
-    });
+  // Debug completo
+    console.log('=== DEBUG COMPLETO ===');
+    console.log('venta.pacienteId:', this.venta.pacienteId, 'tipo:', typeof this.venta.pacienteId);
+    console.log('venta.usuarioId:', this.venta.usuarioId, 'tipo:', typeof this.venta.usuarioId);
+    console.log('pacientes disponibles:', this.pacientes);
+    console.log('usuarios disponibles:', this.usuarios);
+    
+    // Verificar si son truthy
+    console.log('¿pacienteId es truthy?', !!this.venta.pacienteId);
+    console.log('¿usuarioId es truthy?', !!this.venta.usuarioId);
+    
+    // Verificar si son mayor a 0
+    console.log('¿pacienteId > 0?', this.venta.pacienteId > 0);
+    console.log('¿usuarioId > 0?', this.venta.usuarioId > 0);
+    
+    // Convertir a número explícitamente
+    const pacienteIdNum = Number(this.venta.pacienteId);
+    const usuarioIdNum = Number(this.venta.usuarioId);
+    
+    console.log('pacienteId como número:', pacienteIdNum);
+    console.log('usuarioId como número:', usuarioIdNum);
   
-    if (!this.venta.pacienteId || !this.venta.usuarioId) {
+    // Cambiar la validación
+    if (!pacienteIdNum || !usuarioIdNum || pacienteIdNum <= 0 || usuarioIdNum <= 0) {
       console.log('Error: Faltan paciente o usuario');
       alert('Selecciona paciente y usuario');
       return;
@@ -207,6 +223,10 @@ export class VentasComponent implements OnInit {
       return;
     }
   
+    // Actualizar la venta con los valores convertidos
+    this.venta.pacienteId = pacienteIdNum;
+    this.venta.usuarioId = usuarioIdNum;
+  
     console.log('Venta a guardar:', this.venta);
   
     this.ventasService.registrarVenta(this.venta).subscribe(() => {
@@ -216,6 +236,14 @@ export class VentasComponent implements OnInit {
       this.mostrarFormulario = false;
       this.cargarVentas();
     });
+  }
+
+  onPacienteChange(): void {
+    console.log('Paciente seleccionado:', this.venta.pacienteId, 'tipo:', typeof this.venta.pacienteId);
+  }
+  
+  onUsuarioChange(): void {
+    console.log('Usuario seleccionado:', this.venta.usuarioId, 'tipo:', typeof this.venta.usuarioId);
   }
 
   mostrarAgregarVenta() {
