@@ -63,9 +63,11 @@ export class InventarioService {
     return this.http.post('http://34.61.182.228/api/dispersion/dispersar', request);
   }
 
-  obtenerInventarios() {
-    return this.http.get<any[]>('http://34.61.182.228/api/inventario');
+  obtenerInventarios(emailUsuario: string) {
+    const url = `http://34.61.182.228/api/inventarios/con-producto?emailUsuario=${emailUsuario}`;
+    return this.http.get<any[]>(url);
   }
+
 
 
 
