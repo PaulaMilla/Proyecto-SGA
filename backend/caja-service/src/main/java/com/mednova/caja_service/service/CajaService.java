@@ -21,10 +21,12 @@ public class CajaService {
     private final CajaRepository cajaRepo;
     private final MovimientoCajaRepository movimientoCajaRepo;
     private final PagoRepository pagoRepo;
-    private final WebClient webClient;
+    private final WebClient webClientInventario;
+    private final WebClient webClientUsuario;
 
-    public CajaService(WebClient.Builder builder, TurnoCajaRepository turnoCajaRepo, CajaRepository cajaRepo, MovimientoCajaRepository movimientoCajaRepo, PagoRepository pagoRepo) {
-        this.webClient = builder.baseUrl("http://inventarios-service.inventarios.svc.cluster.local").build();
+    public CajaService(WebClient.Builder builder, WebClient.Builder builder2, TurnoCajaRepository turnoCajaRepo, CajaRepository cajaRepo, MovimientoCajaRepository movimientoCajaRepo, PagoRepository pagoRepo) {
+        this.webClientInventario = builder.baseUrl("http://inventarios-service.inventarios.svc.cluster.local").build();
+        this.webClientUsuario = builder2.baseUrl("http://usuarios-service.usuarios.svc.cluster.local").build();
         this.turnoCajaRepo = turnoCajaRepo;
         this.cajaRepo = cajaRepo;
         this.movimientoCajaRepo = movimientoCajaRepo;
@@ -201,7 +203,7 @@ public class CajaService {
     }
 
     public int comprobarFarmacia(int id){
-        FarmaciaRequestDTO farmacia = webClient.get()
+        FarmaciaRequestDTO farmacia = webClientInventario.get()
                 .uri("/api/inventarios/farmacia/"+ id)
                 .retrieve()
                 .bodyToMono(FarmaciaRequestDTO.class)
@@ -215,7 +217,7 @@ public class CajaService {
 
     public int obtenerIdUsuario(String emailUsuario) {
         try{
-            UsuarioRequestDTO usuario = webClient.get()
+            UsuarioRequestDTO usuario = webClientUsuario.get()
                     .uri("/api/usuarios/usuario-email/" + emailUsuario)
                     .retrieve()
                     .bodyToMono(UsuarioRequestDTO.class)
