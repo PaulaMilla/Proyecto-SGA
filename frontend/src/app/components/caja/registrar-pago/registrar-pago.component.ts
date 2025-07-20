@@ -11,16 +11,47 @@ import { Venta } from '../model/venta.model';
 export class RegistrarPagoComponent {
   @Input() caja!: Caja;
   ventas: Venta[] = [];
-  ventaSeleccionada?: number;
+  ventaSeleccionada?: Venta;
   metodoPago: string = 'EFECTIVO';
+  turnoId!: number; 
 
   constructor(private cajaService: CajaService) {}
 
   ngOnInit(): void {
-    this.cajaService.obtenerVentasNoPagadas().subscribe(v => this.ventas = v);
+    this.obtenerVentasNoPagadas();
+    this.obtenerTurnoActual(); 
+  }
+
+  obtenerVentasNoPagadas() {
+    this.cajaService.obtenerVentasNoPagadas().subscribe(data => {
+      this.ventas = data;
+    });
+  }
+
+  obtenerTurnoActual() {
+    const idCaja = this.caja.id_caja;
+    this.cajaService.obtenerTurnoActual(idCaja).subscribe(turno => {
+      this.turnoId = turno.id;
+    });
   }
 
   pagar() {
-    this.cajaService.registrarPago(this.caja.id_caja, this.ventaSeleccionada!, this.metodoPago).subscribe();
+  if (!this.ventaSeleccionada || !this.metodoPago || !this.turnoId) {
+    console.warn('Faltan datos para registrar el pago');
+    return;
   }
+
+  this.cajaService.registrarPago(
+    this.turnoId,
+    this.ventaSeleccionada,
+    this.metodoPago
+  ).subscribe(() => {
+    alert('Pago registrado exitosamente');
+    this.ventaSeleccionada = undefined;
+    this.obtenerVentasNoPagadas(); 
+  }, error => {
+    console.error('Error al registrar el pago', error);
+    alert('Ocurrió un error al registrar el pago');
+  });
+}
 }  

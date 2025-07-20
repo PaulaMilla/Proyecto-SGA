@@ -27,11 +27,11 @@ export class CajaService {
     return this.http.get<Venta[]>(`${this.ventasUrl}/no-pagadas`);
   }
 
-  registrarPago(cajaId: number, idVenta: number, metodo: string): Observable<any> {
+  registrarPago(cajaId: number, venta: Venta, metodo: string): Observable<any> {
     const body = new URLSearchParams();
     body.set('turnoId', cajaId.toString());
-    body.set('idVenta', idVenta.toString());
-    body.set('monto', 'TODO'); // Completa con el monto
+    body.set('idVenta', venta.id.toString());
+    body.set('monto', venta.total.toString()); // Completa con el monto
     body.set('metodo', metodo);
 
     return this.http.post(`${this.apiUrl}/pago`, body.toString(), {

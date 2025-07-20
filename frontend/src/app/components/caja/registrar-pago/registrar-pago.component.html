@@ -1,10 +1,11 @@
 <div class="card p-3 mb-3">
   <h5>Registrar Pago</h5>
   <select class="form-select mb-2" [(ngModel)]="ventaSeleccionada">
-    <option *ngFor="let venta of ventas" [value]="venta.id">
+    <option *ngFor="let venta of ventas" [ngValue]="venta">
       #{{ venta.id }} - ${{ venta.total }} - {{ venta.fechaVenta }}
     </option>
   </select>
+
 
   <select class="form-select mb-2" [(ngModel)]="metodoPago">
     <option value="EFECTIVO">Efectivo</option>
