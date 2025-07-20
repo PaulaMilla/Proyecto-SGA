@@ -64,6 +64,16 @@
       required
     />
 
+     <label for="rol">Farmacia</label>
+     <select
+       id="nombreFarmacia"
+       [(ngModel)]="usuarioDTO.nombre_farmacia"
+       name="nombreFarmacia"
+       required
+     >
+       <option value="">Seleccione una farmacia</option>
+     </select>
+
 
     <button type="submit">Guardar Usuario</button>
   </form>
@@ -74,9 +84,12 @@
   <div class="usuario-card" *ngFor="let u of usuarios">
     <p><strong>Nombre:</strong> {{ u.nombre }} {{ u.apellido }}</p>
     <p><strong>Correo:</strong> {{ u.correo }}</p>
+    <p><strong>Estado:</strong> {{ u.estado }}</p>
+    <p><strong>Rol:</strong> {{ u.rol.id }}</p>
     <!-- Selector de Estado -->
     <td>
       <select [(ngModel)]="u.estado">
+        <option value="">Seleccione un estado</option>
         <option value="Activo">Activo</option>
         <option value="Inactivo">Inactivo</option>
       </select>
