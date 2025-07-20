@@ -128,6 +128,22 @@ public class CajaService {
 
         MovimientoCaja saved = movimientoCajaRepo.save(mov);
 
+        // Actualizar montoCierre según el tipo de movimiento
+        BigDecimal montoCierreActual = (turno.getMontoCierre() != null ? turno.getMontoCierre() : turno.getMontoApertura());
+        BigDecimal nuevoMontoCierre;
+
+        if (tipo == TipoMovimiento.INGRESO) {
+            nuevoMontoCierre = montoCierreActual.add(monto);
+        } else if (tipo == TipoMovimiento.EGRESO) {
+            nuevoMontoCierre = montoCierreActual.subtract(monto);
+        } else {
+            // Para otros tipos, por si acaso
+            nuevoMontoCierre = montoCierreActual;
+        }
+
+        turno.setMontoCierre(nuevoMontoCierre);
+        turnoCajaRepo.save(turno);
+
         MovimientoCajaDTO dto = new MovimientoCajaDTO();
         dto.setId(saved.getId_movimientocaja());
         dto.setTurnoCajaId(turnoId);
@@ -153,6 +169,12 @@ public class CajaService {
         pago.setMetodoPago(metodo);
 
         Pago saved = pagoRepo.save(pago);
+
+        // Actualizar montoCierre sumando el pago
+        BigDecimal nuevoMontoCierre = (turno.getMontoCierre() != null ? turno.getMontoCierre() : turno.getMontoApertura()).add(monto);
+        turno.setMontoCierre(nuevoMontoCierre);
+        turnoCajaRepo.save(turno);
+
 
         PagoDTO dto = new PagoDTO();
         dto.setId(saved.getId_pago());
