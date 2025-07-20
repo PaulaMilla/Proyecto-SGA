@@ -72,10 +72,9 @@
     <select
       id="productoId"
       [(ngModel)]="nuevoDetalle.productoId"
-      name="nuevoProductoId"
-      required
       [ngModelOptions]="{ standalone: true }"
     >
+      <option [ngValue]="0" disabled selected>Selecciona un producto</option>
       <option *ngFor="let prod of productos" [ngValue]="prod.id">{{ prod.nombre }}</option>
     </select>
 
