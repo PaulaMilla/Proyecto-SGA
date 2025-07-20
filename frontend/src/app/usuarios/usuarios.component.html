@@ -84,7 +84,7 @@
   <div class="usuario-card" *ngFor="let u of usuarios">
     <h3>{{ u.nombre }} {{ u.apellido }}</h3>
     <p><strong>Correo:</strong> {{ u.correo }}</p>
-    <p><strong>Rol:</strong> {{ u.rol.nombre }}</p>
+    <p><strong>Rol:</strong> {{ u.rol?.nombre }}</p>
     <p><strong>Estado:</strong> {{ u.estado }}</p>
     <p><strong>Farmacia:</strong> {{ u.nombre_farmacia }}</p>
 
