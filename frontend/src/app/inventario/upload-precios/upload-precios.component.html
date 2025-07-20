@@ -1,0 +1,81 @@
+<div class="container mt-5">
+  <div class="card shadow p-4 custom-card">
+    <h2 class="mb-4 text-center text-primary-custom">Cargar Lista de Precios</h2>
+
+    <!-- Mensajes de estado -->
+    <div *ngIf="message" class="alert" [ngClass]="{
+      'alert-success': messageType === 'success',
+      'alert-danger': messageType === 'error'
+    }">
+      {{ message }}
+    </div>
+
+    <!-- Información de productos -->
+    <div class="mb-4">
+      <h4 class="section-title">📋 Información de Productos</h4>
+      <div class="d-flex flex-wrap gap-2 mb-3">
+        <button class="btn btn-outline-primary" (click)="getProductosInfo()" [disabled]="loading">
+          {{ loading ? 'Cargando...' : 'Ver Productos Disponibles' }}
+        </button>
+      </div>
+      <div *ngIf="productosInfo" class="productos-info-box">
+        <pre class="mb-0">{{ productosInfo }}</pre>
+      </div>
+    </div>
+
+    <!-- Carga de archivos -->
+    <div class="mb-4">
+      <h4 class="section-title">📁 Cargar Archivo</h4>
+
+      <div class="mb-3">
+        <input
+          class="form-control"
+          type="file"
+          (change)="onFileSelected($event)"
+          accept=".csv,.xlsx"
+          [disabled]="loading"
+        />
+        <div class="form-text">Formatos aceptados: <strong>.csv</strong>, <strong>.xlsx</strong> (máximo 10MB)</div>
+      </div>
+
+      <div class="d-flex flex-wrap gap-2 mb-2">
+        <button
+          class="btn btn-warning"
+          (click)="onTestUpload()"
+          [disabled]="!file || loading"
+        >
+          {{ loading ? 'Probando...' : 'Probar Carga' }}
+        </button>
+        <button
+          class="btn btn-success"
+          (click)="onUpload()"
+          [disabled]="!file || loading"
+        >
+          {{ loading ? 'Subiendo...' : 'Subir Archivo' }}
+        </button>
+      </div>
+
+      <div *ngIf="file" class="text-muted">
+        <strong>Archivo seleccionado:</strong> {{ file.name }} ({{ (file.size / 1024).toFixed(2) }} KB)
+      </div>
+    </div>
+
+    <!-- Instrucciones -->
+    <div class="border-top pt-4">
+      <h4 class="section-title">📌 Instrucciones</h4>
+      <ol>
+        <li>Verifica los productos disponibles o crea productos de prueba.</li>
+        <li>Prepara un archivo <strong>CSV</strong> o <strong>Excel</strong> con el formato correcto.</li>
+        <li>Usa los IDs de productos listados en la sección anterior.</li>
+        <li>Primero prueba la carga, luego súbela definitivamente.</li>
+      </ol>
+
+      <h5 class="mt-3">📝 Formato del archivo:</h5>
+      <pre class="bg-instruction p-3 rounded text-white">
+id_producto,precio
+1, 1000
+2, 5000
+      </pre>
+    </div>
+  </div>
+</div>
