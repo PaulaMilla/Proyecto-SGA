@@ -63,6 +63,9 @@ export class InventarioService {
     return this.http.post('http://34.61.182.228/api/dispersion/dispersar', request);
   }
 
+  obtenerInventarios() {
+    return this.http.get<any[]>('http://34.61.182.228/api/inventario');
+  }
 
 
 
@@ -74,8 +77,6 @@ export class InventarioService {
     return this.http.get<any[]>('http://34.61.182.228/api/inventarios/public-productos');
   }
 
-  obtenerInventarios(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
-  }
+
 }
 
