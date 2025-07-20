@@ -66,6 +66,11 @@ export class VentasComponent implements OnInit {
     this.usuariosService.obtenerTodas().subscribe(data => {
       this.usuarios = data;
       console.log('Usuarios cargados:', this.usuarios);
+      // Debug: Ver la estructura del primer usuario
+      if (this.usuarios.length > 0) {
+        console.log('Estructura del primer usuario:', this.usuarios[0]);
+        console.log('Claves del primer usuario:', Object.keys(this.usuarios[0]));
+      }
     });
   }
 

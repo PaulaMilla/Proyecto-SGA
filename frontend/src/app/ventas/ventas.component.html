@@ -52,7 +52,7 @@
       (ngModelChange)="onPacienteChange()"
     >
       <option [ngValue]="0" disabled>Selecciona un paciente</option>
-      <option *ngFor="let p of pacientes" [ngValue]="p.id">{{ p.nombre }}</option>
+      <option *ngFor="let p of pacientes" [ngValue]="p.id_paciente">{{ p.nombre }}</option>
     </select>
 
     <!-- USUARIO -->
