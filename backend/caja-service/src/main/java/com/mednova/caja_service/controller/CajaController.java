@@ -48,9 +48,8 @@ public class CajaController {
     }
 
     @PostMapping("/cerrar-turno")
-    public ResponseEntity<TurnoCajaDTO> cerrarTurno(@RequestParam int turnoId,
-                                                    @RequestParam BigDecimal montoCierre) {
-        TurnoCajaDTO dto = cajaService.cerrarTurno(turnoId, montoCierre);
+    public ResponseEntity<TurnoCajaDTO> cerrarTurno(@RequestParam int turnoId) {
+        TurnoCajaDTO dto = cajaService.cerrarTurno(turnoId);
         return ResponseEntity.ok(dto);
     }
 

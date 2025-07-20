@@ -89,7 +89,7 @@ public class CajaService {
         return dto;
     }
 
-    public TurnoCajaDTO cerrarTurno(int turnoId, BigDecimal montoCierre){
+    public TurnoCajaDTO cerrarTurno(int turnoId){
         TurnoCaja turno = turnoCajaRepo.findById(turnoId)
                 .orElseThrow(() -> new RuntimeException("Turno no encontrado"));
 
@@ -97,7 +97,7 @@ public class CajaService {
             throw new RuntimeException("El turno ya está cerrado");
 
         turno.setHoraCierre(LocalDateTime.now());
-        turno.setMontoCierre(montoCierre);
+        System.out.println(turno.getMontoCierre());
         turno.setCerrado(true);
 
         TurnoCaja saved = turnoCajaRepo.save(turno);
