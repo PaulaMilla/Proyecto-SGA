@@ -185,6 +185,18 @@ public class InventarioService {
             default -> "";
         };
     }
+    public void descontarStock(int idInventario, int cantidad) {
+        Inventario inventario = inventarioRepository.findById(idInventario)
+                .orElseThrow(() -> new RuntimeException("Inventario no encontrado"));
+
+        if (inventario.getCantidad_disponible() < cantidad) {
+            throw new RuntimeException("Stock insuficiente");
+        }
+
+        inventario.setCantidad_disponible(inventario.getCantidad_disponible() - cantidad);
+        inventarioRepository.save(inventario);
+    }
+
 
     public List<InventarioProductoDTO> obtenerInventarioConProducto(String emailUsuario) {
         String nombre_farmacia = obtenerNombreFarmaciaDesdeUsuario(emailUsuario);

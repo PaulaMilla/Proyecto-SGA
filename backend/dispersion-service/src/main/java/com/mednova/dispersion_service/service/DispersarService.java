@@ -1,5 +1,6 @@
 package com.mednova.dispersion_service.service;
 
+import com.mednova.dispersion_service.dto.DescuentoRequest;
 import com.mednova.dispersion_service.dto.DispersarRequest;
 import com.mednova.dispersion_service.model.Dispersion;
 import com.mednova.dispersion_service.repository.DispersionRepository;
@@ -15,7 +16,8 @@ public class DispersarService {
     @Autowired
     private DispersionRepository dispersionRepository;
 
-    private final WebClient webClient = WebClient.create("http://inventario-service:8080");
+    private final WebClient webClient = WebClient.create("http://34.61.182.228:8080");
+
 
     public String dispersarMedicamento(DispersarRequest request) {
         // Llamar al microservicio de inventario

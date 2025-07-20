@@ -87,12 +87,10 @@ export class DispersarMedicamentoComponent implements OnInit {
 
     const formData = this.form.value;
 
-    this.http.post('http://34.61.182.228/api/inventario/dispersar', {
-      idProducto: formData.idProducto,
+    this.http.post('http://34.61.182.228/api/dispersion/dispersar', {
+      idInventario: formData.idProducto,
       cantidad: formData.cantidad,
-      rutPaciente: formData.rutPaciente,
-      nombrePaciente: formData.nombrePaciente,
-      emailUsuario: formData.emailUsuario
+      idPaciente: formData.rutPaciente
     }).subscribe(() => {
       this.mensaje = 'Medicamento dispersado correctamente';
       this.error = '';
@@ -106,4 +104,5 @@ export class DispersarMedicamentoComponent implements OnInit {
       this.mensaje = '';
     });
   }
+
 }
