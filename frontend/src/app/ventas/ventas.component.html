@@ -69,7 +69,13 @@
     <!-- Agregar producto -->
     <h3>Agregar Producto</h3>
     <label for="productoId">Producto</label>
-    <select id="productoId" [(ngModel)]="nuevoDetalle.productoId" name="nuevoProductoId" required>
+    <select
+      id="productoId"
+      [(ngModel)]="nuevoDetalle.productoId"
+      name="nuevoProductoId"
+      required
+      [ngModelOptions]="{ standalone: true }"
+    >
       <option *ngFor="let prod of productos" [ngValue]="prod.id">{{ prod.nombre }}</option>
     </select>
 
@@ -81,6 +87,7 @@
       name="nuevoCantidad"
       min="1"
       required
+      [ngModelOptions]="{ standalone: true }"
     />
 
     <button type="button" (click)="agregarProducto()">Agregar Producto</button>

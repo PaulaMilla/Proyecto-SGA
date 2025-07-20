@@ -146,14 +146,13 @@ export class VentasComponent implements OnInit {
   }
 
   agregarProducto(): void {
-    const productoId = this.nuevoDetalle.productoId;
-    const cantidad = this.nuevoDetalle.cantidad;
+    const productoId = Number(this.nuevoDetalle.productoId);
+    const cantidad = Number(this.nuevoDetalle.cantidad);
+
+    console.log('Intentando agregar:', { productoId, cantidad });
   
-    if (productoId && cantidad > 0) {
-      this.venta.detalles.push({
-        productoId: Number(productoId),
-        cantidad: Number(cantidad)
-      });
+    if (productoId > 0 && cantidad > 0) {
+      this.venta.detalles.push({ productoId, cantidad });
       this.nuevoDetalle = { productoId: 0, cantidad: 1 };
     } else {
       alert('Selecciona un producto válido y una cantidad mayor a 0.');
