@@ -321,6 +321,44 @@ public class InventarioService {
         return resultado;
     }
 
+    @Transactional
+    public void fraccionarMedicamento(int idInventario, int cantidadFraccionada, String emailUsuario) {
+        Inventario inventario = inventarioRepository.findById(idInventario)
+                .orElseThrow(() -> new RuntimeException("Inventario no encontrado con ID: " + idInventario));
+
+        if (cantidadFraccionada <= 0) {
+            throw new RuntimeException("La cantidad fraccionada debe ser mayor que cero.");
+        }
+
+        int stockActual = inventario.getCantidad_disponible();
+
+        if (stockActual < cantidadFraccionada) {
+            throw new RuntimeException("No hay suficiente stock para fraccionar.");
+        }
+
+        // Reducir la cantidad disponible del inventario original
+        inventario.setCantidad_disponible(stockActual - cantidadFraccionada);
+        inventarioRepository.save(inventario);
+
+        // Crear un nuevo registro de inventario para el medicamento fraccionado
+        Inventario fraccionado = new Inventario();
+        fraccionado.setProducto(inventario.getProducto());
+        fraccionado.setCantidad_disponible(cantidadFraccionada);
+        fraccionado.setUbicacion(inventario.getUbicacion());
+        fraccionado.setLote(inventario.getLote());
+        fraccionado.setFecha_vencimiento(inventario.getFecha_vencimiento());
+
+        // Obtener farmacia desde el email del usuario
+        String nombreFarmacia = obtenerNombreFarmaciaDesdeUsuario(emailUsuario);
+        Farmacia farmacia = farmaciaRepository.findByNombre(nombreFarmacia)
+                .orElseThrow(() -> new RuntimeException("Farmacia no encontrada"));
+
+        fraccionado.setFarmacia(farmacia);
+
+        inventarioRepository.save(fraccionado);
+    }
+
+
 
     @Transactional
     public void dispersarMedicamento(DispersarRequest request) {
