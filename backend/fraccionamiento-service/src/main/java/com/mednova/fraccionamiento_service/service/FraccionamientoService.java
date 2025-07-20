@@ -22,7 +22,8 @@ public class FraccionamientoService {
 
     public ResponseEntity<String> realizarFraccionamiento(FraccionamientoRequest request) {
         // Llamada al microservicio de inventarios
-        String url = "http://inventarios-service/api/inventarios/fraccionar";
+        String url = "http://34.61.182.228/api/inventarios/fraccionar";
+
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
