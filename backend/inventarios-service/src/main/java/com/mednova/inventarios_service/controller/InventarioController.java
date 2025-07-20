@@ -3,6 +3,7 @@ package com.mednova.inventarios_service.controller;
 import com.mednova.inventarios_service.dto.DescuentoStockRequest;
 import com.mednova.inventarios_service.dto.FarmaciaResponseDTO;
 import com.mednova.inventarios_service.dto.InventarioProductoDTO;
+import com.mednova.inventarios_service.dto.InventarioRequestDTO;
 import com.mednova.inventarios_service.model.Farmacia;
 import com.mednova.inventarios_service.model.Inventario;
 import com.mednova.inventarios_service.model.Producto;
@@ -231,8 +232,10 @@ public class InventarioController {
     }
 
     @PostMapping
-    public Inventario createInventario(@RequestBody Inventario inventario) {
-        return inventarioService.saveInventario(inventario);
+    public ResponseEntity<Inventario> crearInventario(@RequestBody InventarioRequestDTO dto) {
+        Inventario inventario = inventarioService.fromDTO(dto);
+        Inventario guardado = inventarioService.saveInventario(inventario);
+        return ResponseEntity.ok(guardado);
     }
 
     @GetMapping("/{id}")
