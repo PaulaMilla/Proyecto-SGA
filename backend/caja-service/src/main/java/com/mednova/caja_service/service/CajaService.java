@@ -300,7 +300,7 @@ public class CajaService {
         // Paso 1: Obtener el nombre de la farmacia desde usuarios-service
         String nombreFarmacia = webClientUsuario
                 .get()
-                .uri("/nombre-farmacia/{email}", emailUsuario)
+                .uri("/api/usuarios/nombre-farmacia/{email}", emailUsuario)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
