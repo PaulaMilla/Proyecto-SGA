@@ -24,7 +24,7 @@ export class FraccionamientoComponent implements OnInit {
   }
 
   cargarInventarios(): void {
-    this.inventarioService.getInventarioConProducto('admin@farmacia.cl').subscribe({
+    this.inventarioService.getInventarioConProducto('maria.gonzalez@example.com').subscribe({
       next: (data: any[]) => {
         this.inventario = data;
       },
@@ -34,11 +34,20 @@ export class FraccionamientoComponent implements OnInit {
     });
   }
 
-  onInventarioChange(): void {
-    const inventarioSeleccionado = this.inventario.find(i => i.idInventario === Number(this.idSeleccionado));
+
+    onInventarioChange(): void {
+      const id = Number(this.idSeleccionado); // asegura conversión explícita
+
+      if (isNaN(id)) {
+      this.nuevoLote = '';
+      return;
+    }
+
+    const inventarioSeleccionado = this.inventario.find(i => i.id_inventario === id);
+
     if (inventarioSeleccionado) {
       const timestamp = new Date().getTime();
-      this.nuevoLote = `FRAC-${inventarioSeleccionado.idInventario}-${timestamp}`;
+      this.nuevoLote = `FRAC-${inventarioSeleccionado.id_inventario}-${timestamp}`;
     } else {
       this.nuevoLote = '';
     }
@@ -46,7 +55,9 @@ export class FraccionamientoComponent implements OnInit {
 
 
 
-  fraccionar(): void {
+
+
+    fraccionar(): void {
     if (!this.idSeleccionado || this.cantidadFraccionada <= 0 || !this.nuevoLote) {
       alert('Completa todos los campos');
       return;
