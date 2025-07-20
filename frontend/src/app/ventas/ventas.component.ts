@@ -51,11 +51,22 @@ export class VentasComponent implements OnInit {
   ventasRegistradas: VentaConNombresYDetalles[] = [];
 
   cargarPacientes(): void {
-    this.ventasService.getTodosPacientes().subscribe(data => this.pacientes = data);
+    this.ventasService.getTodosPacientes().subscribe(data => {
+      this.pacientes = data;
+      console.log('Pacientes cargados:', this.pacientes);
+      // Debug: Ver la estructura del primer paciente
+      if (this.pacientes.length > 0) {
+        console.log('Estructura del primer paciente:', this.pacientes[0]);
+        console.log('Claves del primer paciente:', Object.keys(this.pacientes[0]));
+      }
+    });
   }
-
+  
   cargarUsuarios(): void {
-    this.usuariosService.obtenerTodas().subscribe(data => this.usuarios = data);
+    this.usuariosService.obtenerTodas().subscribe(data => {
+      this.usuarios = data;
+      console.log('Usuarios cargados:', this.usuarios);
+    });
   }
 
   cargarProductos(): void {
