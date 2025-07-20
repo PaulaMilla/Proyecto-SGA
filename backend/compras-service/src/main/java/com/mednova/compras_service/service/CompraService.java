@@ -113,4 +113,8 @@ public class CompraService {
         compra.setDetalles(detalles);
         return compra;
     }
+
+    public List<Proveedor> listarProveedores(){
+        return proveedorRepository.findAll();
+    }
 }
