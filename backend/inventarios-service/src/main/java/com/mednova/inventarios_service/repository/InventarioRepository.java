@@ -19,6 +19,7 @@ public interface InventarioRepository extends JpaRepository<Inventario, Integer>
     @Query("UPDATE Inventario i SET i.cantidad_disponible = 0")
     void resetearCantidades();
 
+
     List<Inventario> findByFarmacia(Farmacia farmacia);
 
     Optional<Inventario> findByproducto(Producto producto);
