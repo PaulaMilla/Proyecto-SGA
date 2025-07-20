@@ -73,6 +73,11 @@ public class CompraController {
         return ResponseEntity.ok(compraService.buscarPorProveedor(nombre));
     }
 
+    @PostMapping("/proveedor")
+    public ResponseEntity<Proveedor> crearProveedor(@RequestBody Proveedor proveedor) {
+        return ResponseEntity.ok(compraService.crearProveedor(proveedor));
+    }
+
     @PostMapping("/{id}/anular")
     public ResponseEntity<Compra> anularCompra(@PathVariable int id) {
         return ResponseEntity.ok(compraService.anularCompra(id));

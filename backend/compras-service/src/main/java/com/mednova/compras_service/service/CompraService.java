@@ -137,4 +137,8 @@ public class CompraService {
         compra.setRutaDocumento(ruta.toString());
         compraRepository.save(compra);
     }
+
+    public Proveedor crearProveedor(Proveedor proveedor) {
+        return proveedorRepository.save(proveedor);
+    }
 }
