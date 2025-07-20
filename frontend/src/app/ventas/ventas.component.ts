@@ -88,6 +88,7 @@ export class VentasComponent implements OnInit {
         });
 
         this.ventasService.getUsuarioPorId(v.usuarioId).subscribe((u) => {
+          console.log('Usuario:', u);
           ventaExtendida.nombreUsuario = u.nombre;
         });
 
