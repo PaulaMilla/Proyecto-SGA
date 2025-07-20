@@ -3,10 +3,10 @@ package com.mednova.usuarios_service.dto;
 import com.mednova.usuarios_service.model.Rol;
 
 public class RolDTO {
-    private Integer id;
+    private int id;
     private String nombre;
 
-    public RolDTO(Integer id, String nombre) {
+    public RolDTO(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
@@ -17,5 +17,22 @@ public class RolDTO {
     }
 
     // Getters y setters
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 }
 
