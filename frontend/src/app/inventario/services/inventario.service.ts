@@ -60,8 +60,9 @@ export class InventarioService {
   }
 
   dispersarMedicamento(request: any) {
-    return this.http.post('/api/inventario/dispersar', request);
+    return this.http.post('http://34.61.182.228/api/dispersion/dispersar', request);
   }
+
 
 
 

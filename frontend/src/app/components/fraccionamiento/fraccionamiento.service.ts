@@ -8,15 +8,12 @@ export interface FraccionamientoRequest {
   nuevoLote: string;
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class FraccionamientoService {
-  private apiUrl = 'http://34.61.182.228/api/fraccionamiento';
-
   constructor(private http: HttpClient) {}
 
-  fraccionar(data: FraccionamientoRequest): Observable<any> {
-    return this.http.post(this.apiUrl, data);
+  fraccionar(request: FraccionamientoRequest): Observable<any> {
+    return this.http.post('http://34.61.182.228/api/fraccionamiento', request);
   }
 }
+
