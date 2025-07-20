@@ -15,6 +15,7 @@
     <a *ngIf="userRol === 'ADMIN'" routerLink="/usuarios" routerLinkActive="active">Usuarios</a>
     <a *ngIf="userRol === 'ADMIN' || userRol === 'BODEGUERO'" routerLink="/inventario-info" routerLinkActive="active">Inventario</a>
     <a *ngIf="userRol === 'ADMIN' || userRol === 'BODEGUERO'"  routerLink="/carga-datos" routerLinkActive="active">Carga</a>
+    <a *ngIf="userRol === 'ADMIN' || userRol === 'BODEGUERO'"  routerLink="/informes" routerLinkActive="active">Informes</a>
   </nav>
 
   <!-- Sección de perfil o login -->
