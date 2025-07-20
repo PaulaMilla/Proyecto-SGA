@@ -47,9 +47,9 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.obtenerPorId(id));
     }
 
-    @GetMapping("/roles")
-    public ResponseEntity<List<Rol>> listarRoles() {
-        return ResponseEntity.ok(usuarioService.listarRoles());
+    @GetMapping("roles")
+    public List<RolDTO> listarRoles() {
+        return usuarioService.obtenerTodosLosRoles();
     }
 
     @GetMapping("/farmacias")

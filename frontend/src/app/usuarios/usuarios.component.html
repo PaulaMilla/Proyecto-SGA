@@ -88,6 +88,8 @@
     <p><strong>Estado:</strong> {{ u.estado }}</p>
     <p><strong>Farmacia:</strong> {{ u.nombre_farmacia }}</p>
 
+    <br>
+
     <h5> -- Editar parámetros --</h5>
     <p><strong>Estado:  </strong>
       <select [(ngModel)]="u.estado">
@@ -100,6 +102,8 @@
         <option *ngFor="let r of roles" [value]="r.id">{{ r.nombre }}</option>
       </select>
     </p>
+
+    <br>
 
     <div class="acciones">
       <button (click)="editarUsuario(u)">Editar</button>
