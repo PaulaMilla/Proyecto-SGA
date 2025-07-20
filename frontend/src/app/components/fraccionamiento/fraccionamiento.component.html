@@ -5,11 +5,12 @@
     <label for="inventario">Seleccionar inventario:</label>
     <select [(ngModel)]="idSeleccionado" (change)="onInventarioChange()">
       <option [value]="null">-- Selecciona un inventario --</option>
-      <option *ngFor="let item of inventario" [value]="item.id">
-        {{ item.nombre }}
+      <option *ngFor="let item of inventario" [value]="item.idInventario">
+        {{ item.producto.nombre }} - Stock: {{ item.stock }} - Lote: {{ item.lote }}
       </option>
     </select>
   </div>
+
 
   <div class="form-group">
     <label for="cantidad">Cantidad a fraccionar:</label>

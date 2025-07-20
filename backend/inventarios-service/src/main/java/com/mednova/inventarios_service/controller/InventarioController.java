@@ -9,6 +9,7 @@ import com.mednova.inventarios_service.model.Producto;
 import com.mednova.inventarios_service.repository.ProductoRepository;
 import com.mednova.inventarios_service.service.InventarioService;
 
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -317,5 +318,6 @@ public class InventarioController {
         }
         return ResponseEntity.notFound().build();
     }
+
 
 }
