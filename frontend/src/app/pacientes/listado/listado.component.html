@@ -1,18 +1,18 @@
 <div class="contenedor">
-  <h2>Listado de Pacientes</h2>
 
   <button (click)="exportarAExcel()" class="btn-exportar">
     📥 Exportar a Excel
   </button>
 
-  <h3>Pacientes Beneficiarios</h3>
+  <br>
+
+  <h3>Beneficiarios</h3>
   <table>
     <thead>
     <tr>
       <th>Nombre</th>
       <th>Edad</th>
       <th>Dirección</th>
-      <th>Beneficiario</th>
       <th>Farmacia</th>
       <th>Acciones</th>
     </tr>
@@ -23,7 +23,6 @@
     <td>{{ p.nombre }}</td>
       <td>{{ p.edad }}</td>
       <td>{{ p.direccion }}</td>
-      <td>Sí</td>
       <td>{{ p.nombre_farmacia }}</td>
       <td>
         <button (click)="eliminar(p.id_paciente)" class="btn btn-danger btn-sm">Eliminar</button>
@@ -32,6 +31,8 @@
     </tbody>
   </table>
 
+  <br>
+
   <h3>Pacientes No Beneficiarios</h3>
   <table>
     <thead>
@@ -39,7 +40,6 @@
       <th>Nombre</th>
       <th>Edad</th>
       <th>Dirección</th>
-      <th>Beneficiario</th>
       <th>Farmacia</th>
       <th>Acciones</th>
     </tr>
@@ -49,7 +49,6 @@
       <td>{{ p.nombre }}</td>
       <td>{{ p.edad }}</td>
       <td>{{ p.direccion }}</td>
-      <td>No</td>
       <td>{{ p.nombre_farmacia }}</td>
       <td>
         <button (click)="eliminar(p.id_paciente)" class="btn btn-danger btn-sm">Eliminar</button>
