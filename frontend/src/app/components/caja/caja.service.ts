@@ -65,11 +65,10 @@ export class CajaService {
     });
   }
   
-  cerrarTurno(turnoId: number, montoCierre: number): Observable<TurnoCaja> {
+  cerrarTurno(turnoId: number): Observable<TurnoCaja> {
     return this.http.post<TurnoCaja>(`${this.apiUrl}/cerrar-turno`, null, {
       params: {
-        turnoId: turnoId.toString(),
-        montoCierre: montoCierre.toString()
+        turnoId: turnoId.toString()
       }
     });
   }

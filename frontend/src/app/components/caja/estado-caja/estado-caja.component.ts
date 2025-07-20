@@ -34,12 +34,8 @@ export class EstadoCajaComponent {
   }
 
   cerrarTurno() {
-    const montoCierre = prompt("Ingrese el monto de cierre:");
-
-    if (montoCierre && this.turnoActual) {
-      const monto = parseFloat(montoCierre);
-
-      this.cajaService.cerrarTurno(this.turnoActual.id, monto).subscribe(() => {
+    if (this.turnoActual) {
+      this.cajaService.cerrarTurno(this.turnoActual.id).subscribe(() => {
         this.turnoActual = undefined;
       });
     }
