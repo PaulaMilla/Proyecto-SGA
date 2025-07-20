@@ -6,7 +6,9 @@ export interface FraccionamientoRequest {
   idInventario: number;
   cantidadFraccionada: number;
   nuevoLote: string;
+  emailUsuario: string; // <-- NUEVO
 }
+
 
 @Injectable({ providedIn: 'root' })
 export class FraccionamientoService {
