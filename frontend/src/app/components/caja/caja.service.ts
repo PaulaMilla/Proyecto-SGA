@@ -20,7 +20,7 @@ export class CajaService {
   }
 
   obtenerCajasPorEmail(emailUsuario: string): Observable<Caja[]> {
-    return this.http.get<Caja[]>(`${this.apiUrl}`, {
+    return this.http.get<Caja[]>(`${this.apiUrl}/farmacias`, {
       params: { emailUsuario }
     });
   }

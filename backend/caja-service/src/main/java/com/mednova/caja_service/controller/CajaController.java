@@ -30,7 +30,7 @@ public class CajaController {
         return ResponseEntity.ok(cajaService.obtenerTodasLasCajas());
     }
 
-    @GetMapping
+    @GetMapping("/farmacias")
     public ResponseEntity<List<Caja>> obtenerTodasLasCajasFarmacia(@RequestParam String emailUsuario){
         try {
             List<Caja> cajas = cajaService.obtenerCajasPorEmailUsuario(emailUsuario);
