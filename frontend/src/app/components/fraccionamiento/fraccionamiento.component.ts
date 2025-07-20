@@ -29,6 +29,15 @@ export class FraccionamientoComponent implements OnInit {
       });
     }
 
+  onInventarioChange(): void {
+    if (this.idSeleccionado) {
+      const timestamp = new Date().getTime();
+      this.nuevoLote = `FRAC-${this.idSeleccionado}-${timestamp}`;
+    } else {
+      this.nuevoLote = '';
+    }
+  }
+
   fraccionar(): void {
     if (!this.idSeleccionado || this.cantidadFraccionada <= 0 || !this.nuevoLote) {
       alert('Completa todos los campos');
