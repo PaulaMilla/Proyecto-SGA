@@ -23,20 +23,27 @@ export class FraccionamientoComponent implements OnInit {
     this.cargarInventarios();
   }
 
-    cargarInventarios(): void {
-      this.inventarioService.obtenerInventarios().subscribe((data: any[]) => {
+  cargarInventarios(): void {
+    this.inventarioService.getInventarioConProducto('admin@farmacia.cl').subscribe({
+      next: (data: any[]) => {
         this.inventario = data;
-      });
-    }
+      },
+      error: (err) => {
+        console.error('Error al cargar inventario:', err);
+      }
+    });
+  }
 
   onInventarioChange(): void {
-    if (this.idSeleccionado) {
+    const inventarioSeleccionado = this.inventario.find(i => i.id === Number(this.idSeleccionado));
+    if (inventarioSeleccionado) {
       const timestamp = new Date().getTime();
-      this.nuevoLote = `FRAC-${this.idSeleccionado}-${timestamp}`;
+      this.nuevoLote = `FRAC-${inventarioSeleccionado.idInventario}-${timestamp}`;
     } else {
       this.nuevoLote = '';
     }
   }
+
 
   fraccionar(): void {
     if (!this.idSeleccionado || this.cantidadFraccionada <= 0 || !this.nuevoLote) {
