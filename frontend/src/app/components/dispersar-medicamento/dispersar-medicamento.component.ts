@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-dispersar-medicamento',
   templateUrl: './dispersar-medicamento.component.html',
-  styleUrls: ['./dispersar-medicamento.component.css']
+  styleUrls: ['./dispersar-medicamento.component.scss']
 })
 export class DispersarMedicamentoComponent implements OnInit {
   form: FormGroup;
