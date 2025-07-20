@@ -61,4 +61,8 @@ export class InventarioService {
     return this.http.get<any[]>('http://34.61.182.228/api/inventarios/public-productos');
   }
 
+  obtenerInventarios(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
 }
+
