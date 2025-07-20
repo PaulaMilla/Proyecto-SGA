@@ -74,7 +74,7 @@
   <div class="usuario-card" *ngFor="let u of usuarios">
     <p><strong>Nombre:</strong> {{ u.nombre }} {{ u.apellido }}</p>
     <p><strong>Correo:</strong> {{ u.correo }}</p>
-    <p><strong>Rol:</strong> {{ u.rol }}</p>
+    <p><strong>Rol:</strong> {{ u.rol.nombre }}</p>
     <p><strong>Estado:</strong> {{ u.estado }}</p>
     <p><strong>Último acceso:</strong> {{ u.fechaUltimoAcceso | date: 'dd/MM/yyyy HH:mm' }}</p>
 
