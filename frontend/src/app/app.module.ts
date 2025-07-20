@@ -26,7 +26,9 @@ import { PacientesInfoComponent } from './pacientes/pacientes-info/pacientes-inf
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FraccionamientoComponent } from './components/fraccionamiento/fraccionamiento.component';
 import { InformesComponent } from './components/informes/informes.component';
+import { DispersarMedicamentoComponent } from './components/dispersar-medicamento/dispersar-medicamento.component';
 import { UploadPreciosComponent } from './inventario/upload-precios/upload-precios.component';
+
 
 
 
@@ -51,7 +53,9 @@ import { UploadPreciosComponent } from './inventario/upload-precios/upload-preci
     DashboardComponent,
     FraccionamientoComponent,
     InformesComponent,
+    DispersarMedicamentoComponent,
     UploadPreciosComponent
+
 
   ],
   imports: [

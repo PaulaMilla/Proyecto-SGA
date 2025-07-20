@@ -55,6 +55,11 @@ export class InventarioService {
     return this.http.post('http://34.61.182.228/api/fraccionamiento', request);
   }
 
+  dispersarMedicamento(request: any) {
+    return this.http.post('/api/inventario/dispersar', request);
+  }
+
+
 
   // Método para crear productos de prueba
   createTestProducts(): Observable<any> {

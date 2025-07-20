@@ -1,0 +1,28 @@
+<h2>Dispersar Medicamento</h2>
+
+<form [formGroup]="form" (ngSubmit)="dispersar()">
+  <div>
+    <label>ID Producto:</label>
+    <input formControlName="idProducto" type="number" required>
+  </div>
+
+  <div>
+    <label>Cantidad a dispersar:</label>
+    <input formControlName="cantidad" type="number" required>
+  </div>
+
+  <div>
+    <label>RUT Paciente:</label>
+    <input formControlName="rutPaciente" type="text" required>
+  </div>
+
+  <div>
+    <label>Nombre Paciente:</label>
+    <input formControlName="nombrePaciente" type="text" required>
+  </div>
+
+  <button type="submit" [disabled]="form.invalid || cantidadInvalida">Dispersar</button>
+</form>
+
+<div *ngIf="mensaje" style="color: green;">{{ mensaje }}</div>
+<div *ngIf="error" style="color: red;">{{ error }}</div>
