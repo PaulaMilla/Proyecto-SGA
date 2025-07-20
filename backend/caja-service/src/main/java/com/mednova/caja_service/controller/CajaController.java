@@ -59,9 +59,8 @@ public class CajaController {
     public ResponseEntity<MovimientoCajaDTO> registrarMovimiento(@RequestParam int turnoId,
                                                                  @RequestParam BigDecimal monto,
                                                                  @RequestParam TipoMovimiento tipo,
-                                                                 @RequestParam String descripcion,
-                                                                 @RequestParam(required = false) int idVenta) {
-        MovimientoCajaDTO dto = cajaService.registrarMovimiento(turnoId, monto, tipo, descripcion, idVenta);
+                                                                 @RequestParam String descripcion) {
+        MovimientoCajaDTO dto = cajaService.registrarMovimiento(turnoId, monto, tipo, descripcion);
         return ResponseEntity.ok(dto);
     }
 

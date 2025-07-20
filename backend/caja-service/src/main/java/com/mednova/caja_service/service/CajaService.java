@@ -117,7 +117,7 @@ public class CajaService {
         return dto;
     }
 
-    public MovimientoCajaDTO registrarMovimiento(int turnoId, BigDecimal monto, TipoMovimiento tipo, String descripcion, int idVenta){
+    public MovimientoCajaDTO registrarMovimiento(int turnoId, BigDecimal monto, TipoMovimiento tipo, String descripcion){
         TurnoCaja turno = turnoCajaRepo.findById(turnoId)
                 .orElseThrow(() -> new RuntimeException("Turno no encontrado"));
         MovimientoCaja mov = new MovimientoCaja();
@@ -126,7 +126,6 @@ public class CajaService {
         mov.setMonto(monto);
         mov.setTipoMovimiento(tipo);
         mov.setDescripcion(descripcion);
-        mov.setId_venta(idVenta);
 
         MovimientoCaja saved = movimientoCajaRepo.save(mov);
 
@@ -153,7 +152,6 @@ public class CajaService {
         dto.setMonto(saved.getMonto());
         dto.setTipoMovimiento(saved.getTipoMovimiento());
         dto.setDescripcion(saved.getDescripcion());
-        dto.setIdVenta(idVenta);
 
         return dto;
 
