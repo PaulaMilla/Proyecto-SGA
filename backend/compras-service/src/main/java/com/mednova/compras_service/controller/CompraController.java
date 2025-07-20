@@ -2,6 +2,7 @@ package com.mednova.compras_service.controller;
 
 import com.mednova.compras_service.dto.CompraDTO;
 import com.mednova.compras_service.model.Compra;
+import com.mednova.compras_service.model.Proveedor;
 import com.mednova.compras_service.service.CompraService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,4 +47,10 @@ public class CompraController {
     public ResponseEntity<Compra> anularCompra(@PathVariable int id) {
         return ResponseEntity.ok(compraService.anularCompra(id));
     }
+
+    @GetMapping("/proveedores")
+    public ResponseEntity<List<Proveedor>> obtenerProveedores() {
+        return ResponseEntity.ok(compraService.listarProveedores());
+    }
+    
 }
