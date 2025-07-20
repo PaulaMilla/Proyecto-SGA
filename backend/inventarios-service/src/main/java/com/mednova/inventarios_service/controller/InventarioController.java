@@ -132,6 +132,45 @@ public class InventarioController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/upload-precios")
+    public ResponseEntity<Map<String, String>> uploadPrecios(@RequestPart("file") MultipartFile file) {
+        Map<String, String> response = new HashMap<>();
+
+        System.out.println("=== CARGA DE PRECIOS ===");
+        System.out.println("Recibido archivo: " + file.getOriginalFilename());
+        System.out.println("Tamaño del archivo: " + file.getSize() + " bytes");
+        System.out.println("Tipo de contenido: " + file.getContentType());
+
+        try {
+            // Validaciones básicas del archivo
+            if (file.isEmpty()) {
+                return ResponseEntity.badRequest().body(response);
+            }
+
+            String fileName = file.getOriginalFilename();
+            if (fileName == null || fileName.trim().isEmpty()) {
+                return ResponseEntity.badRequest().body(response);
+            }
+
+            if (!fileName.toLowerCase().endsWith(".csv") && !fileName.toLowerCase().endsWith(".xlsx")) {
+                return ResponseEntity.badRequest().body(response);
+            }
+
+            System.out.println("Iniciando procesamiento del archivo...");
+            inventarioService.processPreciosFile(file);
+            System.out.println("Archivo procesado exitosamente");
+            return ResponseEntity.ok(response);
+
+        } catch (IllegalArgumentException e) {
+            System.err.println("Error de validación: " + e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        } catch (Exception e) {
+            System.err.println("Error al procesar archivo: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
     @PostMapping("/upload")
     public ResponseEntity<Map<String, String>> uploadInventario(@RequestPart("file") MultipartFile file,
                                                                 @RequestPart("tipoInventario") String tipoInventario, @RequestPart("emailUsuario") String emailUsuario) {

@@ -31,7 +31,6 @@ export class UploadPreciosComponent {
 
     const formData = new FormData();
     formData.append('file', this.file, this.file.name);
-    formData.append('emailUsuario', localStorage.getItem('email') || '')
 
     this.inventarioService.subirArchivoPrecios(formData)
       .subscribe({

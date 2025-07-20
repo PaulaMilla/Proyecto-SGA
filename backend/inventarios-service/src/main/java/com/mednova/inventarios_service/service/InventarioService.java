@@ -50,6 +50,98 @@ public class InventarioService {
         this.dispensacionRepository = dispensacionRepository;
     }
 
+    public void processPreciosFile(MultipartFile file) throws Exception {
+        if (file.isEmpty()) throw new IllegalArgumentException("El archivo está vacío.");
+
+        String fileName = file.getOriginalFilename();
+        if (fileName == null) throw new IllegalArgumentException("Nombre de archivo no válido.");
+
+        if (fileName.toLowerCase().endsWith(".csv")) {
+            processPreciosCSV(file);
+        } else if (fileName.toLowerCase().endsWith(".xlsx")) {
+            processPreciosExcel(file);
+        } else {
+            throw new IllegalArgumentException("Formato no soportado. Solo CSV y XLSX permitidos.");
+        }
+    }
+
+    private void processPreciosCSV(MultipartFile file) throws IOException {
+        try (Reader reader = new InputStreamReader(file.getInputStream());
+             CSVReader csvReader = new CSVReader(reader)) {
+
+            List<String[]> rows = csvReader.readAll();
+            if (rows.isEmpty()) throw new IllegalArgumentException("El archivo CSV está vacío.");
+
+            validatePreciosCSVHeader(rows.get(0));
+            for (int i = 1; i < rows.size(); i++) {
+                String[] row = rows.get(i);
+                processPreciosRow(row[0], row[1], i + 1);
+            }
+
+        } catch (CsvException e) {
+            throw new RuntimeException("Error al leer el archivo CSV: " + e.getMessage());
+        }
+    }
+
+    private void processPreciosExcel(MultipartFile file) throws IOException {
+        try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
+            Sheet sheet = workbook.getSheetAt(0);
+            if (sheet.getPhysicalNumberOfRows() == 0)
+                throw new IllegalArgumentException("El archivo Excel está vacío.");
+
+            validatePreciosExcelHeader(sheet.getRow(0));
+            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+                Row row = sheet.getRow(i);
+                if (row != null) {
+                    String idProd = getCellAsString(row.getCell(0));
+                    String precio_unitario = getCellAsString(row.getCell(1));
+
+                    processPreciosRow(idProd, precio_unitario, i + 1);
+                }
+            }
+        }
+    }
+
+    private void validatePreciosCSVHeader(String[] header) {
+        String[] expected = {"id_producto", "precio_unitario"};
+        for (int i = 0; i < expected.length; i++) {
+            if (!header[i].trim().equalsIgnoreCase(expected[i])) {
+                throw new IllegalArgumentException("Columna " + (i + 1) + " debe ser '" + expected[i] + "'");
+            }
+        }
+    }
+
+    private void validatePreciosExcelHeader(Row headerRow) {
+        String[] expected = {"id_producto", "precio_unitario"};
+        for (int i = 0; i < expected.length; i++) {
+            Cell cell = headerRow.getCell(i);
+            if (cell == null || !cell.getStringCellValue().trim().equalsIgnoreCase(expected[i])) {
+                throw new IllegalArgumentException("Columna " + (i + 1) + " debe ser '" + expected[i] + "'");
+            }
+        }
+    }
+
+    private void processPreciosRow(String idProdStr, String precioUnitStr, int fila) {
+        try {
+            int idProducto = Integer.parseInt(idProdStr.trim());
+            double nuevoPrecio = Double.parseDouble(precioUnitStr.trim());
+
+            if (nuevoPrecio < 0) {
+                throw new IllegalArgumentException("El precio no puede ser negativo.");
+            }
+
+            Producto producto = productoRepository.findById(idProducto)
+                    .orElseThrow(() -> new IllegalArgumentException("Producto con ID " + idProducto + " no existe."));
+
+            producto.setPrecio_unitario(nuevoPrecio); // 👈 Asignamos nuevo precio
+            productoRepository.save(producto);        // 👈 Guardamos el producto actualizado
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error en fila " + fila + ": " + e.getMessage());
+        }
+    }
+
+
     public void processFile(MultipartFile file, String tipoInventario, String emailUsuario) throws Exception {
         if (file.isEmpty()) throw new IllegalArgumentException("El archivo está vacío.");
         if (emailUsuario == null || emailUsuario.isEmpty()) {
