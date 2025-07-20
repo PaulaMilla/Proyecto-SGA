@@ -2,6 +2,7 @@ package com.mednova.inventarios_service.controller;
 
 import com.mednova.inventarios_service.dto.DescuentoStockRequest;
 import com.mednova.inventarios_service.dto.FarmaciaResponseDTO;
+import com.mednova.inventarios_service.dto.FraccionamientoRequest;
 import com.mednova.inventarios_service.dto.InventarioProductoDTO;
 import com.mednova.inventarios_service.dto.InventarioRequestDTO;
 import com.mednova.inventarios_service.model.Farmacia;
@@ -253,6 +254,20 @@ public class InventarioController {
                     .body("Error al eliminar inventarios: " + e.getMessage());
         }
     }
+
+    @PostMapping("/fraccionar")
+    public ResponseEntity<String> fraccionar(@RequestBody FraccionamientoRequest request) {
+        String emailUsuario = request.getEmailUsuario(); //  Ya NO se usa admin@farmacia.cl
+
+
+        System.out.println("Fraccionando inventario " + request.getIdInventario() +
+                " con cantidad " + request.getCantidadFraccionada() +
+                ", nuevo lote: " + request.getNuevoLote() +
+                ", email usuario: " + emailUsuario);
+
+        return ResponseEntity.ok("Fraccionamiento procesado");
+    }
+
 
     @DeleteMapping("/{id}")
     public void deleteInventario(@PathVariable int id) {
