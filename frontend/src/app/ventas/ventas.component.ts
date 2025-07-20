@@ -1,9 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { VentasService } from './services/ventas.service';
-import { DetalleVentaDTO, Paciente, Producto, Usuario,
-  Venta, VentaConDetallesDTO, VentaForm,
-  VentaRegistrada
-} from "./model/ventas.model";
+import { DetalleVentaDTO, Producto, VentaConDetallesDTO } from "./model/ventas.model";
 import {DetalleVentaConNombre, VentaConNombresYDetalles} from "./model/venta-con-detalles-view.dto";
 import {UsuariosService} from "../services/usuarios.service";
 import {InventarioService} from "../inventario/services/inventario.service";
@@ -14,21 +11,7 @@ import {InventarioService} from "../inventario/services/inventario.service";
   styleUrls: ['./ventas.component.scss']
 })
 export class VentasComponent implements OnInit {
-  /*venta = {
-    pacienteId: 0,
-    productoId: 0,
-    cantidad: 1,
-    precioUnitario: 0,
-    usuarioId: 0
-  };
-
-  ventasRegistradas: any[] = [];
-  mostrarFormulario = false;
-
-  venta: VentaConDetalles = {
-    detalles: []
-  };*/
-
+  
   venta: VentaConDetallesDTO = {
     pacienteId: 0,
     usuarioId: 0,
@@ -65,15 +48,6 @@ export class VentasComponent implements OnInit {
     this.cargarProductos();
   }
 
-/*  actualizarPrecioYTotal() {
-    if (this.venta.productoId) {
-      this.ventasService.getProductoPorId(this.venta.productoId).subscribe(prod => {
-        this.venta.precioUnitario = prod.precio_unitario;
-        this.venta.total = this.venta.cantidad * prod.precio_unitario;
-      });
-    }
-  }*/
-
   ventasRegistradas: VentaConNombresYDetalles[] = [];
 
   cargarPacientes(): void {
@@ -85,14 +59,14 @@ export class VentasComponent implements OnInit {
   }
 
   cargarProductos(): void {
-    this.inventarioService.getTodosProductos().subscribe(data => {
-      this.productos = data;
-      console.log('Productos cargados:', this.productos);
-    });
-  }
+  this.inventarioService.getTodosProductos().subscribe(data => {
+    this.productos = data;
+    console.log(' Productos cargados:', this.productos);
+  });
+}
 
   getNombreProducto(id: number): string {
-    const producto = this.productos.find(p => p.id === id);
+    const producto = this.productos.find(p => p.id_producto === id);
     return producto ? producto.nombre : 'Desconocido';
   }
 
@@ -151,12 +125,15 @@ export class VentasComponent implements OnInit {
   agregarProducto(): void {
     const productoId = Number(this.nuevoDetalle.productoId);
     const cantidad = Number(this.nuevoDetalle.cantidad);
-
+  
+    console.log('Valor original del select:', this.nuevoDetalle.productoId);
     console.log('Intentando agregar:', { productoId, cantidad });
+    console.log('Productos disponibles:', this.productos);
   
     if (productoId > 0 && cantidad > 0) {
       this.venta.detalles.push({ productoId, cantidad });
       this.nuevoDetalle = { productoId: 0, cantidad: 1 };
+      console.log('Producto agregado. Detalles actuales:', this.venta.detalles);
     } else {
       alert('Selecciona un producto válido y una cantidad mayor a 0.');
     }
@@ -249,6 +226,5 @@ export class VentasComponent implements OnInit {
   onWindowScroll() {
     this.mostrarBotonArriba = window.pageYOffset > 150;
   }
-
 
 }

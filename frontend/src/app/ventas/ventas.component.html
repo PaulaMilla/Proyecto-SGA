@@ -75,7 +75,7 @@
       [ngModelOptions]="{ standalone: true }"
     >
       <option [ngValue]="0" disabled selected>Selecciona un producto</option>
-      <option *ngFor="let prod of productos" [value]="prod.id">{{ prod.nombre }}</option>
+      <option *ngFor="let prod of productos" [ngValue]="prod.id_producto">{{ prod.nombre }}</option>
     </select>
 
     <label for="cantidad">Cantidad</label>
