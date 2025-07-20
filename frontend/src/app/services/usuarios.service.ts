@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {Usuario, UsuarioRequestDTO, UsuarioUpdateDTO} from "../usuarios/model/usuarios.model";
+import {Rol, Usuario, UsuarioRequestDTO, UsuarioUpdateDTO} from "../usuarios/model/usuarios.model";
 
 
 /*export interface Usuario {
@@ -36,7 +36,7 @@ export class UsuariosService {
   }
 
   crear(usuario: UsuarioRequestDTO): Observable<any> {
-    return this.http.post('/api/usuarios', usuario); // cambia el endpoint según tu ruta real
+    return this.http.post(`${this.apiUrl}`, usuario); // cambia el endpoint según tu ruta real
   }
 
   eliminar(id: number): Observable<any> {
@@ -51,5 +51,10 @@ export class UsuariosService {
     obtenerTodas(): Observable<Usuario[]> {
       return this.http.get<Usuario[]>(`${this.apiUrl}`);
     }
+
+  obtenerRoles():Observable<Rol[]> {
+    return this.http.get<Rol[]>(`${this.apiUrl}/roles`);
+  }
+
 
 }

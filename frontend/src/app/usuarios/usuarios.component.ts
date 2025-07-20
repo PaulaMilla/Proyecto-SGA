@@ -11,6 +11,7 @@ import {UsuariosService} from "../services/usuarios.service";
 export class UsuariosComponent implements OnInit {
 
   usuarios: Usuario[] = [];
+  roles: any[] = [];
 
   usuarioDTO: UsuarioRequestDTO = {
     nombre: '',
@@ -28,13 +29,21 @@ export class UsuariosComponent implements OnInit {
   constructor(private usuarioService: UsuariosService) {}
 
   ngOnInit(): void {
-    this.cargarUsuarios()
+    this.cargarUsuarios();
+    this.cargarRoles();
   }
 
   cargarUsuarios(): void {
     this.usuarioService.obtenerTodas().subscribe({
       next: (data) => this.usuarios = data,
       error: (err) => console.error('Error al cargar usuarios:', err)
+    });
+  }
+
+  cargarRoles(): void {
+    this.usuarioService.obtenerRoles().subscribe({
+      next: data => this.roles = data,
+      error: err => console.error('Error al cargar roles:', err)
     });
   }
 
