@@ -1,5 +1,6 @@
 package com.mednova.compras_service.controller;
 
+import com.mednova.compras_service.dto.CompraDTO;
 import com.mednova.compras_service.model.Compra;
 import com.mednova.compras_service.service.CompraService;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,9 @@ public class CompraController {
     }
 
     @PostMapping
-    public ResponseEntity<Compra> crearCompra(@RequestBody Compra compra) {
-        Compra creada = compraService.crearCompra(compra);
+    public ResponseEntity<Compra> crearCompra(@RequestBody CompraDTO dto) {
+        Compra compra = compraService.mapearCompra(dto);
+        Compra creada = compraService.crearCompra(compra, dto.getBodega(), dto.getFarmaciaId());
         return ResponseEntity.status(HttpStatus.CREATED).body(creada);
     }
 

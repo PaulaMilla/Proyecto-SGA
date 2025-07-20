@@ -1,9 +1,11 @@
 package com.mednova.compras_service.service;
 
+import com.mednova.compras_service.dto.CompraDTO;
 import com.mednova.compras_service.dto.InventarioDTO;
 import com.mednova.compras_service.model.Compra;
 import com.mednova.compras_service.model.DetalleCompra;
 import com.mednova.compras_service.model.EstadoCompra;
+import com.mednova.compras_service.model.Proveedor;
 import com.mednova.compras_service.repository.CompraRepository;
 import com.mednova.compras_service.repository.ProveedorRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -11,8 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CompraService {
@@ -82,5 +86,31 @@ public class CompraService {
         }catch (Exception e){
             throw new RuntimeException("Error al agregar stock de compra");
         }
+    }
+
+    public Compra mapearCompra(CompraDTO dto) {
+        Compra compra = new Compra();
+        compra.setNumeroDocumento(dto.getNumeroDocumento());
+        compra.setTipo(dto.getTipo());
+
+        Proveedor proveedor = proveedorRepository.findById(dto.getProveedorId())
+                .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
+        compra.setProveedor(proveedor);
+
+        compra.setFechaCompra(LocalDate.now());
+        compra.setObservacion(dto.getObservacion());
+
+        List<DetalleCompra> detalles = dto.getDetalles().stream().map(d -> {
+            DetalleCompra detalle = new DetalleCompra();
+            detalle.setProductoId(d.getProductoId());
+            detalle.setCantidad(d.getCantidad());
+            detalle.setPrecioUnitario(d.getPrecioUnitario());
+            detalle.setLote(d.getLote());
+            detalle.setFechaVencimiento(d.getFechaVencimiento());
+            return detalle;
+        }).collect(Collectors.toList());
+
+        compra.setDetalles(detalles);
+        return compra;
     }
 }
