@@ -84,18 +84,23 @@
   <div class="usuario-card" *ngFor="let u of usuarios">
     <h3>{{ u.nombre }} {{ u.apellido }}</h3>
     <p><strong>Correo:</strong> {{ u.correo }}</p>
-    <p><strong>Estado:</strong>
+    <p><strong>Rol:</strong> {{ u.rol.nombre }}</p>
+    <p><strong>Estado:</strong> {{ u.estado }}</p>
+    <p><strong>Farmacia:</strong> {{ u.nombre_farmacia }}</p>
+
+    <h5> -- Editar parámetros --</h5>
+    <p><strong>Estado:  </strong>
       <select [(ngModel)]="u.estado">
         <option value="Activo">Activo</option>
         <option value="Inactivo">Inactivo</option>
       </select>
     </p>
-    <p><strong>Rol:</strong>
+    <p><strong>Rol:  </strong>
       <select [(ngModel)]="u.rol.id">
         <option *ngFor="let r of roles" [value]="r.id">{{ r.nombre }}</option>
       </select>
     </p>
-    <p><strong>Farmacia:</strong> {{ u.nombre_farmacia }}</p>
+
     <div class="acciones">
       <button (click)="editarUsuario(u)">Editar</button>
       <button (click)="eliminarUsuario(u.id)">Eliminar</button>
