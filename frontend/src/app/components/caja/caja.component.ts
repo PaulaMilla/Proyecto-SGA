@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CajaService } from './caja.service';
 import { Caja } from './model/caja.model';
+import { ListadoMovimientoComponent } from './listado-movimiento/listado-movimiento.component';
 
 @Component({
   selector: 'app-caja',
@@ -10,11 +11,15 @@ import { Caja } from './model/caja.model';
 export class CajaComponent {
   cajaSeleccionada: Caja | null = null;
 
+  @ViewChild(ListadoMovimientoComponent) listadoMovimientos?: ListadoMovimientoComponent;
+
   constructor(private cajaService: CajaService) {}
 
-  ngOnInit(): void {}
-  
   onCajaSeleccionada(caja: Caja) {
     this.cajaSeleccionada = caja;
+  }
+
+  actualizarListadoMovimientos() {
+    this.listadoMovimientos?.cargarMovimientos();
   }
 }

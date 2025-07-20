@@ -15,6 +15,11 @@ export class ListadoMovimientoComponent {
   constructor(private cajaService: CajaService) {}
 
   ngOnInit(): void {
-    this.cajaService.obtenerMovimientosPorCaja(this.caja.id_caja).subscribe(data => this.movimientos = data);
+    this.cargarMovimientos();
+  }
+
+  cargarMovimientos() {
+    this.cajaService.obtenerMovimientosPorCaja(this.caja.id_caja)
+      .subscribe(data => this.movimientos = data);
   }
 }
