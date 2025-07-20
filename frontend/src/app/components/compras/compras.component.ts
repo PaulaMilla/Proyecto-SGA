@@ -41,6 +41,7 @@ export class ComprasComponent {
     this.inventariosService.getProductosPublicos().subscribe(data => this.productos = data);
   }
 
+  
   agregarDetalle(): void {
     const nuevoDetalle: DetalleCompra = {
       productoId: null,

@@ -1,7 +1,7 @@
 package com.mednova.compras_service.dto;
 
 public class InventarioDTO {
-    private Long productoId;
+    private int productoId;
     private Integer cantidadDisponible;
     private String lote;
     private String fechaVencimiento;
@@ -11,11 +11,11 @@ public class InventarioDTO {
     public InventarioDTO() {}
 
 
-    public Long getProductoId() {
+    public int getProductoId() {
         return productoId;
     }
 
-    public void setProductoId(Long productoId) {
+    public void setProductoId(int productoId) {
         this.productoId = productoId;
     }
 
