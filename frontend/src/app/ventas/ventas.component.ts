@@ -81,14 +81,12 @@ export class VentasComponent implements OnInit {
           nombreUsuario: '',
           detalles: []
         };
-        console.log('Venta extendida:', ventaExtendida);
         // Obtener nombres por ID
         this.ventasService.getPacientePorId(v.pacienteId).subscribe((p) => {
           ventaExtendida.nombrePaciente = p.nombre;
         });
 
         this.ventasService.getUsuarioPorId(v.idUsuarioVendedor).subscribe((u) => {
-          console.log('Usuario:', u);
           ventaExtendida.nombreUsuario = u.nombre;
         });
 
