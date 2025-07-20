@@ -1,1 +1,80 @@
-<p>compras works!</p>
+<div class="container mt-4">
+  <h3 class="mb-4" style="color: #004d40;">Registrar Compra</h3>
+
+  <form>
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label class="form-label">Proveedor</label>
+        <select class="form-select" [(ngModel)]="compra.proveedorId" name="proveedor">
+          <option [ngValue]="null">Selecciona proveedor</option>
+          <option *ngFor="let p of proveedores" [ngValue]="p.id">{{ p.nombre }}</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">N° Documento</label>
+        <input class="form-control" [(ngModel)]="compra.numeroDocumento" name="documento">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Tipo</label>
+        <select class="form-select" [(ngModel)]="compra.tipo" name="tipo">
+          <option value="FACTURA">Factura</option>
+          <option value="GUIA_DESPACHO">Guía de despacho</option>
+          <option value="NOTA_CREDITO">Nota de crédito</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Observación</label>
+      <textarea class="form-control" [(ngModel)]="compra.observacion" name="observacion"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Ubicación / Bodega</label>
+      <input class="form-control" [(ngModel)]="compra.bodega" name="bodega">
+    </div>
+
+    <hr>
+    <h5>Detalles de Productos</h5>
+
+    <div *ngFor="let d of detalles; let i = index" class="card p-3 mb-3 border border-success-subtle shadow-sm">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label>Producto</label>
+          <select class="form-select" [(ngModel)]="d.productoId" [name]="'producto'+i">
+            <option [ngValue]="null">Selecciona producto</option>
+            <option *ngFor="let p of productos" [ngValue]="p.id_producto">{{ p.nombre }}</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label>Cantidad</label>
+          <input type="number" class="form-control" [(ngModel)]="d.cantidad" [name]="'cantidad'+i">
+        </div>
+        <div class="col-md-2">
+          <label>Precio</label>
+          <input type="number" class="form-control" [(ngModel)]="d.precioUnitario" [name]="'precio'+i">
+        </div>
+        <div class="col-md-2">
+          <label>Lote</label>
+          <input type="text" class="form-control" [(ngModel)]="d.lote" [name]="'lote'+i">
+        </div>
+        <div class="col-md-2">
+          <label>Vencimiento</label>
+          <input type="date" class="form-control" [(ngModel)]="d.fechaVencimiento" [name]="'fecha'+i">
+        </div>
+        <div class="col-md-1 d-flex align-items-end">
+          <button type="button" class="btn btn-danger btn-sm" (click)="eliminarDetalle(i)">X</button>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-outline-primary" style="border-color: #004d40; color: #004d40;" (click)="agregarDetalle()">+ Agregar Producto</button>
+
+    <div class="mt-4">
+      <button type="button" class="btn" style="background-color: #004d40; color: white;" (click)="registrarCompra()">
+        Registrar Compra
+      </button>
+    </div>
+  </form>
+  
+</div>

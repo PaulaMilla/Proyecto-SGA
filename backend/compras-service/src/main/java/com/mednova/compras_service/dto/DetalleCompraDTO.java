@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class DetalleCompraDTO {
-    private Long productoId;
+    private int productoId;
     private Integer cantidad;
     private BigDecimal precioUnitario;
     private String lote;
@@ -13,11 +13,11 @@ public class DetalleCompraDTO {
     //Getters y setters
 
 
-    public Long getProductoId() {
+    public int getProductoId() {
         return productoId;
     }
 
-    public void setProductoId(Long productoId) {
+    public void setProductoId(int productoId) {
         this.productoId = productoId;
     }
 
