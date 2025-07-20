@@ -42,6 +42,8 @@ public class CajaService {
         return cajaRepo.findAll();
     }
 
+    public List<TurnoCaja> obtenerTodasLosTurnos() { return turnoCajaRepo.findAll(); }
+
     public Caja crearCaja(Caja caja) {
         return cajaRepo.save(caja);
     }

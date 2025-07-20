@@ -6,6 +6,7 @@ import com.mednova.caja_service.dto.TurnoCajaDTO;
 import com.mednova.caja_service.model.Caja;
 import com.mednova.caja_service.model.MetodoPago;
 import com.mednova.caja_service.model.TipoMovimiento;
+import com.mednova.caja_service.model.TurnoCaja;
 import com.mednova.caja_service.service.CajaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -118,6 +119,9 @@ public class CajaController {
         return turno != null ? ResponseEntity.ok(turno) : ResponseEntity.notFound().build();
     }
 
-
+    @GetMapping("/turno-caja")
+    public ResponseEntity<List<TurnoCaja>> obtenerTurnoCajas() {
+        return ResponseEntity.ok(cajaService.obtenerTodasLosTurnos());
+    }
 
 }
