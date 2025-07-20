@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Usuario, UsuarioRequestDTO, UsuarioUpdateDTO} from "./model/usuarios.model";
+import {Rol, Usuario, UsuarioRequestDTO, UsuarioUpdateDTO} from "./model/usuarios.model";
 import {UsuariosService} from "../services/usuarios.service";
 
 @Component({
@@ -11,7 +11,7 @@ import {UsuariosService} from "../services/usuarios.service";
 export class UsuariosComponent implements OnInit {
 
   usuarios: Usuario[] = [];
-  roles: any[] = [];
+  roles: Rol[] = [];
 
   usuarioDTO: UsuarioRequestDTO = {
     nombre: '',
@@ -44,17 +44,26 @@ export class UsuariosComponent implements OnInit {
 
   cargarUsuarios(): void {
     this.usuarioService.obtenerTodas().subscribe({
-      next: (data) => this.usuarios = data,
+      next: (data) => {
+        this.usuarios = data;
+        // Asegurar que todos los usuarios tengan rol definido
+        this.usuarios.forEach(u => {
+          if (!u.rol) {
+            u.rol = { id: 0, nombre: 'Sin Rol' };
+          }
+        });
+      },
       error: (err) => console.error('Error al cargar usuarios:', err)
     });
   }
 
   cargarRoles(): void {
     this.usuarioService.obtenerRoles().subscribe({
-      next: data => this.roles = data,
-      error: err => console.error('Error al cargar roles:', err)
+      next: (data) => this.roles = data,
+      error: (err) => console.error('Error al cargar roles:', err)
     });
   }
+
 
   guardarUsuario(): void {
     if (!this.usuarioDTO.idRol) {
@@ -120,12 +129,17 @@ export class UsuariosComponent implements OnInit {
   }
 
 
-  eliminarUsuario(id: number) {
-    console.log(id);
-    if (confirm('¿Seguro que deseas eliminar este usuario?')) {
+  eliminarUsuario(id: number): void {
+    if (confirm('¿Estás seguro de eliminar este usuario?')) {
       this.usuarioService.eliminar(id).subscribe({
-        next: () => this.cargarUsuarios(),
-        error: err => console.error('Error al eliminar:', err)
+        next: () => {
+          alert('Usuario eliminado correctamente');
+          this.cargarUsuarios(); // Recargar lista después de eliminar
+        },
+        error: (err) => {
+          console.error('Error al eliminar usuario:', err);
+          alert('No se pudo eliminar el usuario');
+        }
       });
     }
   }
