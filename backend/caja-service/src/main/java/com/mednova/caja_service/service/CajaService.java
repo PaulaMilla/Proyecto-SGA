@@ -1,9 +1,6 @@
 package com.mednova.caja_service.service;
 
-import com.mednova.caja_service.dto.FarmaciaRequestDTO;
-import com.mednova.caja_service.dto.MovimientoCajaDTO;
-import com.mednova.caja_service.dto.PagoDTO;
-import com.mednova.caja_service.dto.TurnoCajaDTO;
+import com.mednova.caja_service.dto.*;
 import com.mednova.caja_service.model.*;
 import com.mednova.caja_service.repository.CajaRepository;
 import com.mednova.caja_service.repository.MovimientoCajaRepository;
@@ -214,5 +211,21 @@ public class CajaService {
             throw new RuntimeException("Farmacia no encontrada, ID: "+ id);
         }
         return farmacia.getId();
+    }
+
+    public int obtenerIdUsuario(String emailUsuario) {
+        try{
+            UsuarioRequestDTO usuario = webClient.get()
+                    .uri("/api/usuarios/usuario-email/" + emailUsuario)
+                    .retrieve()
+                    .bodyToMono(UsuarioRequestDTO.class)
+                    .block();
+            if(usuario == null) {
+                throw new RuntimeException("Usuario no encontrado");
+            }
+            return usuario.getId();
+        }catch (Exception e) {
+            throw new RuntimeException("Error al consultar id: " + e.getMessage());
+        }
     }
 }

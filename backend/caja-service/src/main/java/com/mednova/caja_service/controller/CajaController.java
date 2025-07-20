@@ -6,7 +6,6 @@ import com.mednova.caja_service.dto.TurnoCajaDTO;
 import com.mednova.caja_service.model.Caja;
 import com.mednova.caja_service.model.MetodoPago;
 import com.mednova.caja_service.model.TipoMovimiento;
-import com.mednova.caja_service.model.TurnoCaja;
 import com.mednova.caja_service.service.CajaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,9 +37,13 @@ public class CajaController {
     }
 
     @PostMapping("/abrir-turno")
-    public ResponseEntity<TurnoCajaDTO> abrirTurno(@RequestParam int cajaId, @RequestParam int idUsuario, @RequestParam BigDecimal montoApertura) {
-        TurnoCajaDTO dto = cajaService.abrirTurno(cajaId, idUsuario, montoApertura);
-        return ResponseEntity.ok(dto);
+    public ResponseEntity<TurnoCajaDTO> abrirTurno(@RequestParam int cajaId, @RequestParam String emailUsuario, @RequestParam BigDecimal montoApertura) {
+        int idUsuario = cajaService.obtenerIdUsuario(emailUsuario);
+        if(idUsuario>0){
+            TurnoCajaDTO dto = cajaService.abrirTurno(cajaId, idUsuario, montoApertura);
+            return ResponseEntity.ok(dto);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @PostMapping("/cerrar-turno")

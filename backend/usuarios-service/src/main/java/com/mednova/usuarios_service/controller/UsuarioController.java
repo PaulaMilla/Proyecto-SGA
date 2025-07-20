@@ -99,6 +99,19 @@ public class UsuarioController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("usuario-email/{email}")
+    public ResponseEntity<?> obtenerUsuarioPorCorreo(@PathVariable String email) {
+        Optional<Usuario> usuarioOpt = usuarioService.obtenerPorEmail(email);
+
+        if (usuarioOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+        }
+
+        Usuario usuario = usuarioOpt.get();
+        UsuarioResponseDTO dto = new UsuarioResponseDTO(usuario);
+        return ResponseEntity.ok(dto);
+    }
+
     @GetMapping("/nombre-farmacia/{emailUsuario}")
     public ResponseEntity<String> obtenerNombreFarmaciaPorEmail(@PathVariable String emailUsuario) {
         Optional<Usuario> usuarioOpt = usuarioService.obtenerPorEmail(emailUsuario);
