@@ -3,12 +3,15 @@ package com.mednova.inventarios_service.service;
 import com.mednova.inventarios_service.dto.DescuentoStockRequest;
 import com.mednova.inventarios_service.dto.FarmaciaResponseDTO;
 import com.mednova.inventarios_service.dto.InventarioProductoDTO;
+import com.mednova.inventarios_service.dto.DispersarRequest;
 import com.mednova.inventarios_service.model.Farmacia;
 import com.mednova.inventarios_service.model.Inventario;
 import com.mednova.inventarios_service.model.Producto;
+import com.mednova.inventarios_service.model.Dispensacion;
 import com.mednova.inventarios_service.repository.FarmaciaRepository;
 import com.mednova.inventarios_service.repository.InventarioRepository;
 import com.mednova.inventarios_service.repository.ProductoRepository;
+import com.mednova.inventarios_service.repository.DispensacionRepository;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import org.apache.poi.ss.usermodel.*;
@@ -24,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.*;
+import java.time.LocalDate;
 
 @Service
 public class InventarioService {
@@ -32,14 +36,18 @@ public class InventarioService {
     private final InventarioRepository inventarioRepository;
     private final ProductoRepository productoRepository;
     private final FarmaciaRepository farmaciaRepository;
+    private final DispensacionRepository dispensacionRepository;
+
 
     public InventarioService(WebClient.Builder builder, InventarioRepository inventarioRepository,
                              ProductoRepository productoRepository,
-                             FarmaciaRepository farmaciaRepository) {
+                             FarmaciaRepository farmaciaRepository,
+                             DispensacionRepository dispensacionRepository) {
         this.webClient = builder.baseUrl("http://usuarios-service.usuarios.svc.cluster.local").build();
         this.inventarioRepository = inventarioRepository;
         this.productoRepository = productoRepository;
         this.farmaciaRepository = farmaciaRepository;
+        this.dispensacionRepository = dispensacionRepository;
     }
 
     public void processFile(MultipartFile file, String tipoInventario, String emailUsuario) throws Exception {
@@ -240,6 +248,38 @@ public class InventarioService {
 
         inventarioRepository.save(fraccionado);
     }
+
+    @Transactional
+    public void dispersarMedicamento(DispersarRequest request) {
+            Producto producto = productoRepository.findById(request.getIdProducto())
+                    .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        String nombreFarmacia = obtenerNombreFarmaciaDesdeUsuario(request.getEmailUsuario());
+        Farmacia farmacia = farmaciaRepository.findByNombre(nombreFarmacia)
+                .orElseThrow(() -> new RuntimeException("Farmacia no encontrada"));
+
+        Inventario inventario = inventarioRepository.findByproducto(producto)
+                .orElseThrow(() -> new RuntimeException("Inventario no encontrado"));
+
+        int cantidadNueva = inventario.getCantidad_disponible() - request.getCantidad();
+        if (cantidadNueva < 0) {
+            throw new RuntimeException("Stock insuficiente para el producto.");
+        }
+
+        inventario.setCantidad_disponible(cantidadNueva);
+        inventarioRepository.save(inventario);
+
+        Dispensacion dispensacion = new Dispensacion();
+        dispensacion.setProducto(producto);
+        dispensacion.setFarmacia(farmacia);
+        dispensacion.setCantidad(request.getCantidad());
+        dispensacion.setRutPaciente(request.getRutPaciente());
+        dispensacion.setNombrePaciente(request.getRutPaciente());
+        dispensacion.setFechaDispensacion(LocalDate.now());
+
+        dispensacionRepository.save(dispensacion);
+    }
+
 
 
     private String obtenerNombreFarmaciaDesdeUsuario(String emailUsuario) {

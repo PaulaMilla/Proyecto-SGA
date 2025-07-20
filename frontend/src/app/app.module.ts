@@ -26,6 +26,7 @@ import { PacientesInfoComponent } from './pacientes/pacientes-info/pacientes-inf
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FraccionamientoComponent } from './components/fraccionamiento/fraccionamiento.component';
 import { InformesComponent } from './components/informes/informes.component';
+import { DispersarMedicamentoComponent } from './components/dispersar-medicamento/dispersar-medicamento.component';
 
 
 
@@ -49,7 +50,8 @@ import { InformesComponent } from './components/informes/informes.component';
     PacientesInfoComponent,
     DashboardComponent,
     FraccionamientoComponent,
-    InformesComponent
+    InformesComponent,
+    DispersarMedicamentoComponent
 
   ],
   imports: [
