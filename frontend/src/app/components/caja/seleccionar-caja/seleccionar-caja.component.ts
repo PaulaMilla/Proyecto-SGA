@@ -9,6 +9,8 @@ import { CajaService } from '../caja.service';
 })
 export class SeleccionarCajaComponent {
   cajas: Caja[] = [];
+  cajaSeleccionadaTemp?: Caja;
+
   @Output() cajaSeleccionada = new EventEmitter<Caja>();
 
   constructor(private cajaService: CajaService) {}
@@ -17,12 +19,15 @@ export class SeleccionarCajaComponent {
     this.cajaService.obtenerTodas().subscribe(data => this.cajas = data);
   }
 
-  seleccionarCaja(event: Event) {
-  const target = event.target as HTMLSelectElement;
-  const idSeleccionado = parseInt(target.value, 10);
-  const caja = this.cajas.find(c => c.id_caja === idSeleccionado);
-  if (caja) {
-    this.cajaSeleccionada.emit(caja);
+  onCajaChange(event: Event) {
+    const target = event.target as HTMLSelectElement;
+    const idSeleccionado = parseInt(target.value, 10);
+    this.cajaSeleccionadaTemp = this.cajas.find(c => c.id_caja === idSeleccionado);
   }
-}
+
+  emitirCajaSeleccionada() {
+    if (this.cajaSeleccionadaTemp) {
+      this.cajaSeleccionada.emit(this.cajaSeleccionadaTemp);
+    }
+  }
 }
