@@ -312,7 +312,7 @@ public class CajaService {
         // Paso 2: Obtener el ID de la farmacia desde inventarios-service
         Integer idFarmacia = webClientInventario
                 .get()
-                .uri("/farmacia/nombre/{nombre}", nombreFarmacia)
+                .uri("/api/inventarios/farmacia/nombre/{nombre}", nombreFarmacia)
                 .retrieve()
                 .bodyToMono(Integer.class)
                 .block();
