@@ -24,18 +24,28 @@ export class FraccionamientoComponent implements OnInit {
   }
 
   cargarInventarios(): void {
-    this.inventarioService.getInventarioConProducto('maria.gonzalez@example.com').subscribe({
+    const emailUsuario = localStorage.getItem('email');
+
+    if (!emailUsuario) {
+      alert('No se encontró el usuario en localStorage');
+      return;
+    }
+
+    this.inventarioService.obtenerInventarios(emailUsuario).subscribe({
       next: (data: any[]) => {
         this.inventario = data;
       },
       error: (err) => {
         console.error('Error al cargar inventario:', err);
+        alert('Error al cargar inventario');
       }
     });
   }
 
 
-    onInventarioChange(): void {
+
+
+  onInventarioChange(): void {
       const id = Number(this.idSeleccionado); // asegura conversión explícita
 
       if (isNaN(id)) {
@@ -57,21 +67,29 @@ export class FraccionamientoComponent implements OnInit {
 
 
 
-    fraccionar(): void {
+  fraccionar(): void {
     if (!this.idSeleccionado || this.cantidadFraccionada <= 0 || !this.nuevoLote) {
       alert('Completa todos los campos');
+      return;
+    }
+
+    const emailUsuario = localStorage.getItem('email');
+    if (!emailUsuario) {
+      alert('No se encontró el usuario en localStorage');
       return;
     }
 
     const request: FraccionamientoRequest = {
       idInventario: this.idSeleccionado,
       cantidadFraccionada: this.cantidadFraccionada,
-      nuevoLote: this.nuevoLote
+      nuevoLote: this.nuevoLote,
+      emailUsuario: emailUsuario // <-- NUEVO
     };
 
     this.fraccionamientoService.fraccionar(request).subscribe({
-      next: (res) => alert('Fraccionamiento exitoso'),
+      next: () => alert('Fraccionamiento exitoso'),
       error: (err) => alert('Error en fraccionamiento: ' + err.message)
     });
   }
+
 }

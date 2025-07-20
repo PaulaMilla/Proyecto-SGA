@@ -375,6 +375,8 @@ public class InventarioService {
 
 
 
+
+
     @Transactional
     public void descontarStock(DescuentoStockRequest request) {
         Producto productoEntity = productoRepository.findById(request.getProductoId())
