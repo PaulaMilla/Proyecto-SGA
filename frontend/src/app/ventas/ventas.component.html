@@ -45,17 +45,13 @@
     <!-- PACIENTE -->
     <label for="paciente">Paciente</label>
     <select id="paciente" [(ngModel)]="venta.pacienteId" name="pacienteId" required>
-      <option *ngFor="let p of pacientes" [value]="p.id">
-        {{ p.nombre }}
-      </option>
+      <option *ngFor="let p of pacientes" [ngValue]="p.id">{{ p.nombre }}</option>
     </select>
 
     <!-- USUARIO -->
     <label for="usuario">Usuario</label>
     <select id="usuario" [(ngModel)]="venta.usuarioId" name="usuarioId" required>
-      <option *ngFor="let u of usuarios" [value]="u.id">
-        {{ u.nombre }}
-      </option>
+      <option *ngFor="let u of usuarios" [ngValue]="u.id">{{ u.nombre }}</option>
     </select>
 
     <!-- Lista de productos agregados -->
@@ -74,9 +70,7 @@
     <h3>Agregar Producto</h3>
     <label for="productoId">Producto</label>
     <select id="productoId" [(ngModel)]="nuevoDetalle.productoId" name="nuevoProductoId" required>
-      <option *ngFor="let prod of productos" [value]="prod.id">
-        {{ prod.nombre }}
-      </option>
+      <option *ngFor="let prod of productos" [ngValue]="prod.id">{{ prod.nombre }}</option>
     </select>
 
     <label for="cantidad">Cantidad</label>

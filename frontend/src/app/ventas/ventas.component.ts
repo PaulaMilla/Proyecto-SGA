@@ -146,12 +146,20 @@ export class VentasComponent implements OnInit {
   }
 
   agregarProducto(): void {
-    if (this.nuevoDetalle.productoId && this.nuevoDetalle.cantidad > 0) {
-      this.venta.detalles.push({ ...this.nuevoDetalle });
+    const productoId = this.nuevoDetalle.productoId;
+    const cantidad = this.nuevoDetalle.cantidad;
+  
+    if (productoId && cantidad > 0) {
+      this.venta.detalles.push({
+        productoId: Number(productoId),
+        cantidad: Number(cantidad)
+      });
       this.nuevoDetalle = { productoId: 0, cantidad: 1 };
+    } else {
+      alert('Selecciona un producto válido y una cantidad mayor a 0.');
     }
   }
-
+  
   eliminarProducto(i: number): void {
     this.detallesVenta.splice(i, 1);
     this.actualizarTotal();
@@ -202,16 +210,24 @@ export class VentasComponent implements OnInit {
   }
 
   guardarVenta(): void {
+    if (!this.venta.pacienteId || !this.venta.usuarioId) {
+      alert('Selecciona paciente y usuario');
+      return;
+    }
+  
     if (this.venta.detalles.length === 0) {
       alert('Agrega al menos un producto.');
       return;
     }
-    console.log('Venta a guardar: ', this.venta);
+  
+    console.log('Venta a guardar:', this.venta);
+  
     this.ventasService.registrarVenta(this.venta).subscribe(() => {
       alert('Venta guardada correctamente');
       this.venta = { pacienteId: 0, usuarioId: 0, detalles: [] };
       this.nuevoDetalle = { productoId: 0, cantidad: 1 };
       this.mostrarFormulario = false;
+      this.cargarVentas();
     });
   }
 
