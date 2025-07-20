@@ -26,7 +26,7 @@ public class Dispensacion {
     private LocalDate fechaDispensacion;
 
     @ManyToOne
-    @JoinColumn(name = "producto_id", referencedColumnName = "id")
+    @JoinColumn(name = "producto_id", referencedColumnName = "id_producto")
     private Producto producto;
 
     @ManyToOne
