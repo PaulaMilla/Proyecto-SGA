@@ -50,6 +50,10 @@ public class InventarioService {
         this.dispensacionRepository = dispensacionRepository;
     }
 
+    public List<Producto> listarTodos() {
+        return productoRepository.findAll();
+    }
+
     public void processPreciosFile(MultipartFile file) throws Exception {
         if (file.isEmpty()) throw new IllegalArgumentException("El archivo está vacío.");
 

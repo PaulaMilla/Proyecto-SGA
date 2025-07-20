@@ -85,7 +85,7 @@ export class VentasComponent implements OnInit {
   }
 
   cargarProductos(): void {
-    this.inventarioService.getProductosInfo().subscribe(data => this.productos = data);
+    this.inventarioService.getTodosProductos().subscribe(data => this.productos = data);
   }
 
   getNombreProducto(id: number): string {

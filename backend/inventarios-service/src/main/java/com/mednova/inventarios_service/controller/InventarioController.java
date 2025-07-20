@@ -39,6 +39,11 @@ public class InventarioController {
         return ResponseEntity.ok(inventarioService.getAllInventarios());
     }
 
+    @GetMapping("/productos")
+    public ResponseEntity<List<Producto>> listarProductos() {
+        return ResponseEntity.ok(inventarioService.listarTodos());
+    }
+
     // Endpoint para mostrar productos con formato legible
     @GetMapping("/productos-info")
     public ResponseEntity<String> getProductosInfo() {

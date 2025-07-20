@@ -12,6 +12,10 @@ export class InventarioService {
 
   constructor(private http: HttpClient) {}
 
+  getTodosProductos(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/productos`);
+  }
+
   getInventarioConProducto(emailUsuario: string): Observable<InventarioProducto[]> {
     let params = new HttpParams();
     params = params.append('emailUsuario', emailUsuario); // Nombre EXACTO del parámetro
