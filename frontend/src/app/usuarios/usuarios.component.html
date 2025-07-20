@@ -1,6 +1,6 @@
  <div class="formulario-usuario">
 <h2 class="titulo">Registrar Usuario</h2>
-  <form (ngSubmit)="guardarUsuario()" #form="ngForm" class="formulario">
+   <form (ngSubmit)="guardarUsuario()" #form="ngForm" class="formulario">
     <label for="nombre">Nombre</label>
     <input
       id="nombre"
@@ -74,9 +74,24 @@
   <div class="usuario-card" *ngFor="let u of usuarios">
     <p><strong>Nombre:</strong> {{ u.nombre }} {{ u.apellido }}</p>
     <p><strong>Correo:</strong> {{ u.correo }}</p>
-    <p><strong>Rol:</strong> {{ u.rol.nombre }}</p>
-    <p><strong>Estado:</strong> {{ u.estado }}</p>
-    <p><strong>Último acceso:</strong> {{ u.fechaUltimoAcceso | date: 'dd/MM/yyyy HH:mm' }}</p>
+    <!-- Selector de Estado -->
+    <td>
+      <select [(ngModel)]="u.estado">
+        <option value="Activo">Activo</option>
+        <option value="Inactivo">Inactivo</option>
+      </select>
+    </td>
+
+    <!-- Selector de Rol -->
+    <td>
+      <select [(ngModel)]="u.rol.id">
+        <option value="">Seleccione un rol</option>
+        <option [value]="1">ADMIN</option>
+        <option [value]="2">BODEGUERO</option>
+        <option [value]="3">FARMACEUTICO</option>
+        <option [value]="4">USUARIO</option>
+      </select>
+    </td>
 
     <div class="acciones">
       <button (click)="editarUsuario(u)">Editar</button>

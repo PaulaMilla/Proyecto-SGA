@@ -4,10 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.mednova.usuarios_service.dto.RolRequestDTO;
-import com.mednova.usuarios_service.dto.UsuarioLoginDTO;
-import com.mednova.usuarios_service.dto.UsuarioRequestDTO;
-import com.mednova.usuarios_service.dto.UsuarioResponseDTO;
+import com.mednova.usuarios_service.dto.*;
 import com.mednova.usuarios_service.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -63,6 +60,12 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<Usuario> crearUsuario(@RequestBody UsuarioRequestDTO usuarioDTO) {
         return ResponseEntity.ok(usuarioService.crearUsuario(usuarioDTO));
+    }
+
+    @PutMapping("/usuarios")
+    public ResponseEntity<Usuario> actualizarUsuario(@RequestBody UsuarioUpdateDTO dto) {
+        Usuario actualizado = usuarioService.actualizarUsuario(dto);
+        return ResponseEntity.ok(actualizado);
     }
 
     @PostMapping("/roles")

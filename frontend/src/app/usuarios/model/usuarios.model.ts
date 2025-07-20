@@ -27,4 +27,10 @@ export interface UsuarioRequestDTO {
   idRol: number;
 }
 
+export interface UsuarioUpdateDTO {
+  id: number;
+  estado: string;
+  idRol: number;
+}
+
 

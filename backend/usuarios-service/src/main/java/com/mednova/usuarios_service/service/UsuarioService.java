@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.mednova.usuarios_service.dto.RolRequestDTO;
 import com.mednova.usuarios_service.dto.UsuarioRequestDTO;
+import com.mednova.usuarios_service.dto.UsuarioUpdateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -66,6 +67,20 @@ public class UsuarioService {
         }
         return null;
     }
+
+    public Usuario actualizarUsuario(UsuarioUpdateDTO dto) {
+        Usuario usuario = usuarioRepository.findById(dto.getId())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + dto.getId()));
+
+        usuario.setEstado(dto.getEstado());
+
+        Rol rol = rolRepository.findById(dto.getIdRol())
+                .orElseThrow(() -> new RuntimeException("Rol no encontrado con ID: " + dto.getIdRol()));
+        usuario.setRol(rol);
+
+        return usuarioRepository.save(usuario);
+    }
+
 
     public void eliminarUsuario(Integer id) {
         usuarioRepository.deleteById(id);
