@@ -3,22 +3,22 @@
 
   <div class="form-group">
     <label for="inventario">Seleccionar inventario:</label>
-    <select [(ngModel)]="idSeleccionado">
+    <select [(ngModel)]="idSeleccionado" (change)="onInventarioChange()">
       <option [value]="null">-- Selecciona un inventario --</option>
-      <option *ngFor="let item of inventario" [value]="item.id_inventario">
-        {{ item.nombre }} (ID: {{ item.id_inventario }}) - Cantidad: {{ item.cantidad_disponible }}
+      <option *ngFor="let item of inventario" [value]="item.id">
+        {{ item.nombre }}
       </option>
     </select>
   </div>
 
   <div class="form-group">
     <label for="cantidad">Cantidad a fraccionar:</label>
-    <input type="number" [(ngModel)]="cantidadFraccionada" min="1">
+    <input type="number" [(ngModel)]="cantidadFraccionada" min="1" />
   </div>
 
   <div class="form-group">
-    <label for="nuevoLote">Nuevo lote:</label>
-    <input type="text" [(ngModel)]="nuevoLote">
+    <label for="nuevoLote">Nuevo Lote:</label>
+    <input type="text" [(ngModel)]="nuevoLote" readonly />
   </div>
 
   <button (click)="fraccionar()">Fraccionar</button>

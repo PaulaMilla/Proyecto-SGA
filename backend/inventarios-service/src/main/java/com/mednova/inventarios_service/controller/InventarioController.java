@@ -9,7 +9,6 @@ import com.mednova.inventarios_service.model.Producto;
 import com.mednova.inventarios_service.repository.ProductoRepository;
 import com.mednova.inventarios_service.service.InventarioService;
 
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -69,6 +68,13 @@ public class InventarioController {
                 .body("Error al obtener información de productos: " + e.getMessage());
         }
     }
+
+    @GetMapping("/listar-con-producto")
+    public ResponseEntity<List<InventarioProductoDTO>> listarInventarioConProducto(@RequestParam String email) {
+        List<InventarioProductoDTO> inventario = inventarioService.obtenerInventarioConProducto(email);
+        return ResponseEntity.ok(inventario);
+    }
+
 
     @GetMapping("/con-producto")
     public ResponseEntity<List<InventarioProductoDTO>> getInventarioConProducto(@RequestParam("emailUsuario") String emailUsuario) {

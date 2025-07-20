@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FraccionamientoService, FraccionamientoRequest } from './fraccionamiento.service';
 import { InventarioService } from '../../inventario/services/inventario.service';
 
 @Component({
@@ -13,41 +14,45 @@ export class FraccionamientoComponent implements OnInit {
   cantidadFraccionada: number = 0;
   nuevoLote: string = '';
 
-  constructor(private inventarioService: InventarioService) {}
+  constructor(
+    private fraccionamientoService: FraccionamientoService,
+    private inventarioService: InventarioService
+  ) {}
 
   ngOnInit(): void {
-    const email = localStorage.getItem('email') || '';
-    this.inventarioService.getInventarioConProducto(email).subscribe({
-      next: (data) => {
+    this.cargarInventarios();
+  }
+
+    cargarInventarios(): void {
+      this.inventarioService.obtenerInventarios().subscribe((data: any[]) => {
         this.inventario = data;
-      },
-      error: (error) => {
-        console.error('Error al cargar inventario', error);
-      }
-    });
+      });
+    }
+
+  onInventarioChange(): void {
+    if (this.idSeleccionado) {
+      const timestamp = new Date().getTime();
+      this.nuevoLote = `FRAC-${this.idSeleccionado}-${timestamp}`;
+    } else {
+      this.nuevoLote = '';
+    }
   }
 
   fraccionar(): void {
-    if (this.idSeleccionado === null || this.cantidadFraccionada <= 0 || this.nuevoLote.trim() === '') {
+    if (!this.idSeleccionado || this.cantidadFraccionada <= 0 || !this.nuevoLote) {
       alert('Completa todos los campos');
       return;
     }
 
-    const payload = {
+    const request: FraccionamientoRequest = {
       idInventario: this.idSeleccionado,
       cantidadFraccionada: this.cantidadFraccionada,
       nuevoLote: this.nuevoLote
     };
 
-    this.inventarioService.fraccionarInventario(payload).subscribe({
-      next: () => {
-        alert('Fraccionamiento realizado');
-        this.cantidadFraccionada = 0;
-        this.nuevoLote = '';
-      },
-      error: (err) => {
-        alert('Error al fraccionar: ' + err.error?.message || 'Error desconocido');
-      }
+    this.fraccionamientoService.fraccionar(request).subscribe({
+      next: (res) => alert('Fraccionamiento exitoso'),
+      error: (err) => alert('Error en fraccionamiento: ' + err.message)
     });
   }
 }

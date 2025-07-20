@@ -1,11 +1,10 @@
-package com.mednova.inventarios_service.dto;
+package com.mednova.fraccionamiento_service.dto;
 
 public class FraccionamientoRequest {
     private int idInventario;
     private int cantidadFraccionada;
     private String nuevoLote;
 
-    // Getters y setters     
     public int getIdInventario() {
         return idInventario;
     }
