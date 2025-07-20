@@ -9,6 +9,8 @@ import {InventarioService} from "../services/inventario.service";
 })
 export class InventarioInfoComponent implements OnInit {
   inventarioList: InventarioProducto[] = [];
+  ubicacionesUnicas: string[] = [];
+  inventarioPorUbicacion: { [ubicacion: string]: any[] } = {};
   loading = true;
 
   constructor(private inventarioService: InventarioService) {}
@@ -20,10 +22,21 @@ export class InventarioInfoComponent implements OnInit {
       this.loading = false;
       return;
     }
-  
+
     this.inventarioService.getInventarioConProducto(emailUsuario).subscribe({
       next: (data) => {
         this.inventarioList = data;
+
+        // Obtener ubicaciones únicas
+        const ubicaciones = [...new Set(data.map(item => item.ubicacion))];
+        this.ubicacionesUnicas = ubicaciones;
+
+        // Agrupar inventario por ubicación
+        this.inventarioPorUbicacion = {};
+        for (const ubicacion of ubicaciones) {
+          this.inventarioPorUbicacion[ubicacion] = data.filter(item => item.ubicacion === ubicacion);
+        }
+
         this.loading = false;
       },
       error: (err) => {
