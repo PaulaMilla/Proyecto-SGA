@@ -4,11 +4,12 @@
   <div class="form-group">
     <label for="inventario">Seleccionar inventario:</label>
     <select [(ngModel)]="idSeleccionado" (change)="onInventarioChange()">
-      <option [value]="null">-- Selecciona un inventario --</option>
-      <option *ngFor="let item of inventario" [value]="item.idInventario">
+      <option [ngValue]="null">-- Selecciona un inventario --</option>
+      <option *ngFor="let item of inventario" [ngValue]="item.idInventario">
         {{ item.producto.nombre }} - Stock: {{ item.stock }} - Lote: {{ item.lote }}
       </option>
     </select>
+
   </div>
 
 

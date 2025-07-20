@@ -35,7 +35,7 @@ export class FraccionamientoComponent implements OnInit {
   }
 
   onInventarioChange(): void {
-    const inventarioSeleccionado = this.inventario.find(i => i.id === Number(this.idSeleccionado));
+    const inventarioSeleccionado = this.inventario.find(i => i.idInventario === Number(this.idSeleccionado));
     if (inventarioSeleccionado) {
       const timestamp = new Date().getTime();
       this.nuevoLote = `FRAC-${inventarioSeleccionado.idInventario}-${timestamp}`;
@@ -43,6 +43,7 @@ export class FraccionamientoComponent implements OnInit {
       this.nuevoLote = '';
     }
   }
+
 
 
   fraccionar(): void {
