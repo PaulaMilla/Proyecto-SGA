@@ -86,6 +86,14 @@ public class VentaService {
         return ventaGuardada;
     }
 
+    public void marcarVentaComoPagada(int idVenta){
+        Venta venta = ventaRepository.findById(idVenta)
+                .orElseThrow(() -> new RuntimeException("No existe una venta con id: " + idVenta));
+
+        venta.setPagada(true);
+        ventaRepository.save(venta);
+    }
+
 
    /* public Venta registrarVenta(Venta venta, List<DetalleVenta> detalles) {
         double totalVenta = 0.0;

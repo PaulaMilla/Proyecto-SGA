@@ -72,6 +72,7 @@ public class CajaController {
                                                  @RequestParam MetodoPago metodo,
                                                  @RequestParam(required = false) String observacion) {
         PagoDTO dto = cajaService.registrarPago(turnoId, idVenta, monto, metodo, observacion);
+        cajaService.notificarVentaPagada(idVenta, monto);
         return ResponseEntity.ok(dto);
     }
 

@@ -1,6 +1,7 @@
 package com.mednova.ventas_service.controller;
 
 import com.mednova.ventas_service.dto.DetalleVentaDTO;
+import com.mednova.ventas_service.dto.NotificarVentaDTO;
 import com.mednova.ventas_service.dto.VentaConDetallesDTO;
 import com.mednova.ventas_service.model.DetalleVenta;
 import com.mednova.ventas_service.service.VentaService;
@@ -68,6 +69,13 @@ public class VentasController {
     public ResponseEntity<Void> eliminarVenta(@PathVariable int id) {
         ventaService.eliminarVentaConDetalles(id);
         return ResponseEntity.noContent().build();
+    }
+
+    //Notificar pago de venta
+    @PostMapping("/notificar-pago")
+    public ResponseEntity<Void> registrarPagoDesdeCaja(@RequestBody NotificarVentaDTO dto){
+        ventaService.marcarVentaComoPagada(dto.getIdVenta());
+        return ResponseEntity.ok().build();
     }
 
 }

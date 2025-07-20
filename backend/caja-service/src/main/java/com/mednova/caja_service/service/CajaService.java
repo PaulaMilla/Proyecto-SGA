@@ -23,10 +23,14 @@ public class CajaService {
     private final PagoRepository pagoRepo;
     private final WebClient webClientInventario;
     private final WebClient webClientUsuario;
+    private final WebClient webClientVenta;
+    private final WebClient webClientCompra;
 
-    public CajaService(WebClient.Builder builder, WebClient.Builder builder2, TurnoCajaRepository turnoCajaRepo, CajaRepository cajaRepo, MovimientoCajaRepository movimientoCajaRepo, PagoRepository pagoRepo) {
+    public CajaService(WebClient.Builder builder, WebClient.Builder builder2, WebClient.Builder builder3, WebClient.Builder builder4, TurnoCajaRepository turnoCajaRepo, CajaRepository cajaRepo, MovimientoCajaRepository movimientoCajaRepo, PagoRepository pagoRepo) {
         this.webClientInventario = builder.baseUrl("http://inventarios-service.inventarios.svc.cluster.local").build();
         this.webClientUsuario = builder2.baseUrl("http://usuarios-service.usuarios.svc.cluster.local").build();
+        this.webClientVenta = builder3.baseUrl("http://ventas-service.ventas.svc.cluster.local").build();
+        this.webClientCompra = builder4.baseUrl("http://compras-service.compras.svc.cluster.local").build();
         this.turnoCajaRepo = turnoCajaRepo;
         this.cajaRepo = cajaRepo;
         this.movimientoCajaRepo = movimientoCajaRepo;
@@ -160,6 +164,23 @@ public class CajaService {
 
         return dto;
 
+    }
+
+    public void notificarVentaPagada(int idVenta, BigDecimal monto){
+        NotificarVentaDTO dto = new NotificarVentaDTO();
+        dto.setIdVenta(idVenta);
+        dto.setMonto(monto);
+
+        try{
+            webClientVenta.post()
+                    .uri("/api/ventas/notificar-pago")
+                    .bodyValue(dto)
+                    .retrieve()
+                    .toBodilessEntity()
+                    .block();
+        }catch (Exception e){
+            throw new RuntimeException("Error al notificar pago a ventas-service: "+ e.getMessage());
+        }
     }
 
     public List<MovimientoCajaDTO> obtenerMovimientosPorTurno(int turnoId) {
