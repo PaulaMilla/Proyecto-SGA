@@ -1,7 +1,7 @@
 export interface VentaConNombresYDetalles {
   id: number;
   pacienteId: number;
-  usuarioId: number;
+  idUsuarioVendedor: number;
   fechaVenta: string;
   total: number;
   nombrePaciente: string;

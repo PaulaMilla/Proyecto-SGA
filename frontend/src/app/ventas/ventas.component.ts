@@ -74,14 +74,14 @@ export class VentasComponent implements OnInit {
         const ventaExtendida: VentaConNombresYDetalles = {
           id: v.id,
           pacienteId: v.pacienteId,
-          usuarioId: v.usuarioId,
+          idUsuarioVendedor: v.idUsuarioVendedor,
           fechaVenta: v.fechaVenta,
           total: v.total,
           nombrePaciente: '',
           nombreUsuario: '',
           detalles: []
         };
-
+        console.log('Venta extendida:', ventaExtendida);
         // Obtener nombres por ID
         this.ventasService.getPacientePorId(v.pacienteId).subscribe((p) => {
           ventaExtendida.nombrePaciente = p.nombre;
