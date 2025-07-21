@@ -15,6 +15,7 @@ public class UsuarioResponseDTO {
     private String nombreRol;
     private Date fechaCreacion;
     private Date fechaModificacion;
+    private Integer idRol;
 
     public UsuarioResponseDTO(Usuario usuario) {
         this.id = usuario.getId();
@@ -25,6 +26,7 @@ public class UsuarioResponseDTO {
         this.nombreFarmacia = usuario.getNombre_farmacia();
         this.fechaCreacion = usuario.getFechaCreacion();
         this.fechaModificacion = usuario.getFechaModificacion();
+        this.idRol = usuario.getRol().getId_rol();
 
         // Si el rol no es null, obtenemos su nombre
         if (usuario.getRol() != null) {

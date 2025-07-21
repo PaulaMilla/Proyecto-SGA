@@ -43,11 +43,14 @@ export class UsuariosComponent implements OnInit {
   }
 
   cargarUsuarios(): void {
-    this.usuarioService.obtenerUsuarios().subscribe({
-      next: (data) => this.usuarios = data,
-      error: (err) => console.error('Error al cargar usuarios:', err)
+    this.usuarioService.obtenerTodas().subscribe({
+      next: (data: Usuario[]) => {
+        this.usuarios = data;
+      },
+      error: err => console.error('Error al cargar usuarios:', err)
     });
   }
+
 
   cargarRoles(): void {
     this.usuarioService.obtenerRoles().subscribe({
@@ -84,21 +87,24 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
-  editarUsuario(usuario: any): void {
+  editarUsuario(usuario: Usuario): void {
+    if (!usuario.idRol) {
+      alert('Debe seleccionar un rol válido.');
+      return;
+    }
+
     const dto: UsuarioUpdateDTO = {
       id: usuario.id,
       estado: usuario.estado,
-      idRol: usuario.rol.id // O usuario.rol si solo tienes el ID directo
+      idRol: usuario.idRol
     };
 
     this.usuarioService.actualizar(dto).subscribe({
       next: () => {
         console.log('Usuario actualizado');
-        this.cargarUsuarios(); // Recarga la lista completa
+        this.cargarUsuarios();
       },
-      error: err => {
-        console.error('Error al actualizar usuario:', err);
-      }
+      error: err => console.error('Error al actualizar usuario:', err)
     });
   }
 

@@ -13,6 +13,7 @@ export interface Usuario {
   nombreRol: string;
   fechaCreacion?: Date;
   fechaModificacion?: Date;
+  idRol: number;
 }
 
 export interface UsuarioRequestDTO {
