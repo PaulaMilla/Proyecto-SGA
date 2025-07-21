@@ -91,8 +91,8 @@ export class InformesComponent implements OnInit{
 
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(productosOrdenados);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Mayor Movimiento');
-    XLSX.writeFile(wb, 'productos_mas_vendidos.xlsx');
+    XLSX.utils.book_append_sheet(wb, ws, 'Menor Movimiento');
+    XLSX.writeFile(wb, 'productos_menos_vendidos.xlsx');
   }
 
   cargarVentas(): void {
