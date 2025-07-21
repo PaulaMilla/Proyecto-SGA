@@ -99,60 +99,6 @@ public class VentaService {
     }
 
 
-   /* public Venta registrarVenta(Venta venta, List<DetalleVenta> detalles) {
-        double totalVenta = 0.0;
-
-        for (DetalleVenta detalle : detalles) {
-            // Obtener datos del producto
-            ProductoDTO producto = productoService.getProducto(detalle.getProductoId());
-
-            // Calcular subtotal
-            double subtotal = detalle.getCantidad() * producto.getPrecio_unitario();
-
-            // Rellenar precios
-            detalle.setPrecioUnitario(producto.getPrecio_unitario());
-            detalle.setSubtotal(subtotal);
-
-            totalVenta += subtotal;
-        }
-
-        venta.setTotal(totalVenta);
-        venta.setFechaVenta(LocalDate.now());
-
-        // Guardar venta
-        Venta ventaGuardada = ventaRepository.save(venta);
-
-        // Guardar detalle con ventaId
-        for (DetalleVenta detalle : detalles) {
-            detalle.setVentaId(ventaGuardada.getId());
-            detalleVentaRepository.save(detalle);
-        }
-
-        return ventaGuardada;
-    }*/
-
-  /**  public Venta registrarVenta(Venta venta){
-        Venta ventaGuardada = ventaRepository.save(venta);
-        return ventaGuardada;
-    }
-
-
-    public Venta registrarVenta(Venta venta, List<DetalleVenta> detalles) {
-        // 1. Guardar venta
-        Venta ventaGuardada = ventaRepository.save(venta);
-
-        // 2. Procesar detalles de venta
-        for (DetalleVenta detalle : detalles) {
-            detalle.setVentaId(ventaGuardada.getId());
-            detalleVentaRepository.save(detalle);
-
-            // 3. Descontar stock llamando a inventarios-service
-            descontarStock(detalle.getProductoId(), detalle.getCantidad());
-        }
-
-        return ventaGuardada;
-    }**/
-
     public List<Venta> listarTodas() {
         return ventaRepository.findAll();
     }
