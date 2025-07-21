@@ -1,5 +1,6 @@
 package com.mednova.compras_service.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -12,8 +13,8 @@ public class DetalleCompra {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "compra_id")
+    @ManyToOne
+    @JsonBackReference
     private Compra compra;
 
     @Column(nullable = false)

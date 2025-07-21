@@ -1,5 +1,6 @@
 package com.mednova.compras_service.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -36,7 +37,8 @@ public class Compra {
     @Column(nullable = false)
     private EstadoCompra estado;
 
-    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<DetalleCompra> detalles = new ArrayList<>();
 
     private String observacion;
