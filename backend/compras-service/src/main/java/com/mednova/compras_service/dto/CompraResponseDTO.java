@@ -1,53 +1,24 @@
-package com.mednova.compras_service.model;
+package com.mednova.compras_service.dto;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
+import com.mednova.compras_service.model.EstadoCompra;
+import com.mednova.compras_service.model.TipoDocumento;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name="compras")
-public class Compra {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CompraResponseDTO {
     private int id;
-
-    @Column(nullable = false, unique = true)
     private String numeroDocumento;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private TipoDocumento tipo;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "proveedor_id", nullable = false)
-    private Proveedor proveedor;
-
-    @Column(nullable = false)
+    private int proveedorId;
+    private String proveedorNombre;
     private LocalDate fechaCompra;
-
-    @Column(precision = 10, scale = 2, nullable = false)
     private BigDecimal total;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private EstadoCompra estado;
-
-    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<DetalleCompra> detalles = new ArrayList<>();
-
     private String observacion;
-
-    @Column(name = "ruta_documento")
     private String rutaDocumento;
-
-    // Getters, Setters, Constructor vacío
-    public Compra() {}
+    private List<DetalleCompraResponseDTO> detalles;
 
     public int getId() {
         return id;
@@ -73,12 +44,20 @@ public class Compra {
         this.tipo = tipo;
     }
 
-    public Proveedor getProveedor() {
-        return proveedor;
+    public int getProveedorId() {
+        return proveedorId;
     }
 
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
+    public void setProveedorId(int proveedorId) {
+        this.proveedorId = proveedorId;
+    }
+
+    public String getProveedorNombre() {
+        return proveedorNombre;
+    }
+
+    public void setProveedorNombre(String proveedorNombre) {
+        this.proveedorNombre = proveedorNombre;
     }
 
     public LocalDate getFechaCompra() {
@@ -105,14 +84,6 @@ public class Compra {
         this.estado = estado;
     }
 
-    public List<DetalleCompra> getDetalles() {
-        return detalles;
-    }
-
-    public void setDetalles(List<DetalleCompra> detalles) {
-        this.detalles = detalles;
-    }
-
     public String getObservacion() {
         return observacion;
     }
@@ -129,5 +100,11 @@ public class Compra {
         this.rutaDocumento = rutaDocumento;
     }
 
+    public List<DetalleCompraResponseDTO> getDetalles() {
+        return detalles;
+    }
 
+    public void setDetalles(List<DetalleCompraResponseDTO> detalles) {
+        this.detalles = detalles;
+    }
 }

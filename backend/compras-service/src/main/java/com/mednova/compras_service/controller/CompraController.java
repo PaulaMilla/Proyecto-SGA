@@ -1,7 +1,11 @@
 package com.mednova.compras_service.controller;
 
 import com.mednova.compras_service.dto.CompraDTO;
+import com.mednova.compras_service.dto.CompraResponseDTO;
+import com.mednova.compras_service.dto.DetalleCompraDTO;
+import com.mednova.compras_service.dto.DetalleCompraResponseDTO;
 import com.mednova.compras_service.model.Compra;
+import com.mednova.compras_service.model.DetalleCompra;
 import com.mednova.compras_service.model.Proveedor;
 import com.mednova.compras_service.service.CompraService;
 import org.springframework.http.HttpStatus;
@@ -12,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/compras")
@@ -57,9 +62,49 @@ public class CompraController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Compra>> listarCompras() {
-        return ResponseEntity.ok(compraService.listarCompras());
+    public ResponseEntity<List<CompraResponseDTO>> listarCompras() {
+        List<Compra> compras = compraService.listarCompras();
+
+        List<CompraResponseDTO> compraDTOs = compras.stream()
+                .map(this::mapToResponseDTO)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(compraDTOs);
     }
+
+    private CompraResponseDTO mapToResponseDTO(Compra compra) {
+        CompraResponseDTO dto = new CompraResponseDTO();
+        dto.setId(compra.getId());
+        dto.setNumeroDocumento(compra.getNumeroDocumento());
+        dto.setTipo(compra.getTipo());
+        dto.setProveedorId(compra.getProveedor().getId());
+        dto.setProveedorNombre(compra.getProveedor().getNombre());
+        dto.setFechaCompra(compra.getFechaCompra());
+        dto.setTotal(compra.getTotal());
+        dto.setEstado(compra.getEstado());
+        dto.setObservacion(compra.getObservacion());
+        dto.setRutaDocumento(compra.getRutaDocumento());
+
+        List<DetalleCompraResponseDTO> detalles = compra.getDetalles().stream()
+                .map(this::mapDetalleToResponseDTO)
+                .collect(Collectors.toList());
+
+        dto.setDetalles(detalles);
+        return dto;
+    }
+
+    private DetalleCompraResponseDTO mapDetalleToResponseDTO(DetalleCompra d) {
+        DetalleCompraResponseDTO dto = new DetalleCompraResponseDTO();
+        dto.setProductoId(d.getProductoId());
+        dto.setCantidad(d.getCantidad());
+        dto.setPrecioUnitario(d.getPrecioUnitario());
+        dto.setSubtotal(d.getSubtotal());
+        dto.setLote(d.getLote());
+        dto.setFechaVencimiento(d.getFechaVencimiento());
+        dto.setBodegaId(d.getBodegaId());
+        return dto;
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Compra> obtenerCompraPorId(@PathVariable int id) {
