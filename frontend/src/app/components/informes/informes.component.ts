@@ -61,6 +61,39 @@ export class InformesComponent implements OnInit{
     XLSX.writeFile(wb, 'productos_mas_vendidos.xlsx');
   }
 
+  exportarProductosMenosVendidos(): void {
+    if (!this.ventas || this.ventas.length === 0) {
+      console.warn('No hay ventas disponibles para exportar.');
+      return;
+    }
+
+    const resumen: { [id: number]: ProductoResumen } = {};
+
+    for (const venta of this.ventas) {
+      if (!Array.isArray(venta.detalles)) continue;
+      for (const detalle of venta.detalles) {
+        const id = detalle.productoId;
+        if (!resumen[id]) {
+          resumen[id] = {
+            productoId: id,
+            nombreProducto: detalle.nombreProducto,
+            precioUnitario: detalle.precioUnitario,
+            cantidadVendida: 0
+          };
+        }
+        resumen[id].cantidadVendida += detalle.cantidad;
+      }
+    }
+
+    const productosOrdenados = Object.values(resumen).sort(
+      (a, b) => a.cantidadVendida - b.cantidadVendida
+    );
+
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(productosOrdenados);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Mayor Movimiento');
+    XLSX.writeFile(wb, 'productos_mas_vendidos.xlsx');
+  }
 
   cargarVentas(): void {
     this.ventasService.obtenerTodas().subscribe((ventas: any[]) => {
