@@ -494,6 +494,11 @@ public class InventarioService {
         Farmacia farmacia = farmaciaRepository.findById(dto.getFarmaciaId())
                 .orElseThrow(() -> new RuntimeException("Farmacia no encontrada con ID: " + dto.getFarmaciaId()));
 
+        //actualizar laboratorio
+        if (dto.getNombreProveedor() != null && !dto.getNombreProveedor().isBlank()) {
+            producto.setLaboratorio(dto.getNombreProveedor());
+            productoRepository.save(producto);
+        }
         Inventario inventario = new Inventario();
         inventario.setProducto(producto);
         inventario.setCantidad_disponible(dto.getCantidadDisponible());

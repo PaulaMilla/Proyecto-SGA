@@ -7,6 +7,7 @@ public class InventarioDTO {
     private String fechaVencimiento;
     private String ubicacion;
     private Integer farmaciaId;
+    private String proveedorNombre;
 
     public InventarioDTO() {}
 
@@ -57,5 +58,13 @@ public class InventarioDTO {
 
     public void setFarmaciaId(Integer farmaciaId) {
         this.farmaciaId = farmaciaId;
+    }
+
+    public String getProveedorNombre() {
+        return proveedorNombre;
+    }
+
+    public void setProveedorNombre(String proveedorNombre) {
+        this.proveedorNombre = proveedorNombre;
     }
 }

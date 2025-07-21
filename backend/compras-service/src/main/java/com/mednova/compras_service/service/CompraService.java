@@ -52,6 +52,7 @@ public class CompraService {
             dto.setFechaVencimiento(detalle.getFechaVencimiento().toString());
             dto.setUbicacion(bodega);
             dto.setFarmaciaId(idFarmacia);
+            dto.setProveedorNombre(compra.getProveedor().getNombre());
 
             agregarStockDesdeCompra(dto);
         }
