@@ -8,6 +8,7 @@ import { Compra } from './model/compra.model';
 })
 export class ComprasService {
   private baseUrl = 'http://34.61.182.228/api/compras';
+  private usuarioUrl = 'http://34.61.182.228/api/usuarios';
 
   constructor(private http: HttpClient) {}
 
@@ -26,5 +27,9 @@ export class ComprasService {
 
   getProveedores(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/proveedores`);
+  }
+
+  getNombreFarmaciaPorEmail(email: string): Observable<string> {
+    return this.http.get(`${this.usuarioUrl}/nombre-farmacia/${email}`, { responseType: 'text' });
   }
 }

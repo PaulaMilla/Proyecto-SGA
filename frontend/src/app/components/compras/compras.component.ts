@@ -31,11 +31,26 @@ export class ComprasComponent {
   ) {}
 
   ngOnInit(): void {
+    this.definirIdFarmacia();
     this.cargarProveedores();
     this.cargarProductos();
     this.agregarDetalle(); // para iniciar con un producto vacío
   }
-
+  
+  definirIdFarmacia(): void{
+    const email = localStorage.getItem('email');
+    if (!email) return;
+  
+    this.comprasService.getNombreFarmaciaPorEmail(email).subscribe({
+      next: nombre => {
+        this.inventariosService.getIdFarmaciaPorNombre(nombre).subscribe({
+          next: id => this.compra.farmaciaId = id,
+          error: () => console.warn('No se pudo obtener ID de farmacia')
+        });
+      },
+      error: () => console.warn('No se pudo obtener nombre de farmacia')
+    });
+  }
   cargarProveedores(): void {
     this.comprasService.getProveedores().subscribe(data => this.proveedores = data);
   }
