@@ -21,7 +21,6 @@ public class DispersionService {
     }
 
     public ResponseEntity<String> dispersar(DispersionRequest request) {
-        // Llamada al microservicio de inventarios
         String url = "http://inventarios-service/api/inventarios/descontar";
 
         HttpHeaders headers = new HttpHeaders();
@@ -30,14 +29,17 @@ public class DispersionService {
 
         ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
 
-        // Guardar localmente
-        Dispersion dispersion = new Dispersion(
-                request.getIdInventario(),
-                request.getCantidad(),
-                request.getEmailUsuario()
-        );
-        dispersionRepository.save(dispersion);
+        if (response.getStatusCode().is2xxSuccessful()) {
+            Dispersion dispersion = new Dispersion(
+                    request.getIdInventario(),
+                    request.getCantidad(),
+                    request.getEmailUsuario()
+            );
+            dispersionRepository.save(dispersion);
+        }
 
         return response;
     }
+
 }
+

@@ -29,13 +29,16 @@ export class DispersarMedicamentoComponent implements OnInit {
     }
 
     this.inventarioService.obtenerInventarios(email).subscribe({
-      next: (data) => this.inventario = data,
+      next: (data) => {
+        this.inventario = data.filter(item => item.cantidad_disponible > 0);
+      },
       error: (err) => {
         console.error('Error al cargar inventarios:', err);
         alert('Error al cargar inventarios');
       }
     });
   }
+
 
   dispersar(): void {
     if (!this.idSeleccionado || this.cantidad <= 0) {
