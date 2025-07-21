@@ -18,6 +18,7 @@ import { FraccionamientoComponent } from './components/fraccionamiento/fracciona
 import {DispersarMedicamentoComponent} from "./components/dispersar-medicamento/dispersar-medicamento.component";
 import { CajaComponent } from './components/caja/caja.component';
 import { ComprasComponent } from './components/compras/compras.component';
+import {InformesComponent} from "./components/informes/informes.component";
 
 const routes: Routes = [
   { path: '', component: MenuPrincipalComponent }, // CAMBIADO: ahora el inicio es público
@@ -37,7 +38,8 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
   { path: 'pacientes/listado', component: ListadoComponent, canActivate: [authGuard] },
   {path: 'caja', component: CajaComponent, canActivate: [authGuard]},
-  {path: 'compras', component: ComprasComponent, canActivate: [authGuard]}
+  {path: 'compras', component: ComprasComponent, canActivate: [authGuard]},
+  {path: 'informes', component: InformesComponent, canActivate: [authGuard]}
 ];
 
 @NgModule({
