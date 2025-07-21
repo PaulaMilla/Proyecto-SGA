@@ -1,16 +1,19 @@
-<div class="container">
+<div class="dispersar-formulario">
   <h2>Dispersar Medicamento</h2>
 
-  <label for="inventario">Seleccionar Inventario:</label>
-  <select [(ngModel)]="idSeleccionado" id="inventario" class="form-control">
-    <option *ngFor="let item of inventario" [value]="item.id">{{ item.producto.nombre }} - Lote: {{ item.lote }}</option>
-  </select>
+  <div class="form-group">
+    <label for="inventario">Seleccionar inventario:</label>
+    <select [(ngModel)]="idSeleccionado" id="inventario">
+      <option *ngFor="let item of inventario" [value]="item.id_inventario">
+        {{ item.producto.nombre }} - {{ item.lote }} (Stock: {{ item.stock }})
+      </option>
+    </select>
+  </div>
 
-  <label for="cantidad">Cantidad a dispersar:</label>
-  <input type="number" [(ngModel)]="cantidad" class="form-control" id="cantidad" />
+  <div class="form-group">
+    <label for="cantidad">Cantidad a dispersar:</label>
+    <input type="number" id="cantidad" [(ngModel)]="cantidad" min="1">
+  </div>
 
-  <label for="rut">RUT del paciente:</label>
-  <input type="text" [(ngModel)]="rutPaciente" class="form-control" id="rut" />
-
-  <button (click)="dispersar()" class="btn btn-primary mt-3">Dispersar</button>
+  <button (click)="dispersar()">Dispersar</button>
 </div>

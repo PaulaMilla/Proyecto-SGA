@@ -29,9 +29,9 @@ export class DashboardComponent {
       ruta: '/fraccionamiento'
     },
     {
-      icon: '🧾',
-      titulo: 'Dispensaciones hoy',
-      descripcion: 'Cuántas recetas se atendieron hoy',
+      icon: '💉',
+      titulo: 'Dispersión de medicamentos',
+      descripcion: 'Formulario para entregar medicamentos a pacientes',
       ruta: '/dispersar'
     },
     {

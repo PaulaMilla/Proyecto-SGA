@@ -11,7 +11,6 @@ export class DispersarMedicamentoComponent implements OnInit {
   inventario: any[] = [];
   idSeleccionado: number | null = null;
   cantidad: number = 0;
-  rutPaciente: string = '';
 
   constructor(
     private inventarioService: InventarioService,
@@ -39,7 +38,7 @@ export class DispersarMedicamentoComponent implements OnInit {
   }
 
   dispersar(): void {
-    if (!this.idSeleccionado || this.cantidad <= 0 || !this.rutPaciente) {
+    if (!this.idSeleccionado || this.cantidad <= 0) {
       alert('Completa todos los campos');
       return;
     }
@@ -52,8 +51,7 @@ export class DispersarMedicamentoComponent implements OnInit {
 
     const request = {
       idInventario: this.idSeleccionado,
-      cantidadDispersada: this.cantidad,
-      rutPaciente: this.rutPaciente,
+      cantidad: this.cantidad,
       emailUsuario: email
     };
 
