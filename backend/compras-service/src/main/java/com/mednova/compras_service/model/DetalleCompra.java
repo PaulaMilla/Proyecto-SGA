@@ -13,7 +13,8 @@ public class DetalleCompra {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "compra_id")
     @JsonBackReference
     private Compra compra;
 
