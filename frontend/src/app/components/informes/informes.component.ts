@@ -32,6 +32,7 @@ export class InformesComponent implements OnInit{
       const resumen: { [id: number]: ProductoResumen } = {};
 
       for (const venta of ventas) {
+        if (!Array.isArray(venta.detalles)) continue;
         for (const detalle of venta.detalles) {
           const id = detalle.productoId;
           if (!resumen[id]) {
