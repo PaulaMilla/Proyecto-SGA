@@ -1,28 +1,16 @@
-<h2>Dispersar Medicamento</h2>
+<div class="container">
+  <h2>Dispersar Medicamento</h2>
 
-<form [formGroup]="form" (ngSubmit)="dispersar()">
-  <div>
-    <label>ID Producto:</label>
-    <input formControlName="idProducto" type="number" required>
-  </div>
+  <label for="inventario">Seleccionar Inventario:</label>
+  <select [(ngModel)]="idSeleccionado" id="inventario" class="form-control">
+    <option *ngFor="let item of inventario" [value]="item.id">{{ item.producto.nombre }} - Lote: {{ item.lote }}</option>
+  </select>
 
-  <div>
-    <label>Cantidad a dispersar:</label>
-    <input formControlName="cantidad" type="number" required>
-  </div>
+  <label for="cantidad">Cantidad a dispersar:</label>
+  <input type="number" [(ngModel)]="cantidad" class="form-control" id="cantidad" />
 
-  <div>
-    <label>RUT Paciente:</label>
-    <input formControlName="rutPaciente" type="text" required>
-  </div>
+  <label for="rut">RUT del paciente:</label>
+  <input type="text" [(ngModel)]="rutPaciente" class="form-control" id="rut" />
 
-  <div>
-    <label>Nombre Paciente:</label>
-    <input formControlName="nombrePaciente" type="text" required>
-  </div>
-
-  <button type="submit" [disabled]="form.invalid || cantidadInvalida">Dispersar</button>
-</form>
-
-<div *ngIf="mensaje" style="color: green;">{{ mensaje }}</div>
-<div *ngIf="error" style="color: red;">{{ error }}</div>
+  <button (click)="dispersar()" class="btn btn-primary mt-3">Dispersar</button>
+</div>
