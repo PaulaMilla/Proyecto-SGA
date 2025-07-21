@@ -84,7 +84,7 @@
   <div class="usuario-card" *ngFor="let u of usuarios">
     <h3>{{ u.nombre }} {{ u.apellido }}</h3>
     <p><strong>Correo:</strong> {{ u.correo }}</p>
-    <p><strong>Rol:</strong> {{ u.rol?.nombre }}</p>
+    <p><strong>Rol:</strong> {{ u.nombreRol }}</p>
     <p><strong>Estado:</strong> {{ u.estado }}</p>
     <p><strong>Farmacia:</strong> {{ u.nombre_farmacia }}</p>
 
@@ -97,11 +97,11 @@
         <option value="Inactivo">Inactivo</option>
       </select>
     </p>
-    <p><strong>Rol:  </strong>
-      <select [(ngModel)]="u.rol.id">
+    <!--<p><strong>Rol:  </strong>
+      <select [(ngModel)]="rol.id">
         <option *ngFor="let r of roles" [value]="r.id">{{ r.nombre }}</option>
       </select>
-    </p>
+    </p>-->
 
     <br>
 

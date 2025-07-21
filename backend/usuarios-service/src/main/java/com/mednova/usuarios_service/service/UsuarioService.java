@@ -4,10 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.mednova.usuarios_service.dto.RolDTO;
-import com.mednova.usuarios_service.dto.RolRequestDTO;
-import com.mednova.usuarios_service.dto.UsuarioRequestDTO;
-import com.mednova.usuarios_service.dto.UsuarioUpdateDTO;
+import com.mednova.usuarios_service.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -68,6 +65,13 @@ public class UsuarioService {
             return usuarioRepository.save(usuarioExistente);
         }
         return null;
+    }
+
+    public List<UsuarioResponseDTO> obtenerTodosLosUsuarios() {
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        return usuarios.stream()
+                .map(UsuarioResponseDTO::new)
+                .collect(Collectors.toList());
     }
 
     public List<String> obtenerNombresDeFarmacias() {

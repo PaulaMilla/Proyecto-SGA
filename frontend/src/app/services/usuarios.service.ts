@@ -56,6 +56,10 @@ export class UsuariosService {
       return this.http.get<Usuario[]>(`${this.apiUrl}`);
     }
 
+  obtenerUsuarios(): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${this.apiUrl}/response`);
+  }
+
   obtenerRoles():Observable<Rol[]> {
     return this.http.get<Rol[]>(`${this.apiUrl}/roles`);
   }

@@ -9,12 +9,10 @@ export interface Usuario {
   apellido: string;
   correo: string;
   estado: string;
+  nombre_farmacia: string;
+  nombreRol: string;
   fechaCreacion?: Date;
   fechaModificacion?: Date;
-  fechaUltimoAcceso?: Date;
-  password: string;
-  rol: Rol;
-  nombre_farmacia: string;
 }
 
 export interface UsuarioRequestDTO {

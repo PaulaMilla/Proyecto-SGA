@@ -43,16 +43,8 @@ export class UsuariosComponent implements OnInit {
   }
 
   cargarUsuarios(): void {
-    this.usuarioService.obtenerTodas().subscribe({
-      next: (data) => {
-        this.usuarios = data;
-        // Asegurar que todos los usuarios tengan rol definido
-        this.usuarios.forEach(u => {
-          if (!u.rol) {
-            u.rol = { id: 0, nombre: 'Sin Rol' };
-          }
-        });
-      },
+    this.usuarioService.obtenerUsuarios().subscribe({
+      next: (data) => this.usuarios = data,
       error: (err) => console.error('Error al cargar usuarios:', err)
     });
   }
@@ -109,25 +101,6 @@ export class UsuariosComponent implements OnInit {
       }
     });
   }
-
-  actualizarUsuario(): void {
-    if (this.usuarioEditando) {
-      const dto = {
-        id: this.usuarioEditando.id,
-        estado: this.usuarioEditando.estado,
-        idRol: this.usuarioEditando.rol.id,
-      };
-
-      this.usuarioService.actualizar(dto).subscribe({
-        next: () => {
-          this.cargarUsuarios();
-          this.usuarioEditando = null;
-        },
-        error: err => console.error('Error al actualizar:', err)
-      });
-    }
-  }
-
 
   eliminarUsuario(id: number): void {
     if (confirm('¿Estás seguro de eliminar este usuario?')) {

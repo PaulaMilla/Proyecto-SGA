@@ -42,6 +42,12 @@ public class UsuarioController {
         return ResponseEntity.ok(dtos);
     }
 
+    @GetMapping("/response")
+    public ResponseEntity<List<UsuarioResponseDTO>> obtenerUsuarios() {
+        List<UsuarioResponseDTO> usuarios = usuarioService.obtenerTodosLosUsuarios();
+        return ResponseEntity.ok(usuarios);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Usuario>> obtenerPorId(@PathVariable Integer id) {
         return ResponseEntity.ok(usuarioService.obtenerPorId(id));
