@@ -39,7 +39,8 @@ const routes: Routes = [
   { path: 'pacientes/listado', component: ListadoComponent, canActivate: [authGuard] },
   {path: 'caja', component: CajaComponent, canActivate: [authGuard]},
   {path: 'compras', component: ComprasComponent, canActivate: [authGuard]},
-  {path: 'informes', component: InformesComponent, canActivate: [authGuard]}
+  {path: 'informes', component: InformesComponent, canActivate: [authGuard]},
+  {path: 'carga-documentos-compra', component: CargaDatosComponent, canActivate: [authGuard]}
 ];
 
 @NgModule({

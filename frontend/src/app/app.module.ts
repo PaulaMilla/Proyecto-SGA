@@ -35,6 +35,7 @@ import { EstadoCajaComponent } from './components/caja/estado-caja/estado-caja.c
 import { RegistrarPagoComponent } from './components/caja/registrar-pago/registrar-pago.component';
 import { RegistrarMovimientoComponent } from './components/caja/registrar-movimiento/registrar-movimiento.component';
 import { ListadoMovimientoComponent } from './components/caja/listado-movimiento/listado-movimiento.component';
+import { CargaDocumentosCompraComponent } from './components/carga-documentos-compra/carga-documentos-compra.component';
 
 
 
@@ -68,7 +69,8 @@ import { ListadoMovimientoComponent } from './components/caja/listado-movimiento
     EstadoCajaComponent,
     RegistrarPagoComponent,
     RegistrarMovimientoComponent,
-    ListadoMovimientoComponent
+    ListadoMovimientoComponent,
+    CargaDocumentosCompraComponent
 
 
   ],

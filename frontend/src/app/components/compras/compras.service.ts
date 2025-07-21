@@ -32,4 +32,14 @@ export class ComprasService {
   getNombreFarmaciaPorEmail(email: string): Observable<string> {
     return this.http.get(`${this.usuarioUrl}/nombre-farmacia/${email}`, { responseType: 'text' });
   }
+
+  getCompras(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}`);
+  }
+  
+  subirDocumento(compraId: number, archivo: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', archivo);
+    return this.http.post(`${this.baseUrl}/${compraId}/documento`, formData);
+  }
 }

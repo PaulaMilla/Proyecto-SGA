@@ -1,0 +1,22 @@
+<div class="container mt-4">
+  <h4 style="color: #004d40;">Cargar Factura o Guía de Despacho</h4>
+
+  <div class="mb-3">
+    <label>Seleccionar compra</label>
+    <select class="form-select" [(ngModel)]="selectedCompraId">
+      <option [ngValue]="null">Seleccione una compra</option>
+      <option *ngFor="let c of compras" [ngValue]="c.id">
+        {{ c.numeroDocumento }} - {{ c.tipo }} ({{ c.fechaCompra }})
+      </option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label>Seleccionar archivo</label>
+    <input type="file" class="form-control" (change)="onFileSelected($event)" accept=".pdf,.xml,.jpg,.png">
+  </div>
+
+  <button class="btn" style="background-color: #004d40; color: white;" (click)="subirDocumento()">
+    Subir o Reemplazar Documento
+  </button>
+</div>
