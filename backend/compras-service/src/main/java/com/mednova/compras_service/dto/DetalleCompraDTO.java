@@ -9,7 +9,7 @@ public class DetalleCompraDTO {
     private BigDecimal precioUnitario;
     private String lote;
     private LocalDate fechaVencimiento;
-
+    private String nombreProveedor;
     //Getters y setters
 
 
@@ -51,5 +51,13 @@ public class DetalleCompraDTO {
 
     public void setFechaVencimiento(LocalDate fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
+    }
+
+    public String getNombreProveedor() {
+        return nombreProveedor;
+    }
+
+    public void setNombreProveedor(String nombreProveedor) {
+        this.nombreProveedor = nombreProveedor;
     }
 }
