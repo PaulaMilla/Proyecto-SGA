@@ -42,14 +42,25 @@ public class UsuarioController {
         return ResponseEntity.ok(dtos);
     }
 
+    @GetMapping("/response")
+    public ResponseEntity<List<UsuarioResponseDTO>> obtenerUsuarios() {
+        List<UsuarioResponseDTO> usuarios = usuarioService.obtenerTodosLosUsuarios();
+        return ResponseEntity.ok(usuarios);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Usuario>> obtenerPorId(@PathVariable Integer id) {
         return ResponseEntity.ok(usuarioService.obtenerPorId(id));
     }
 
     @GetMapping("/roles")
-    public ResponseEntity<List<Rol>> listarRoles() {
-        return ResponseEntity.ok(usuarioService.listarRoles());
+    public List<RolDTO> listarRoles() {
+        return usuarioService.obtenerTodosLosRoles();
+    }
+
+    @GetMapping("/farmacias")
+    public ResponseEntity<List<String>> obtenerNombresDeFarmacias() {
+        return ResponseEntity.ok(usuarioService.obtenerNombresDeFarmacias());
     }
 
     @GetMapping("/permisos")
@@ -149,6 +160,6 @@ public class UsuarioController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarUsuario(@PathVariable Integer id) {
         usuarioService.eliminarUsuario(id);
-        return ResponseEntity.ok("Usuario eliminado");
+        return ResponseEntity.noContent().build();
     }
 }

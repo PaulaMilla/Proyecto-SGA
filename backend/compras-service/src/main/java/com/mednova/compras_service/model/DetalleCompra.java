@@ -17,7 +17,7 @@ public class DetalleCompra {
     private Compra compra;
 
     @Column(nullable = false)
-    private Long productoId;
+    private int productoId;
 
     @Column(nullable = false)
     private Integer cantidad;
@@ -29,7 +29,7 @@ public class DetalleCompra {
     private BigDecimal subtotal;
 
     @Column(nullable = false)
-    private Long bodegaId;
+    private int bodegaId;
 
     private String lote;
 
@@ -54,11 +54,11 @@ public class DetalleCompra {
         this.compra = compra;
     }
 
-    public Long getProductoId() {
+    public int getProductoId() {
         return productoId;
     }
 
-    public void setProductoId(Long productoId) {
+    public void setProductoId(int productoId) {
         this.productoId = productoId;
     }
 
@@ -86,11 +86,11 @@ public class DetalleCompra {
         this.subtotal = subtotal;
     }
 
-    public Long getBodegaId() {
+    public int getBodegaId() {
         return bodegaId;
     }
 
-    public void setBodegaId(Long bodegaId) {
+    public void setBodegaId(int bodegaId) {
         this.bodegaId = bodegaId;
     }
 

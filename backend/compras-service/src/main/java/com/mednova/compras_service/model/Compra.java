@@ -41,6 +41,9 @@ public class Compra {
 
     private String observacion;
 
+    @Column(name = "ruta_documento")
+    private String rutaDocumento;
+
     // Getters, Setters, Constructor vacío
     public Compra() {}
 
@@ -114,5 +117,13 @@ public class Compra {
 
     public void setObservacion(String observacion) {
         this.observacion = observacion;
+    }
+
+    public String getRutaDocumento() {
+        return rutaDocumento;
+    }
+
+    public void setRutaDocumento(String rutaDocumento) {
+        this.rutaDocumento = rutaDocumento;
     }
 }

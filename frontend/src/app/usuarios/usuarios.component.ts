@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Usuario, UsuarioRequestDTO, UsuarioUpdateDTO} from "./model/usuarios.model";
+import {Rol, Usuario, UsuarioRequestDTO, UsuarioUpdateDTO} from "./model/usuarios.model";
 import {UsuariosService} from "../services/usuarios.service";
 
 @Component({
@@ -11,6 +11,7 @@ import {UsuariosService} from "../services/usuarios.service";
 export class UsuariosComponent implements OnInit {
 
   usuarios: Usuario[] = [];
+  roles: Rol[] = [];
 
   usuarioDTO: UsuarioRequestDTO = {
     nombre: '',
@@ -23,20 +24,41 @@ export class UsuariosComponent implements OnInit {
   };
 
   usuarioEditando: Usuario | null = null;
+  farmacias: string[] = [];
 
 
   constructor(private usuarioService: UsuariosService) {}
 
   ngOnInit(): void {
-    this.cargarUsuarios()
+    this.cargarUsuarios();
+    this.cargarRoles();
+    this.cargarFarmacias();
+  }
+
+  cargarFarmacias(): void {
+    this.usuarioService.obtenerNombresFarmacias().subscribe({
+      next: data => this.farmacias = data,
+      error: err => console.error('Error al cargar farmacias:', err)
+    });
   }
 
   cargarUsuarios(): void {
     this.usuarioService.obtenerTodas().subscribe({
-      next: (data) => this.usuarios = data,
-      error: (err) => console.error('Error al cargar usuarios:', err)
+      next: (data: Usuario[]) => {
+        this.usuarios = data;
+      },
+      error: err => console.error('Error al cargar usuarios:', err)
     });
   }
+
+
+  cargarRoles(): void {
+    this.usuarioService.obtenerRoles().subscribe({
+      next: (data) => this.roles = data,
+      error: (err) => console.error('Error al cargar roles:', err)
+    });
+  }
+
 
   guardarUsuario(): void {
     if (!this.usuarioDTO.idRol) {
@@ -65,49 +87,38 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
-  editarUsuario(usuario: any): void {
+  editarUsuario(usuario: Usuario): void {
+    if (!usuario.idRol) {
+      alert('Debe seleccionar un rol válido.');
+      return;
+    }
+
     const dto: UsuarioUpdateDTO = {
       id: usuario.id,
       estado: usuario.estado,
-      idRol: usuario.rol.id // O usuario.rol si solo tienes el ID directo
+      idRol: usuario.idRol
     };
 
     this.usuarioService.actualizar(dto).subscribe({
       next: () => {
         console.log('Usuario actualizado');
-        this.cargarUsuarios(); // Recarga la lista completa
+        this.cargarUsuarios();
       },
-      error: err => {
-        console.error('Error al actualizar usuario:', err);
-      }
+      error: err => console.error('Error al actualizar usuario:', err)
     });
   }
 
-  actualizarUsuario(): void {
-    if (this.usuarioEditando) {
-      const dto = {
-        id: this.usuarioEditando.id,
-        estado: this.usuarioEditando.estado,
-        idRol: this.usuarioEditando.rol.id,
-      };
-
-      this.usuarioService.actualizar(dto).subscribe({
-        next: () => {
-          this.cargarUsuarios();
-          this.usuarioEditando = null;
-        },
-        error: err => console.error('Error al actualizar:', err)
-      });
-    }
-  }
-
-
-  eliminarUsuario(id: number) {
-    console.log(id);
-    if (confirm('¿Seguro que deseas eliminar este usuario?')) {
+  eliminarUsuario(id: number): void {
+    if (confirm('¿Estás seguro de eliminar este usuario?')) {
       this.usuarioService.eliminar(id).subscribe({
-        next: () => this.cargarUsuarios(),
-        error: err => console.error('Error al eliminar:', err)
+        next: () => {
+          alert('Usuario eliminado correctamente');
+          this.cargarUsuarios(); // Recargar lista después de eliminar
+        },
+        error: (err) => {
+          console.error('Error al eliminar usuario:', err);
+          alert('No se pudo eliminar el usuario');
+        }
       });
     }
   }
