@@ -9,7 +9,7 @@ export interface Usuario {
   apellido: string;
   correo: string;
   estado: string;
-  nombre_farmacia: string;
+  nombreFarmacia: string;
   nombreRol: string;
   fechaCreacion?: Date;
   fechaModificacion?: Date;
