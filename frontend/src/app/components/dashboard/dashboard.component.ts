@@ -25,7 +25,7 @@ export class DashboardComponent {
     {
       icon: '📦',
       titulo: 'Fraccionamientos hoy',
-      descripcion: 'Cuántos fraccionamientos se realizaron en el día actual',
+      descripcion: 'Cuántos fraccionamientos se realizaron en el día',
       ruta: '/fraccionamiento'
     },
     {
@@ -42,7 +42,7 @@ export class DashboardComponent {
     },
     {
       icon: '🧍‍♂️',
-      titulo: 'Pacientes atendidos hoy',
+      titulo: 'Pacientes atendidos',
       descripcion: 'Número de pacientes distintos atendidos en el día',
       ruta: '/pacientes/info'
     }
