@@ -35,6 +35,12 @@ export class ComprasComponent {
     this.cargarProveedores();
     this.cargarProductos();
     this.agregarDetalle(); // para iniciar con un producto vacío
+    this.compra.numeroDocumento = this.generarNumeroDocumento();
+  }
+
+  generarNumeroDocumento(): string {
+    const timestamp = Date.now(); // milisegundos desde 1970
+    return `DOC-${timestamp}`;
   }
   
   definirIdFarmacia(): void{
