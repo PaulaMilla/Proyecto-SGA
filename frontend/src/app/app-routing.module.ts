@@ -19,6 +19,7 @@ import {DispersarMedicamentoComponent} from "./components/dispersar-medicamento/
 import { CajaComponent } from './components/caja/caja.component';
 import { ComprasComponent } from './components/compras/compras.component';
 import {InformesComponent} from "./components/informes/informes.component";
+import { CargaDocumentosCompraComponent } from './components/carga-documentos-compra/carga-documentos-compra.component';
 
 const routes: Routes = [
   { path: '', component: MenuPrincipalComponent }, // CAMBIADO: ahora el inicio es público
@@ -40,7 +41,7 @@ const routes: Routes = [
   {path: 'caja', component: CajaComponent, canActivate: [authGuard]},
   {path: 'compras', component: ComprasComponent, canActivate: [authGuard]},
   {path: 'informes', component: InformesComponent, canActivate: [authGuard]},
-  {path: 'carga-documentos-compra', component: CargaDatosComponent, canActivate: [authGuard]}
+  {path: 'carga-documentos-compra', component: CargaDocumentosCompraComponent, canActivate: [authGuard]}
 ];
 
 @NgModule({
