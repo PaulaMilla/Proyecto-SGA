@@ -64,38 +64,51 @@
       required
     />
 
+     <label for="nombreFarmacia">Farmacia</label>
+     <select
+       id="nombreFarmacia"
+       [(ngModel)]="usuarioDTO.nombre_farmacia"
+       name="nombreFarmacia"
+       required
+     >
+       <option value="">Seleccione una farmacia</option>
+       <option *ngFor="let f of farmacias" [value]="f">{{ f }}</option>
+     </select>
 
-    <button type="submit">Guardar Usuario</button>
+     <button type="submit">Guardar Usuario</button>
   </form>
 </div>
 
 <h2 class="titulo-lista">Usuarios Registrados</h2>
 <div class="usuarios-lista">
   <div class="usuario-card" *ngFor="let u of usuarios">
-    <p><strong>Nombre:</strong> {{ u.nombre }} {{ u.apellido }}</p>
+    <h3>{{ u.nombre }} {{ u.apellido }}</h3>
     <p><strong>Correo:</strong> {{ u.correo }}</p>
-    <!-- Selector de Estado -->
-    <td>
+    <p><strong>Rol:</strong> {{ u.nombreRol }}</p>
+    <p><strong>Estado:</strong> {{ u.estado }}</p>
+    <p><strong>Farmacia:</strong> {{ u.nombreFarmacia }}</p>
+
+    <br>
+
+    <h5> -- Editar parámetros --</h5>
+    <p><strong>Estado:  </strong>
       <select [(ngModel)]="u.estado">
         <option value="Activo">Activo</option>
         <option value="Inactivo">Inactivo</option>
       </select>
-    </td>
-
-    <!-- Selector de Rol -->
-    <td>
-      <select [(ngModel)]="u.rol.id">
-        <option value="">Seleccione un rol</option>
-        <option [value]="1">ADMIN</option>
-        <option [value]="2">BODEGUERO</option>
-        <option [value]="3">FARMACEUTICO</option>
-        <option [value]="4">USUARIO</option>
+    </p>
+    <p><strong>Rol:  </strong>
+      <select [(ngModel)]="u.idRol">
+        <option *ngFor="let r of roles" [value]="r.id">{{ r.nombre }}</option>
       </select>
-    </td>
+    </p>
+
+    <br>
 
     <div class="acciones">
       <button (click)="editarUsuario(u)">Editar</button>
       <button (click)="eliminarUsuario(u.id)">Eliminar</button>
     </div>
   </div>
+
 </div>

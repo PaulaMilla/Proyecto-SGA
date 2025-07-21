@@ -1,8 +1,10 @@
 package com.mednova.inventarios_service.service;
 
+
 import com.mednova.inventarios_service.dto.DescuentoStockRequest;
 import com.mednova.inventarios_service.dto.FarmaciaResponseDTO;
 import com.mednova.inventarios_service.dto.InventarioProductoDTO;
+import com.mednova.inventarios_service.dto.*;
 import com.mednova.inventarios_service.model.Farmacia;
 import com.mednova.inventarios_service.model.Inventario;
 import com.mednova.inventarios_service.model.Producto;
@@ -452,5 +454,27 @@ public class InventarioService {
             return Optional.of(dto);
         }
         return Optional.empty();
+    }
+
+    public Inventario fromDTO(InventarioRequestDTO dto) {
+        Producto producto = productoRepository.findById(dto.getProductoId())
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + dto.getProductoId()));
+
+        Farmacia farmacia = farmaciaRepository.findById(dto.getFarmaciaId())
+                .orElseThrow(() -> new RuntimeException("Farmacia no encontrada con ID: " + dto.getFarmaciaId()));
+
+        //actualizar laboratorio
+        if (dto.getNombreProveedor() != null && !dto.getNombreProveedor().isBlank()) {
+            producto.setLaboratorio(dto.getNombreProveedor());
+            productoRepository.save(producto);
+        }
+        Inventario inventario = new Inventario();
+        inventario.setProducto(producto);
+        inventario.setCantidad_disponible(dto.getCantidadDisponible());
+        inventario.setLote(dto.getLote());
+        inventario.setFecha_vencimiento(dto.getFechaVencimiento());
+        inventario.setUbicacion(dto.getUbicacion());
+        inventario.setFarmacia(farmacia);
+        return inventario;
     }
 }

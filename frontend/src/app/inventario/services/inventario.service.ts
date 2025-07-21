@@ -68,7 +68,9 @@ export class InventarioService {
     return this.http.get<any[]>(url);
   }
 
-
+  getIdFarmaciaPorNombre(nombre: string): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/farmacia/nombre/${nombre}`);
+  }
 
 
   // Método para crear productos de prueba

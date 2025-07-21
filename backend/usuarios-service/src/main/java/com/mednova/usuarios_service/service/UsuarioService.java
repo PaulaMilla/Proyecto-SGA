@@ -2,10 +2,9 @@ package com.mednova.usuarios_service.service;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-import com.mednova.usuarios_service.dto.RolRequestDTO;
-import com.mednova.usuarios_service.dto.UsuarioRequestDTO;
-import com.mednova.usuarios_service.dto.UsuarioUpdateDTO;
+import com.mednova.usuarios_service.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -68,6 +67,18 @@ public class UsuarioService {
         return null;
     }
 
+    public List<UsuarioResponseDTO> obtenerTodosLosUsuarios() {
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        return usuarios.stream()
+                .map(UsuarioResponseDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> obtenerNombresDeFarmacias() {
+        return usuarioRepository.obtenerNombresDeFarmacias();
+    }
+
+
     public Usuario actualizarUsuario(UsuarioUpdateDTO dto) {
         Usuario usuario = usuarioRepository.findById(dto.getId())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + dto.getId()));
@@ -81,6 +92,12 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
+    public List<RolDTO> obtenerTodosLosRoles() {
+        return rolRepository.findAll()
+                .stream()
+                .map(rol -> new RolDTO(rol.getId_rol(), rol.getNombre_rol()))
+                .collect(Collectors.toList());
+    }
 
     public void eliminarUsuario(Integer id) {
         usuarioRepository.deleteById(id);
