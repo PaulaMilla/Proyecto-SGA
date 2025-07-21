@@ -32,7 +32,7 @@ export class DashboardComponent {
       icon: '🧾',
       titulo: 'Dispensaciones hoy',
       descripcion: 'Cuántas recetas se atendieron hoy',
-      ruta: ''
+      ruta: '/dispersar'
     },
     {
       icon: '🪙',
