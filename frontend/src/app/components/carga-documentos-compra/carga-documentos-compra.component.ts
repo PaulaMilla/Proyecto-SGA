@@ -30,13 +30,17 @@ export class CargaDocumentosCompraComponent {
       alert('Debe seleccionar una compra y un archivo.');
       return;
     }
-
+  
+    console.log('Enviando archivo:', this.selectedFile);
+    console.log('Compra ID:', this.selectedCompraId);
+  
     this.comprasService.subirDocumento(this.selectedCompraId, this.selectedFile).subscribe({
       next: () => {
         alert('Documento cargado exitosamente');
         this.selectedFile = null;
       },
-      error: () => {
+      error: (err) => {
+        console.error('Error en la subida:', err);
         alert('Error al subir el archivo');
       }
     });
