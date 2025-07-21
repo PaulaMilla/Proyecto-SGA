@@ -61,15 +61,20 @@ export class ComprasComponent {
 
 
   agregarDetalle(): void {
+    const proveedor = this.proveedores.find(p => p.id === this.compra.proveedorId);
+    const nombre = proveedor?.nombre || '';
+  
     const nuevoDetalle: DetalleCompra = {
       productoId: null,
       cantidad: 1,
       precioUnitario: 0,
       lote: '',
-      fechaVencimiento: ''
+      fechaVencimiento: '',
+      nombreProveedor: nombre
     };
+  
     this.detalles.push(nuevoDetalle);
-  }
+    }
 
   eliminarDetalle(index: number): void {
     this.detalles.splice(index, 1);
@@ -77,6 +82,13 @@ export class ComprasComponent {
 
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
+  }
+
+  onProveedorSeleccionado(): void{
+    const proveedor = this.proveedores.find(p => p.id === this.compra.proveedorId);
+    const nombre = proveedor?.nombre || '';
+
+    this.detalles.forEach(d => d.nombreProveedor = nombre);
   }
 
   registrarCompra(): void {

@@ -4,6 +4,7 @@ export interface DetalleCompra {
   precioUnitario: number;
   lote: string;
   fechaVencimiento: string; // formato ISO (yyyy-mm-dd)
+  nombreProveedor?: string;
 }
 
 export interface Compra {

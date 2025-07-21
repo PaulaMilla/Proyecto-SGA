@@ -64,9 +64,6 @@ export class FraccionamientoComponent implements OnInit {
   }
 
 
-
-
-
   fraccionar(): void {
     if (!this.idSeleccionado || this.cantidadFraccionada <= 0 || !this.nuevoLote) {
       alert('Completa todos los campos');
