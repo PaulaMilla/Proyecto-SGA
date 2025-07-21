@@ -40,6 +40,9 @@ export class ComprasService {
   subirDocumento(compraId: number, archivo: File): Observable<any> {
     const formData = new FormData();
     formData.append('file', archivo);
-    return this.http.post(`${this.baseUrl}/${compraId}/documento`, formData);
+  
+    return this.http.post(`${this.baseUrl}/${compraId}/documento`, formData, {
+      responseType: 'text' 
+    });
   }
 }
